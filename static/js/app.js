@@ -1,470 +1,480 @@
-// GulfRay Medical - Advanced Core Materials & Bilingual Configurator Engine
-let currentLang = "en"; // "ar" or "en"
-let catalogData = {"categories": ["Full Overlap", "Reverse", "Zipper", "Full Wraparound Overlap", "Full Wraparound Release", "Frontal Surgery", "Frontal", "Dental Apron", "Accessories"], "tree": {"Full Overlap": {"category_ar": "مريول تراكب كامل (Full Overlap)", "genders": ["Female", "Male"], "thicknesses": ["0.50 mm Pb"], "sizes": ["L", "M", "S", "XL", "XS", "XXL"], "items": [{"code": "VSF-M-0.50-XS", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-F-0.50-XS", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-M-0.50-S", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-F-0.50-S", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-M-0.50-M", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-F-0.50-M", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-M-0.50-L", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-F-0.50-L", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-M-0.50-XL", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-F-0.50-XL", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-M-0.50-XXL", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "VSF-F-0.50-XXL", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}]}, "Reverse": {"category_ar": "مريول حماية معكوس (Reverse)", "genders": ["Female", "Male"], "thicknesses": ["0.50 mm Pb"], "sizes": ["L", "M", "S", "XL", "XS", "XXL"], "items": [{"code": "VSR-M-0.50-XS", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-F-0.50-XS", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-M-0.50-S", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-F-0.50-S", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-M-0.50-M", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-F-0.50-M", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-M-0.50-L", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-F-0.50-L", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-M-0.50-XL", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-F-0.50-XL", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-M-0.50-XXL", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "VSR-F-0.50-XXL", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}]}, "Zipper": {"category_ar": "مريول سحاب أمامي (Zipper)", "genders": ["Female", "Male"], "thicknesses": ["0.50 mm Pb"], "sizes": ["L", "M", "S", "XL", "XS", "XXL"], "items": [{"code": "VSZ-M-0.50-XS", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-XS", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-M-0.50-S", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-S", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-M-0.50-M", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-M", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-M-0.50-L", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-L", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-M-0.50-XL", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-XL", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-M-0.50-XXL", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-XXL", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}]}, "Full Wraparound Overlap": {"category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "genders": ["Female", "Male"], "thicknesses": ["0.50 mm Pb"], "sizes": ["L", "M", "S", "XL", "XS", "XXL"], "items": [{"code": "FWF-M-0.50-XS", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-F-0.50-XS", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-M-0.50-S", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-F-0.50-S", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-M-0.50-M", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-F-0.50-M", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-M-0.50-L", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-F-0.50-L", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-M-0.50-XL", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-F-0.50-XL", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-M-0.50-XXL", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "FWF-F-0.50-XXL", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}]}, "Full Wraparound Release": {"category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "genders": ["Female", "Male"], "thicknesses": ["0.50 mm Pb"], "sizes": ["L", "M", "S", "XL", "XS", "XXL"], "items": [{"code": "FWR-M-0.50-XS", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-F-0.50-XS", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-M-0.50-S", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-F-0.50-S", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-M-0.50-M", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-F-0.50-M", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-M-0.50-L", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-F-0.50-L", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-M-0.50-XL", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-F-0.50-XL", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-M-0.50-XXL", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "FWR-F-0.50-XXL", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}]}, "Frontal Surgery": {"category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "genders": ["Female", "Male"], "thicknesses": ["0.35 mm Pb", "0.50 mm Pb"], "sizes": ["L", "M", "S", "XL", "XS", "XXL"], "items": [{"code": "FSD-M-0.50-XS", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-F-0.50-XS", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-M-0.50-S", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-F-0.50-S", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-M-0.50-M", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-F-0.50-M", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-M-0.50-L", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-F-0.50-L", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-M-0.50-XL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-F-0.50-XL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-M-0.50-XXL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 2109.0, "uom": "EACH"}, {"code": "FSD-F-0.50-XXL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 2109.0, "uom": "EACH"}, {"code": "FSD-M-0.35-XL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.35 mm Pb - مقاس XL", "name_en": "Frontal Surgery Apron - Male - 0.35 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.35 mm Pb", "size": "XL", "price_sar": 1425.0, "uom": "EACH"}, {"code": "FSD-F-0.35-XL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.35 mm Pb - مقاس XL", "name_en": "Frontal Surgery Apron - Female - 0.35 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.35 mm Pb", "size": "XL", "price_sar": 1425.0, "uom": "EACH"}, {"code": "FSD-M-0.35-XXL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.35 mm Pb - مقاس XXL", "name_en": "Frontal Surgery Apron - Male - 0.35 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.35 mm Pb", "size": "XXL", "price_sar": 1596.0, "uom": "EACH"}, {"code": "FSD-F-0.35-XXL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.35 mm Pb - مقاس XXL", "name_en": "Frontal Surgery Apron - Female - 0.35 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.35 mm Pb", "size": "XXL", "price_sar": 1596.0, "uom": "EACH"}]}, "Frontal": {"category_ar": "مريول حماية أمامي (Frontal Vest)", "genders": ["Female", "Male"], "thicknesses": ["0.35 mm Pb", "0.50 mm Pb"], "sizes": ["L", "M", "S", "XL", "XS", "XXL"], "items": [{"code": "FVP-M-0.50-XS", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-F-0.50-XS", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-M-0.50-S", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-F-0.50-S", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-M-0.50-M", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-F-0.50-M", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-M-0.50-L", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-F-0.50-L", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-M-0.50-XL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-F-0.50-XL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-M-0.50-XXL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 2109.0, "uom": "EACH"}, {"code": "FVP-F-0.50-XXL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 2109.0, "uom": "EACH"}, {"code": "FVP-M-0.35-XL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.35 mm Pb - مقاس XL", "name_en": "Frontal Apron - Male - 0.35 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.35 mm Pb", "size": "XL", "price_sar": 1425.0, "uom": "EACH"}, {"code": "FVP-F-0.35-XL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.35 mm Pb - مقاس XL", "name_en": "Frontal Apron - Female - 0.35 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.35 mm Pb", "size": "XL", "price_sar": 1425.0, "uom": "EACH"}, {"code": "FVP-M-0.35-XXL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.35 mm Pb - مقاس XXL", "name_en": "Frontal Apron - Male - 0.35 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.35 mm Pb", "size": "XXL", "price_sar": 1596.0, "uom": "EACH"}, {"code": "FVP-F-0.35-XXL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.35 mm Pb - مقاس XXL", "name_en": "Frontal Apron - Female - 0.35 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.35 mm Pb", "size": "XXL", "price_sar": 1596.0, "uom": "EACH"}]}, "Dental Apron": {"category_ar": "مريول أشعة الأسنان (Dental Apron)", "genders": ["Unisex"], "thicknesses": ["0.35 mm Pb"], "sizes": ["One Size"], "items": [{"code": "DRA", "category": "Dental Apron", "category_ar": "مريول أشعة الأسنان (Dental Apron)", "name_ar": "مريول أسنان وبانوراما للبالغين", "name_en": "Panoramic Dental Apron - Adult", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.35 mm Pb", "size": "One Size", "price_sar": 1596.0, "uom": "EACH"}, {"code": "DRV", "category": "Dental Apron", "category_ar": "مريول أشعة الأسنان (Dental Apron)", "name_ar": "مريول أسنان وبانوراما مع واقي غدة مدمج", "name_en": "Dental Apron with Integrated Thyroid Collar", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.35 mm Pb", "size": "One Size", "price_sar": 1596.0, "uom": "EACH"}, {"code": "DRP", "category": "Dental Apron", "category_ar": "مريول أشعة الأسنان (Dental Apron)", "name_ar": "مريول أسنان وبانوراما للأطفال", "name_en": "Panoramic Dental Apron - Pediatric", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.35 mm Pb", "size": "One Size", "price_sar": 1083.0, "uom": "EACH"}]}, "Accessories": {"category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "genders": ["Unisex"], "thicknesses": ["0.50 mm Pb"], "sizes": ["L", "M", "One Size", "S"], "items": [{"code": "SLV-L", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "كم واقي من الإشعاع - ذراع يسار (Left Sleeve)", "name_en": "Lead Protection Sleeve - Left", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 285.0, "uom": "EACH"}, {"code": "SLV-R", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "كم واقي من الإشعاع - ذراع يمين (Right Sleeve)", "name_en": "Lead Protection Sleeve - Right", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 285.0, "uom": "EACH"}, {"code": "APW", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "أجنحة وحزام تدعيم المريول (Apron Wings Support)", "name_en": "Apron Support Wings Belt", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 285.0, "uom": "EACH"}, {"code": "TCV-S", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية فيلكرو - مقاس S", "name_en": "Thyroid Collar (Velcro) - Small", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 353.4, "uom": "EACH"}, {"code": "TCV-M", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية فيلكرو - مقاس M", "name_en": "Thyroid Collar (Velcro) - Medium", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 353.4, "uom": "EACH"}, {"code": "TCV-L", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية فيلكرو - مقاس L", "name_en": "Thyroid Collar (Velcro) - Large", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 353.4, "uom": "EACH"}, {"code": "TCM-S", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية مغناطيسي - مقاس S", "name_en": "Thyroid Collar (Magnetic) - Small", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 353.4, "uom": "EACH"}, {"code": "TCM-M", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية مغناطيسي - مقاس M", "name_en": "Thyroid Collar (Magnetic) - Medium", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 353.4, "uom": "EACH"}, {"code": "TCM-L", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية مغناطيسي - مقاس L", "name_en": "Thyroid Collar (Magnetic) - Large", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 353.4, "uom": "EACH"}, {"code": "CAP-S", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "قبعة واقية من الإشعاع - قياسية", "name_en": "Radiation Protection Cap - Standard", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 427.5, "uom": "EACH"}, {"code": "CAP-V", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "قبعة واقية من الإشعاع - شريط فيلكرو", "name_en": "Radiation Protection Cap - Velcro", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 427.5, "uom": "EACH"}, {"code": "BSB", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "حزام تدعيم الظهر المرن (Back Support)", "name_en": "Back Support Belt for Aprons", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 142.5, "uom": "EACH"}, {"code": "SUS", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "حمّالات مريول مرنة قابلة للتعديل", "name_en": "Adjustable Apron Suspenders", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 142.5, "uom": "EACH"}, {"code": "BAG", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "حقيبة مبطنة لحفظ ونقل المريول", "name_en": "Heavy-Duty Apron Storage Bag", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 142.5, "uom": "EACH"}]}}, "total_items": 109, "items": [{"code": "VSF-M-0.50-XS", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-F-0.50-XS", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-M-0.50-S", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-F-0.50-S", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-M-0.50-M", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-F-0.50-M", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-M-0.50-L", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-F-0.50-L", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-M-0.50-XL", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-F-0.50-XL", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSF-M-0.50-XXL", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Overlap Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "VSF-F-0.50-XXL", "category": "Full Overlap", "category_ar": "مريول تراكب كامل (Full Overlap)", "name_ar": "مريول تراكب كامل (Full Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Overlap Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "VSR-M-0.50-XS", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-F-0.50-XS", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-M-0.50-S", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-F-0.50-S", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-M-0.50-M", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-F-0.50-M", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-M-0.50-L", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-F-0.50-L", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-M-0.50-XL", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-F-0.50-XL", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSR-M-0.50-XXL", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Reverse Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "VSR-F-0.50-XXL", "category": "Reverse", "category_ar": "مريول حماية معكوس (Reverse)", "name_ar": "مريول حماية معكوس (Reverse) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Reverse Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "VSZ-M-0.50-XS", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-XS", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-M-0.50-S", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-S", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-M-0.50-M", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-M", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-M-0.50-L", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-L", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-M-0.50-XL", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-XL", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "VSZ-M-0.50-XXL", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Zipper Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "VSZ-F-0.50-XXL", "category": "Zipper", "category_ar": "مريول سحاب أمامي (Zipper)", "name_ar": "مريول سحاب أمامي (Zipper) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Zipper Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "FWF-M-0.50-XS", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-F-0.50-XS", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-M-0.50-S", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-F-0.50-S", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-M-0.50-M", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-F-0.50-M", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-M-0.50-L", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-F-0.50-L", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-M-0.50-XL", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-F-0.50-XL", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWF-M-0.50-XXL", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Wraparound Overlap Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "FWF-F-0.50-XXL", "category": "Full Wraparound Overlap", "category_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap)", "name_ar": "مريول حماية شاملة تراكبية (Full Wraparound Overlap) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Wraparound Overlap Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "FWR-M-0.50-XS", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-F-0.50-XS", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-M-0.50-S", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-F-0.50-S", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-M-0.50-M", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-F-0.50-M", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-M-0.50-L", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-F-0.50-L", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-M-0.50-XL", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-F-0.50-XL", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 2850.0, "uom": "EACH"}, {"code": "FWR-M-0.50-XXL", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Wraparound Release Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "FWR-F-0.50-XXL", "category": "Full Wraparound Release", "category_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release)", "name_ar": "مريول حماية شاملة فك سريع (Full Wraparound Release) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Full Wraparound Release Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 3135.0, "uom": "EACH"}, {"code": "FSD-M-0.50-XS", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-F-0.50-XS", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-M-0.50-S", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-F-0.50-S", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-M-0.50-M", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-F-0.50-M", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-M-0.50-L", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-F-0.50-L", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-M-0.50-XL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-F-0.50-XL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FSD-M-0.50-XXL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Frontal Surgery Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 2109.0, "uom": "EACH"}, {"code": "FSD-F-0.50-XXL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Frontal Surgery Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 2109.0, "uom": "EACH"}, {"code": "FSD-M-0.35-XL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.35 mm Pb - مقاس XL", "name_en": "Frontal Surgery Apron - Male - 0.35 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.35 mm Pb", "size": "XL", "price_sar": 1425.0, "uom": "EACH"}, {"code": "FSD-F-0.35-XL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.35 mm Pb - مقاس XL", "name_en": "Frontal Surgery Apron - Female - 0.35 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.35 mm Pb", "size": "XL", "price_sar": 1425.0, "uom": "EACH"}, {"code": "FSD-M-0.35-XXL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - رجالي - سمك 0.35 mm Pb - مقاس XXL", "name_en": "Frontal Surgery Apron - Male - 0.35 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.35 mm Pb", "size": "XXL", "price_sar": 1596.0, "uom": "EACH"}, {"code": "FSD-F-0.35-XXL", "category": "Frontal Surgery", "category_ar": "مريول جراحي أمامي (Frontal Surgery Drop)", "name_ar": "مريول جراحي أمامي (Frontal Surgery Drop) - نسائي - سمك 0.35 mm Pb - مقاس XXL", "name_en": "Frontal Surgery Apron - Female - 0.35 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.35 mm Pb", "size": "XXL", "price_sar": 1596.0, "uom": "EACH"}, {"code": "FVP-M-0.50-XS", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size XS", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-F-0.50-XS", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس XS", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size XS", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XS", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-M-0.50-S", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس S", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size S", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-F-0.50-S", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس S", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size S", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-M-0.50-M", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس M", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size M", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-F-0.50-M", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس M", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size M", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-M-0.50-L", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس L", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size L", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-F-0.50-L", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس L", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size L", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-M-0.50-XL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-F-0.50-XL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس XL", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XL", "price_sar": 1938.0, "uom": "EACH"}, {"code": "FVP-M-0.50-XXL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Frontal Apron - Male - 0.50 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 2109.0, "uom": "EACH"}, {"code": "FVP-F-0.50-XXL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.50 mm Pb - مقاس XXL", "name_en": "Frontal Apron - Female - 0.50 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.50 mm Pb", "size": "XXL", "price_sar": 2109.0, "uom": "EACH"}, {"code": "FVP-M-0.35-XL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.35 mm Pb - مقاس XL", "name_en": "Frontal Apron - Male - 0.35 mm Pb - Size XL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.35 mm Pb", "size": "XL", "price_sar": 1425.0, "uom": "EACH"}, {"code": "FVP-F-0.35-XL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.35 mm Pb - مقاس XL", "name_en": "Frontal Apron - Female - 0.35 mm Pb - Size XL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.35 mm Pb", "size": "XL", "price_sar": 1425.0, "uom": "EACH"}, {"code": "FVP-M-0.35-XXL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - رجالي - سمك 0.35 mm Pb - مقاس XXL", "name_en": "Frontal Apron - Male - 0.35 mm Pb - Size XXL", "gender": "Male", "gender_ar": "رجالي", "thickness": "0.35 mm Pb", "size": "XXL", "price_sar": 1596.0, "uom": "EACH"}, {"code": "FVP-F-0.35-XXL", "category": "Frontal", "category_ar": "مريول حماية أمامي (Frontal Vest)", "name_ar": "مريول حماية أمامي (Frontal Vest) - نسائي - سمك 0.35 mm Pb - مقاس XXL", "name_en": "Frontal Apron - Female - 0.35 mm Pb - Size XXL", "gender": "Female", "gender_ar": "نسائي", "thickness": "0.35 mm Pb", "size": "XXL", "price_sar": 1596.0, "uom": "EACH"}, {"code": "DRA", "category": "Dental Apron", "category_ar": "مريول أشعة الأسنان (Dental Apron)", "name_ar": "مريول أسنان وبانوراما للبالغين", "name_en": "Panoramic Dental Apron - Adult", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.35 mm Pb", "size": "One Size", "price_sar": 1596.0, "uom": "EACH"}, {"code": "DRV", "category": "Dental Apron", "category_ar": "مريول أشعة الأسنان (Dental Apron)", "name_ar": "مريول أسنان وبانوراما مع واقي غدة مدمج", "name_en": "Dental Apron with Integrated Thyroid Collar", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.35 mm Pb", "size": "One Size", "price_sar": 1596.0, "uom": "EACH"}, {"code": "DRP", "category": "Dental Apron", "category_ar": "مريول أشعة الأسنان (Dental Apron)", "name_ar": "مريول أسنان وبانوراما للأطفال", "name_en": "Panoramic Dental Apron - Pediatric", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.35 mm Pb", "size": "One Size", "price_sar": 1083.0, "uom": "EACH"}, {"code": "SLV-L", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "كم واقي من الإشعاع - ذراع يسار (Left Sleeve)", "name_en": "Lead Protection Sleeve - Left", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 285.0, "uom": "EACH"}, {"code": "SLV-R", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "كم واقي من الإشعاع - ذراع يمين (Right Sleeve)", "name_en": "Lead Protection Sleeve - Right", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 285.0, "uom": "EACH"}, {"code": "APW", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "أجنحة وحزام تدعيم المريول (Apron Wings Support)", "name_en": "Apron Support Wings Belt", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 285.0, "uom": "EACH"}, {"code": "TCV-S", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية فيلكرو - مقاس S", "name_en": "Thyroid Collar (Velcro) - Small", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 353.4, "uom": "EACH"}, {"code": "TCV-M", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية فيلكرو - مقاس M", "name_en": "Thyroid Collar (Velcro) - Medium", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 353.4, "uom": "EACH"}, {"code": "TCV-L", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية فيلكرو - مقاس L", "name_en": "Thyroid Collar (Velcro) - Large", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 353.4, "uom": "EACH"}, {"code": "TCM-S", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية مغناطيسي - مقاس S", "name_en": "Thyroid Collar (Magnetic) - Small", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 353.4, "uom": "EACH"}, {"code": "TCM-M", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية مغناطيسي - مقاس M", "name_en": "Thyroid Collar (Magnetic) - Medium", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "M", "price_sar": 353.4, "uom": "EACH"}, {"code": "TCM-L", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "واقي الغدة الدرقية مغناطيسي - مقاس L", "name_en": "Thyroid Collar (Magnetic) - Large", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "L", "price_sar": 353.4, "uom": "EACH"}, {"code": "CAP-S", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "قبعة واقية من الإشعاع - قياسية", "name_en": "Radiation Protection Cap - Standard", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "S", "price_sar": 427.5, "uom": "EACH"}, {"code": "CAP-V", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "قبعة واقية من الإشعاع - شريط فيلكرو", "name_en": "Radiation Protection Cap - Velcro", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 427.5, "uom": "EACH"}, {"code": "BSB", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "حزام تدعيم الظهر المرن (Back Support)", "name_en": "Back Support Belt for Aprons", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 142.5, "uom": "EACH"}, {"code": "SUS", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "حمّالات مريول مرنة قابلة للتعديل", "name_en": "Adjustable Apron Suspenders", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 142.5, "uom": "EACH"}, {"code": "BAG", "category": "Accessories", "category_ar": "إكسسوارات الوقاية من الإشعاع (Accessories)", "name_ar": "حقيبة مبطنة لحفظ ونقل المريول", "name_en": "Heavy-Duty Apron Storage Bag", "gender": "Unisex", "gender_ar": "للجنسين", "thickness": "0.50 mm Pb", "size": "One Size", "price_sar": 142.5, "uom": "EACH"}]};
-let currentSelection = {
-  category: null,
-  gender: null,
-  thickness: null,
-  size: null,
-  matchedItem: null,
+// ==========================================================================
+// GulfRay® Medical - Radiation Protection Aprons & Shielding
+// Interactive RFQ & Material Guide Engine (BurMed + Saudi Sadu Heritage)
+// ==========================================================================
+
+let currentLang = "en"; // "en" (default) or "ar"
+let rfqBasket = [];
+let uploadedLogoFilename = null;
+
+// Pre-baked Full Catalog (0ms offline load, zero prices)
+const CATALOG_DATA = {
+  categories: [
+    {
+      id: "Full Overlap",
+      name_en: "Full Overlap (Vest & Skirt)",
+      name_ar: "مريول تراكب كامل (سترة وتنورة)",
+      code: "VSF-0.5",
+      format_en: "Vest + Skirt",
+      format_ar: "طقم سترة وتنورة",
+      desc_en: "Overlapping front & back 360° protection. Weight distributed evenly across shoulders and hips.",
+      desc_ar: "حماية شاملة 360 درجة مع توزيع الوزن هندسياً بين الكتفين والخصر لتخفيف الإجهاد.",
+      image: "/images/saudi_green_apron.jpg",
+      lead_options: ["0.50 mm Pb"],
+      genders: ["Male", "Female"],
+      sizes: ["XS", "S", "M", "L", "XL", "XXL", "Custom"]
+    },
+    {
+      id: "Reverse",
+      name_en: "Reverse Apron (Vest & Skirt)",
+      name_ar: "مريول حماية معكوس (سترة وتنورة)",
+      code: "VSR-0.5",
+      format_en: "Vest + Skirt",
+      format_ar: "طقم سترة وتنورة",
+      desc_en: "Reverse closure allowing superior flexibility and lumbar support in interventional suites.",
+      desc_ar: "إغلاق معكوس يمنح مرونة حركة استثنائية مع دعامة أسفل الظهر للأشعة التداخلية.",
+      image: "/images/vest_skirt_style.jpg",
+      lead_options: ["0.50 mm Pb"],
+      genders: ["Male", "Female"],
+      sizes: ["XS", "S", "M", "L", "XL", "XXL", "Custom"]
+    },
+    {
+      id: "Zipper",
+      name_en: "Zipper Front (Vest & Skirt)",
+      name_ar: "مريول سحاب أمامي (سترة وتنورة)",
+      code: "VSZ-0.5",
+      format_en: "Vest + Skirt",
+      format_ar: "طقم سترة وتنورة",
+      desc_en: "Heavy-duty zipper front closure for swift donning, coupled with complete internal overlap shielding.",
+      desc_ar: "سحاب أمامي متين لسرعة وسهولة الارتداء والخلع مع تراكب واقٍ كامل بالداخل.",
+      image: "/images/clinical_procedure.jpg",
+      lead_options: ["0.50 mm Pb"],
+      genders: ["Male", "Female"],
+      sizes: ["XS", "S", "M", "L", "XL", "XXL", "Custom"]
+    },
+    {
+      id: "Full Wraparound Overlap",
+      name_en: "Full Wraparound Overlap (One-Piece)",
+      name_ar: "مريول حماية شاملة تراكبية (قطعة واحدة)",
+      code: "FWF-0.5",
+      format_en: "Full Apron",
+      format_ar: "مريول كامل متصل",
+      desc_en: "Single-piece full wrap garment designed for maximum 360° protection with padded Velcro fastening.",
+      desc_ar: "مريول كامل متصل قطعة واحدة يوفر حماية محيطية كاملة مع حزام تثبيت عريض مبطن.",
+      image: "/images/full_wrap_style.jpg",
+      lead_options: ["0.50 mm Pb"],
+      genders: ["Male", "Female"],
+      sizes: ["XS", "S", "M", "L", "XL", "XXL", "Custom"]
+    },
+    {
+      id: "Full Wraparound Release",
+      name_en: "Full Wraparound Quick Release",
+      name_ar: "مريول حماية شاملة فك سريع",
+      code: "FWR-0.5",
+      format_en: "Full Apron",
+      format_ar: "مريول كامل متصل",
+      desc_en: "Quick-release mechanisms allowing sterile OR team removal without breaking surgical scrub.",
+      desc_ar: "أنظمة فك سريعة تتيح نزع المريول في غرف العمليات دون المساس بالتعقيم الجراحي.",
+      image: "/images/full_apron_format.jpg",
+      lead_options: ["0.50 mm Pb"],
+      genders: ["Male", "Female"],
+      sizes: ["XS", "S", "M", "L", "XL", "XXL", "Custom"]
+    },
+    {
+      id: "Frontal Surgery",
+      name_en: "Frontal Surgery Drop-Off Apron",
+      name_ar: "مريول جراحي أمامي سهل الإسقاط",
+      code: "FSD-0.5",
+      format_en: "Frontal Apron",
+      format_ar: "مريول أمامي جراحي",
+      desc_en: "Sterile-field drop design allowing surgeons to drop the apron from underneath sterile gowns.",
+      desc_ar: "تصميم جراحي متطور يسمح للجراح بإسقاط ونزع المريول من تحت الرداء الجراحي المعقم.",
+      image: "/images/in_use_surgical.jpg",
+      lead_options: ["0.35 mm Pb", "0.50 mm Pb"],
+      genders: ["Male", "Female"],
+      sizes: ["XS", "S", "M", "L", "XL", "XXL", "Custom"]
+    },
+    {
+      id: "Frontal",
+      name_en: "Classic Frontal Protection Vest",
+      name_ar: "مريول حماية أمامي كلاسيكي",
+      code: "FVP-0.5",
+      format_en: "Frontal Apron",
+      format_ar: "مريول أمامي خفيف",
+      desc_en: "Lightweight frontal radiation apron with cross-back straps for open ventilation.",
+      desc_ar: "مريول أمامي خفيف الوزن مع أحزمة ظهر متقاطعة توفر أقصى تهوية وراحة أثناء الفحص.",
+      image: "/images/in_use_doctor.jpg",
+      lead_options: ["0.35 mm Pb", "0.50 mm Pb"],
+      genders: ["Male", "Female"],
+      sizes: ["XS", "S", "M", "L", "XL", "XXL", "Custom"]
+    },
+    {
+      id: "Dental Apron",
+      name_en: "Panoramic & Dental Shielding Apron",
+      name_ar: "مريول أشعة الأسنان والبانوراما",
+      code: "DRA",
+      format_en: "Dental Shield",
+      format_ar: "واقي مراكز الأسنان",
+      desc_en: "Patient protective aprons for dental radiography and panoramic imaging with thyroid collars.",
+      desc_ar: "مريول واقٍ للمرضى في عيادات الأسنان ومراكز البانوراما مع واقي غدة درقية متكامل.",
+      image: "/images/hero_medical.jpg",
+      lead_options: ["0.35 mm Pb"],
+      genders: ["Unisex"],
+      sizes: ["Adult (One Size)", "Pediatric (Children)"]
+    },
+    {
+      id: "Accessories",
+      name_en: "Shielding Accessories (Thyroid, Sleeves, Belts)",
+      name_ar: "إكسسوارات الوقاية (واقي الغدة، الأكمام، الأحزمة)",
+      code: "TCV",
+      format_en: "Accessories",
+      format_ar: "إكسسوارات وملحقات",
+      desc_en: "Magnetic & Velcro thyroid collars, protective sleeves, and ergonomic lumbar support belts.",
+      desc_ar: "واقيات الغدة الدرقية مغناطيسية وفيلكرو، أكمام الوقاية للذراعين، وأحزمة دعم الظهر.",
+      image: "/images/patterns_sadu.jpg",
+      lead_options: ["0.50 mm Pb"],
+      genders: ["Unisex"],
+      sizes: ["S", "M", "L", "One Size"]
+    }
+  ],
+
+  core_materials: [
+    {
+      id: "UM",
+      name_en: "UM (Ultra-Lightest)",
+      name_ar: "ألترا لايت (UM - الأخف وزناً)",
+      density: "2.60 kg/m²",
+      thickness: "0.66 mm",
+      badge_en: "28% Lighter than Lead",
+      badge_ar: "أخف بنسبة 28%",
+      standard: "ASTM F2547-18"
+    },
+    {
+      id: "NPL",
+      name_en: "NPL (Broad-Beam UK Verified)",
+      name_ar: "إن بي إل (NPL - معتمد بريطانياً)",
+      density: "2.83 kg/m²",
+      thickness: "0.71 mm",
+      badge_en: "Broad-Beam Tested",
+      badge_ar: "معتمد بالحزمة العريضة",
+      standard: "BS EN 61331-1:2014"
+    },
+    {
+      id: "ML",
+      name_en: "ML (Most Economical Lead-Free)",
+      name_ar: "إم إل (ML - اقتصادي خالٍ من الرصاص)",
+      density: "3.60 kg/m²",
+      thickness: "0.96 mm",
+      badge_en: "Best Value for Tenders",
+      badge_ar: "الأعلى قيمة للمستشفيات",
+      standard: "GBZ/T 147-2020"
+    }
+  ],
+
+  collections: [
+    {
+      id: "saudi_green",
+      category: "saudi",
+      name_en: "Saudi Green (إصدار المملكة - أخضر)",
+      name_ar: "الأخضر السعودي (إصدارات المملكة)",
+      hex: "#006C35",
+      image: "/images/saudi_green_apron.jpg",
+      tag_en: "Collection 02 · Saudi Editions",
+      tag_ar: "المجموعة الثانية · إصدارات المملكة",
+      desc_en: "Deep official Saudi Green paired with warm ivory and restrained gold trim.",
+      desc_ar: "الأخضر السعودي الرسمي موشح بلمسات العاج والذهب الهادئ."
+    },
+    {
+      id: "saudi_lavender",
+      category: "saudi",
+      name_en: "Saudi Lavender (إصدار المملكة - لافندر)",
+      name_ar: "اللافندر السعودي (إصدارات المملكة)",
+      hex: "#684F8C",
+      image: "/images/saudi_lavender_apron.jpg",
+      tag_en: "Collection 02 · Saudi Editions",
+      tag_ar: "المجموعة الثانية · إصدارات المملكة",
+      desc_en: "Contemporary Saudi lavender, expressing modern cultural elegance in surgical suites.",
+      desc_ar: "لون اللافندر السعودي المعاصر، يعكس روح التجدد والأناقة في غرف العمليات."
+    },
+    {
+      id: "sadu_trim",
+      category: "sadu",
+      name_en: "Sadu Heritage Trim (تطريز السدو التراثي)",
+      name_ar: "تطريز السدو التراثي السعودي",
+      hex: "#8B263E",
+      image: "/images/patterns_sadu.jpg",
+      tag_en: "Collection 04 · Patterns",
+      tag_ar: "المجموعة الرابعة · تطريز السدو",
+      desc_en: "Intricate geometric Saudi Sadu motifs woven into high-performance medical fabric.",
+      desc_ar: "نقوش وزخارف السدو الهندسية محاكة بدقة متناهية على الرداء الطبي."
+    },
+    {
+      id: "royal_navy",
+      category: "classics",
+      name_en: "Royal Navy Blue (أزرق ملكي كحلي)",
+      name_ar: "أزرق ملكي كحلي",
+      hex: "#1B2A4A",
+      image: "/images/vest_skirt_format.jpg",
+      tag_en: "Collection 01 · Signature",
+      tag_ar: "المجموعة الأولى · كلاسيكيات الخليج",
+      desc_en: "Executive clinical navy blue for premier cardiology and radiology suites.",
+      desc_ar: "الكحلي الملكي المعتمد في أرقى مراكز قسطرة القلب ومستشفيات المملكة."
+    },
+    {
+      id: "surgical_teal",
+      category: "classics",
+      name_en: "Medical Surgical Teal (تيل جراحي)",
+      name_ar: "تيل جراحي معتمد",
+      hex: "#0D9488",
+      image: "/images/full_wrap_style.jpg",
+      tag_en: "Collection 01 · Signature",
+      tag_ar: "المجموعة الأولى · كلاسيكيات الخليج",
+      desc_en: "Classic surgical operating room teal with antimicrobial dirt-repellent finish.",
+      desc_ar: "اللون الجراحي الكلاسيكي لغرف العمليات مع معالجة مقاومة للسوائل والبكتيريا."
+    },
+    {
+      id: "charcoal_slate",
+      category: "classics",
+      name_en: "Charcoal Slate (رمادي حجري)",
+      name_ar: "رمادي حجري فاخر",
+      hex: "#374151",
+      image: "/images/full_apron_format.jpg",
+      tag_en: "Collection 01 · Signature",
+      tag_ar: "المجموعة الأولى · كلاسيكيات الخليج",
+      desc_en: "Modern neutral charcoal slate offering restrained clinical authority.",
+      desc_ar: "رمادي حجري حديث يوفر مظهراً تقنياً وقوراً ومقاوماً للاتساخ."
+    }
+  ]
+};
+
+// Current Live Configurator State
+let currentConfig = {
+  category: "Full Overlap",
+  core_material: "UM",
+  thickness: "0.50 mm Pb",
+  collection: "Saudi Editions",
+  color: "Saudi Green",
+  color_hex: "#006C35",
+  gender: "Male",
+  size: "L",
   qty: 1,
   embroidery: "",
-  logoFilename: null,
-  logoUrl: null
+  logo_filename: null
 };
 
-let cart = [];
-const VAT_RATE = 0.15;
-
-const I18N = {
-  ar: {
-    headerBrandTitle: "GulfRay® | شركة سقالة حلول الوقاية",
-    headerBrandSubtitle: "مصنع لإنتاج Radiation Protection Aprons وحلول الوقاية من الأشعة",
-    btnLangToggle: "🌐 English",
-    txtHeaderCart: "🛒 طلب الشراء",
-    txtAdminBtn: "⚙️ تحديث الأسعار (Admin)",
-    heroTitle: "حلول ومواد الحماية المتقدمة من الإشعاع الطبي",
-    heroDesc: "مصنع وطني متخصص في إنتاج مآزر الرصاص الخفيفة وعالية الحماية وحلول تدريع غرف الأشعة، بأعلى درجات الراحة والتوازن الهيكلي للأطباء والكوادر الطبية.",
-    kpiLabelCat: "الفئات المعتمدة",
-    kpiCategories: "9 فئات رئيسية",
-    kpiLabelItems: "الموديلات والأصناف",
-    kpiItemsCount: "109 أصناف مسجلة",
-    kpiLabelLead: "مستويات الرصاص المكافئ",
-    kpiLabelPrice: "قائمة الأسعار الرسمية",
-    kpiPriceVal: "ريال سعودي (غير شامل VAT)",
-    tabConfigTxt: "✨ مُشكّل المريول التفاعلي (Configurator)",
-    tabCatalogTxt: "📊 جدول وتصفح كافة الأصناف (Catalog Explorer)",
-    step1Title: "اختر فئة المريول أو الإكسسوار (Product Category)",
-    step2Title: "التصميم والجنس (Gender / Cut)",
-    step3Title: "سمك الرصاص المكافئ للحماية (Lead Equivalence)",
-    step4Title: "المقاس (Size)",
-    step5Title: "التخصيص الفاخر وإرفاق الشعار (Customization) - اختياري",
-    lblEmbroidery: "🧵 تطريز مخصص على المريول (اسم الطبيب أو اسم القسم):",
-    lblLogo: "📎 إرفاق شعار المستشفى / المركز الطبي (Hospital Logo):",
-    btnUploadLogo: "📤 اختر ملف الشعار من جهازك",
-    logoNone: "لم يتم إرفاق ملف بعد",
-    summaryCardTitle: "ملخص الصنف المختار",
-    summaryPriceLbl: "السعر الرسمي المعتمد للصنف",
-    summaryCurrencyLbl: "ريال سعودي (غير شامل VAT)",
-    qtyLabel: "الكمية المطلوبة (Quantity)",
-    btnAddToCartTxt: "🛒 إضافة إلى طلب عرض السعر",
-    txtComplianceBadge: "✓ منتجات مصنعة محلياً ومعتمدة وفق مواصفات CE و ISO للحماية الإشعاعية.",
-    searchPlaceholder: "🔍 ابحث برقم الكود، الفئة، أو المقاس...",
-    optAllCategories: "جميع الفئات (All Categories)",
-    thCode: "الكود (Item Code)",
-    thCategory: "الفئة (Category)",
-    thSpecs: "النوع والمواصفة",
-    thSize: "المقاس",
-    thThickness: "السمك Pb",
-    thPrice: "السعر (SAR)",
-    thAction: "إجراء",
-    cartModalTitle: "📋 تفاصيل طلب الشراء / عرض السعر (RFQ)",
-    lblSubtotal: "المجموع الفرعي (Subtotal):",
-    lblVat: "ضريبة القيمة المضافة 15% (VAT):",
-    lblGrandTotal: "الإجمالي النهائي شامل الضريبة:",
-    hdrCustomerDetails: "👤 بيانات العميل وجهة الشراء",
-    lblCustName: "اسم المسؤول / الطبيب: *",
-    lblCustOrg: "اسم المستشفى / المركز الطبي: *",
-    lblCustCity: "المدينة: *",
-    lblCustPhone: "رقم الجوال / الواتساب: *",
-    lblCustEmail: "البريد الإلكتروني للعميل: *",
-    lblPaymentMethod: "طريقة السداد المعتمدة لدى جهتكم: *",
-    optBankTransfer: "تحويل بنكي رسمي (Bank Transfer)",
-    optLpo: "أمر شراء حكومي / تعميد ودفع آجل للمستشفيات (LPO / Credit Term)",
-    optCod: "نقداً / شبكة عند التوريد (Cash / Card on Delivery)",
-    lblCustNotes: "ملاحظات إضافية أو شروط خاصة:",
-    txtOrderNotice: "📬 عند الضغط على 'إرسال طلب الشراء'، سيتم توثيق الطلب وإرسال نسخة كاملة وفورية إلى إدارة مبيعات GulfRay (asaeed@ims-medical.com, tarek@Ims-medical.com, atharwat@ims-medical.com) بالإضافة إلى نسخة إلى إيميلك المسجل.",
-    txtSubmitBtn: "✉️ اعتماد وإرسال طلب الشراء الرسمي",
-    txtPrintBtn: "📄 طباعة / PDF فوري",
-    adminModalTitle: "⚙️ لوحة تحديث قائمة الأسعار (Admin)",
-    adminModalDesc: "يمكنك هنا رفع ملف GulfRay price list.xlsx الجديد ليقوم النظام بتحديث الأسعار فورياً محلياً وبشكل آمن تماماً.",
-    lblAdminPin: "الرمز السري للإدارة (PIN Code):",
-    lblAdminFile: "اختر ملف الإكسل المحدث (.xlsx):",
-    txtAdminUploadBtn: "🔄 تحديث وتطبيق الأسعار الجديدة",
-    currencySymbol: "ر.س",
-    cartEmptyMsg: "سلة طلب الشراء فارغة حالياً.",
-    addedSuccess: "✓ تمت الإضافة بنجاح إلى الطلب!"
-  },
-  en: {
-    headerBrandTitle: "GulfRay® | Siqalah Shielding Solutions",
-    headerBrandSubtitle: "Manufacturer of Radiation Protection Aprons & Radiation Shielding Solutions",
-    btnLangToggle: "🌐 العربية",
-    txtHeaderCart: "🛒 Purchase Order",
-    txtAdminBtn: "⚙️ Update Prices (Admin)",
-    heroTitle: "Advanced Core Material & Radiation Shielding Solutions",
-    heroDesc: "A specialized national factory producing lightweight, high-protection lead aprons and medical X-ray shielding solutions engineered for optimal weight distribution and doctor comfort.",
-    kpiLabelCat: "Approved Categories",
-    kpiCategories: "9 Main Categories",
-    kpiLabelItems: "Registered SKUs",
-    kpiItemsCount: "109 Products",
-    kpiLabelLead: "Lead Equivalence",
-    kpiLabelPrice: "Official Price List",
-    kpiPriceVal: "SAR (Excl. 15% VAT)",
-    tabConfigTxt: "✨ Interactive Apron Configurator",
-    tabCatalogTxt: "📊 Catalog & Price Explorer",
-    step1Title: "Select Apron or Accessory Category",
-    step2Title: "Design & Gender Cut",
-    step3Title: "Lead Protection Equivalence (mm Pb)",
-    step4Title: "Size",
-    step5Title: "Custom Embroidery & Logo (Optional)",
-    lblEmbroidery: "🧵 Custom Embroidery (Doctor's Name / Dept):",
-    lblLogo: "📎 Attach Hospital / Clinic Logo File:",
-    btnUploadLogo: "📤 Choose Logo File",
-    logoNone: "No logo attached yet",
-    summaryCardTitle: "Selected Item Summary",
-    summaryPriceLbl: "Approved Official Unit Price",
-    summaryCurrencyLbl: "SAR (Excl. 15% VAT)",
-    qtyLabel: "Requested Quantity",
-    btnAddToCartTxt: "🛒 Add to RFQ Quotation",
-    txtComplianceBadge: "✓ Locally manufactured & certified compliant with CE and ISO 13485 radiation protection standards.",
-    searchPlaceholder: "🔍 Search by item code, category, or size...",
-    optAllCategories: "All Categories",
-    thCode: "Item Code",
-    thCategory: "Category",
-    thSpecs: "Description & Specs",
-    thSize: "Size",
-    thThickness: "Lead Pb",
-    thPrice: "Price (SAR)",
-    thAction: "Action",
-    cartModalTitle: "📋 Quotation / Purchase Order Request (RFQ)",
-    lblSubtotal: "Subtotal:",
-    lblVat: "Value Added Tax 15% (VAT):",
-    lblGrandTotal: "Grand Total (Incl. VAT):",
-    hdrCustomerDetails: "👤 Client & Procurement Details",
-    lblCustName: "Doctor / Contact Name: *",
-    lblCustOrg: "Hospital / Medical Center: *",
-    lblCustCity: "City: *",
-    lblCustPhone: "Mobile / WhatsApp: *",
-    lblCustEmail: "Client Email: *",
-    lblPaymentMethod: "Approved Payment Term: *",
-    optBankTransfer: "Official Bank Transfer",
-    optLpo: "Hospital Purchase Order / Credit Term (LPO)",
-    optCod: "Cash / Card on Delivery (COD)",
-    lblCustNotes: "Additional Notes or Delivery Instructions:",
-    txtOrderNotice: "📬 Submitting will dispatch an official RFQ copy to GulfRay Sales Management (asaeed@ims-medical.com, tarek@Ims-medical.com, atharwat@ims-medical.com) and an automatic confirmation copy to your email.",
-    txtSubmitBtn: "✉️ Submit Official Purchase Order",
-    txtPrintBtn: "📄 Instant Print / PDF",
-    adminModalTitle: "⚙️ Update Price List (Admin)",
-    adminModalDesc: "Upload updated GulfRay price list.xlsx to instantly update the pricing engine with local verification.",
-    lblAdminPin: "Admin Security PIN:",
-    lblAdminFile: "Select Updated Excel File (.xlsx):",
-    txtAdminUploadBtn: "🔄 Apply New Price List",
-    currencySymbol: "SAR",
-    cartEmptyMsg: "The purchase order cart is currently empty.",
-    addedSuccess: "✓ Successfully added to order!"
-  }
-};
-
-// -------------------------------------------------------------
-// Initialization & Language Switching
-// -------------------------------------------------------------
-
+// ==========================================================================
+// Initialization
+// ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
-  const savedLang = null;
-  if (savedLang === "en" || savedLang === "ar") {
-    currentLang = savedLang;
-  }
-  applyLanguage(currentLang);
-  loadCatalog();
-  loadCartFromStorage();
+  loadSavedBasket();
+  renderCollectionsGrid("all");
+  renderStyleOptions();
+  renderCoreOptions();
+  renderLeadOptions();
+  renderColorSwatches();
+  renderGenderOptions();
+  renderSizeOptions();
+  updateLiveSummary();
 });
 
-function toggleLanguage() {
-  currentLang = currentLang === "ar" ? "en" : "ar";
-  localStorage.setItem("gulfray_lang", currentLang);
-  applyLanguage(currentLang);
-  if (catalogData) {
-    renderCategoryPills();
-    selectCategory(currentSelection.category || catalogData.categories[0]);
-    populateCatalogTableFilter();
-    renderCatalogTable();
-  }
-  renderCartModal();
-}
+// ==========================================================================
+// Render Configurator Options
+// ==========================================================================
+function renderStyleOptions() {
+  const container = document.getElementById("styleOptionsGrid");
+  if (!container) return;
 
-function applyLanguage(lang) {
-  const t = I18N[lang];
-  document.documentElement.lang = lang;
-  document.body.dir = lang === "ar" ? "rtl" : "ltr";
-
-  // Update text content of mapped IDs
-  for (const [id, text] of Object.entries(t)) {
-    const el = document.getElementById(id);
-    if (el) {
-      if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
-        el.placeholder = text;
-      } else {
-        el.textContent = text;
-      }
-    }
-  }
-
-  const searchInput = document.getElementById("catalogSearchInput");
-  if (searchInput) searchInput.placeholder = t.searchPlaceholder;
-
-  updateCartBadge();
-}
-
-// -------------------------------------------------------------
-// Catalog Loader
-// -------------------------------------------------------------
-
-async function loadCatalog() {
-  try {
-    const res = await fetch("/api/catalog?t=" + new Date().getTime());
-    if (!res.ok) throw new Error("Failed to load catalog data");
-    catalogData = await res.json();
-
-    const t = I18N[currentLang];
-    const catEl = document.getElementById("kpiCategories");
-    const itemsEl = document.getElementById("kpiItemsCount");
-    if (catEl) catEl.textContent = `${catalogData.categories.length} ${currentLang === 'ar' ? 'فئات رئيسية' : 'Categories'}`;
-    if (itemsEl) itemsEl.textContent = `${catalogData.total_items} ${currentLang === 'ar' ? 'أصناف مسجلة' : 'Registered SKUs'}`;
-
-    renderCategoryPills();
-    populateCatalogTableFilter();
-    renderCatalogTable();
-
-    if (catalogData.categories.length > 0) {
-      selectCategory(currentSelection.category || catalogData.categories[0]);
-    }
-  } catch (err) {
-    console.error("Error loading catalog:", err);
-    setTimeout(loadCatalog, 1200);
-  }
-}
-
-// -------------------------------------------------------------
-// Configurator Selection Logic
-// -------------------------------------------------------------
-
-function renderCategoryPills() {
-  const container = document.getElementById("categoryPillsContainer");
-  container.innerHTML = "";
-
-  catalogData.categories.forEach(cat => {
-    const info = catalogData.tree[cat];
-    const pill = document.createElement("div");
-    pill.className = "category-pill";
-    pill.dataset.category = cat;
-    const catName = currentLang === "ar" ? (info.category_ar || cat) : cat;
-    pill.innerHTML = `
-      <span class="cat-name">${catName}</span>
-      <small style="font-size: 11px; opacity: 0.85;">${cat}</small>
+  container.innerHTML = CATALOG_DATA.categories.map(cat => {
+    const isSelected = cat.id === currentConfig.category;
+    const name = currentLang === "ar" ? cat.name_ar : cat.name_en;
+    const format = currentLang === "ar" ? cat.format_ar : cat.format_en;
+    return `
+      <div class="option-card-radio ${isSelected ? 'selected' : ''}" onclick="selectCategory('${cat.id}')">
+        <span class="opt-title">${name}</span>
+        <span class="opt-desc">🏷️ ${format} · ${cat.code}</span>
+      </div>
     `;
-    pill.onclick = () => selectCategory(cat);
-    container.appendChild(pill);
-  });
+  }).join("");
 }
 
-function selectCategory(category) {
-  currentSelection.category = category;
-  
-  document.querySelectorAll(".category-pill").forEach(p => {
-    p.classList.toggle("active", p.dataset.category === category);
-  });
+function renderCoreOptions() {
+  const container = document.getElementById("coreOptionsGrid");
+  if (!container) return;
 
-  const catTree = catalogData.tree[category];
-  if (!catTree) return;
-
-  renderGenderPills(catTree.genders);
-  renderThicknessPills(catTree.thicknesses);
-  renderSizePills(catTree.sizes);
-  evaluateItemMatch();
+  container.innerHTML = CATALOG_DATA.core_materials.map(core => {
+    const isSelected = core.id === currentConfig.core_material;
+    const name = currentLang === "ar" ? core.name_ar : core.name_en;
+    const badge = currentLang === "ar" ? core.badge_ar : core.badge_en;
+    return `
+      <div class="core-radio-card ${isSelected ? 'selected' : ''}" onclick="selectCoreMaterial('${core.id}')">
+        <div class="core-radio-title">${core.id} Core</div>
+        <div style="font-size: 0.8rem; color: var(--slate-700); margin: 4px 0;">${name}</div>
+        <span class="core-radio-badge">✓ ${badge}</span>
+      </div>
+    `;
+  }).join("");
 }
 
-function renderGenderPills(genders) {
-  const container = document.getElementById("genderPillsContainer");
-  const section = document.getElementById("stepGenderSection");
-  container.innerHTML = "";
+function renderLeadOptions() {
+  const container = document.getElementById("leadOptionsGrid");
+  if (!container) return;
 
-  if (genders.length === 1 && genders[0] === "Unisex") {
-    currentSelection.gender = "Unisex";
-    section.style.display = "none";
-    return;
+  const currentCatObj = CATALOG_DATA.categories.find(c => c.id === currentConfig.category) || CATALOG_DATA.categories[0];
+  const options = currentCatObj.lead_options;
+
+  if (!options.includes(currentConfig.thickness)) {
+    currentConfig.thickness = options[0];
   }
 
-  section.style.display = "block";
-  genders.forEach(g => {
-    const pill = document.createElement("div");
-    pill.className = "spec-pill";
-    pill.dataset.gender = g;
-    let label = g;
-    if (currentLang === "ar") {
-      label = g === "Male" ? "رجالي 👨 (Male)" : (g === "Female" ? "نسائي 👩 (Female)" : "للجنسين ⚡ (Unisex)");
-    } else {
-      label = g === "Male" ? "Male 👨" : (g === "Female" ? "Female 👩" : "Unisex ⚡");
-    }
-    pill.innerHTML = `<span>${label}</span>`;
-    pill.onclick = () => selectGender(g);
-    container.appendChild(pill);
-  });
+  container.innerHTML = options.map(thick => {
+    const isSelected = thick === currentConfig.thickness;
+    return `
+      <div class="option-card-radio ${isSelected ? 'selected' : ''}" onclick="selectLead('${thick}')">
+        <span class="opt-title">${thick}</span>
+        <span class="opt-desc">${thick === '0.50 mm Pb' ? (currentLang === 'ar' ? 'حماية تداخلية كاملة' : 'Full Interventional') : (currentLang === 'ar' ? 'حماية أمامية خفيفة' : 'Lightweight Frontal')}</span>
+      </div>
+    `;
+  }).join("");
+}
 
-  selectGender(genders[0]);
+function renderColorSwatches() {
+  const container = document.getElementById("colorSwatchesGrid");
+  if (!container) return;
+
+  container.innerHTML = CATALOG_DATA.collections.map(col => {
+    const isSelected = col.name_en.includes(currentConfig.color);
+    const name = currentLang === "ar" ? col.name_ar : col.name_en;
+    return `
+      <div class="color-option-btn ${isSelected ? 'selected' : ''}" onclick="selectColor('${col.id}', '${col.name_en}', '${col.hex}', '${col.tag_en}')">
+        <span class="swatch-circle" style="background-color: ${col.hex};"></span>
+        <span class="swatch-name">${name.split('(')[0]}</span>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderGenderOptions() {
+  const container = document.getElementById("genderOptionsGrid");
+  if (!container) return;
+
+  const currentCatObj = CATALOG_DATA.categories.find(c => c.id === currentConfig.category) || CATALOG_DATA.categories[0];
+  const genders = currentCatObj.genders;
+
+  if (!genders.includes(currentConfig.gender)) {
+    currentConfig.gender = genders[0];
+  }
+
+  container.innerHTML = genders.map(g => {
+    const isSelected = g === currentConfig.gender;
+    const label = g === "Male" ? (currentLang === "ar" ? "رجالي (Male)" : "Male") :
+                  g === "Female" ? (currentLang === "ar" ? "نسائي (Female)" : "Female") :
+                  (currentLang === "ar" ? "للجنسين (Unisex)" : "Unisex");
+    return `
+      <div class="option-card-radio ${isSelected ? 'selected' : ''}" onclick="selectGender('${g}')">
+        <span class="opt-title">${label}</span>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderSizeOptions() {
+  const container = document.getElementById("sizeOptionsGrid");
+  if (!container) return;
+
+  const currentCatObj = CATALOG_DATA.categories.find(c => c.id === currentConfig.category) || CATALOG_DATA.categories[0];
+  const sizes = currentCatObj.sizes;
+
+  if (!sizes.includes(currentConfig.size)) {
+    currentConfig.size = sizes.includes("L") ? "L" : sizes[0];
+  }
+
+  container.innerHTML = sizes.map(s => {
+    const isSelected = s === currentConfig.size;
+    return `
+      <div class="option-card-radio ${isSelected ? 'selected' : ''}" style="text-align: center; padding: 10px;" onclick="selectSize('${s}')">
+        <span class="opt-title" style="margin: 0;">${s}</span>
+      </div>
+    `;
+  }).join("");
+}
+
+// ==========================================================================
+// Selection Actions
+// ==========================================================================
+function selectCategory(catId) {
+  currentConfig.category = catId;
+  const catObj = CATALOG_DATA.categories.find(c => c.id === catId);
+  if (catObj && catObj.image) {
+    document.getElementById("summaryImg").src = catObj.image;
+  }
+  renderStyleOptions();
+  renderLeadOptions();
+  renderGenderOptions();
+  renderSizeOptions();
+  updateLiveSummary();
+}
+
+function selectCoreMaterial(coreId) {
+  currentConfig.core_material = coreId;
+  renderCoreOptions();
+  updateLiveSummary();
+
+  // Scroll to configurator if clicked from materials guide section
+  const el = document.getElementById("rfq-builder");
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+function selectLead(thick) {
+  currentConfig.thickness = thick;
+  renderLeadOptions();
+  updateLiveSummary();
+}
+
+function selectColor(colId, nameEn, hex, tagEn) {
+  currentConfig.color = nameEn;
+  currentConfig.color_hex = hex;
+  currentConfig.collection = tagEn;
+
+  const colObj = CATALOG_DATA.collections.find(c => c.id === colId);
+  if (colObj && colObj.image) {
+    document.getElementById("summaryImg").src = colObj.image;
+  }
+
+  renderColorSwatches();
+  updateLiveSummary();
 }
 
 function selectGender(g) {
-  currentSelection.gender = g;
-  document.querySelectorAll("#genderPillsContainer .spec-pill").forEach(p => {
-    p.classList.toggle("active", p.dataset.gender === g);
-  });
-  evaluateItemMatch();
+  currentConfig.gender = g;
+  renderGenderOptions();
+  updateLiveSummary();
 }
 
-function renderThicknessPills(thicknesses) {
-  const container = document.getElementById("thicknessPillsContainer");
-  const section = document.getElementById("stepThicknessSection");
-  container.innerHTML = "";
-
-  if (thicknesses.length === 1 && (thicknesses[0] === "-" || thicknesses[0] === "Standard")) {
-    currentSelection.thickness = thicknesses[0];
-    section.style.display = "none";
-    return;
-  }
-
-  section.style.display = "block";
-  thicknesses.forEach(th => {
-    const pill = document.createElement("div");
-    pill.className = "spec-pill";
-    pill.dataset.thickness = th;
-    const isStandard = th.includes("0.50");
-    const tag = currentLang === "ar"
-      ? (isStandard ? " [المعياري الأعلى حماية]" : " [خفيف الوزن للجراحة]")
-      : (isStandard ? " [Standard Max Protection]" : " [Lightweight Surgical]");
-    pill.innerHTML = `<span>${th}</span> <small style="color: var(--teal-primary); font-weight: bold;">${tag}</small>`;
-    pill.onclick = () => selectThickness(th);
-    container.appendChild(pill);
-  });
-
-  const preferred = thicknesses.find(t => t.includes("0.50")) || thicknesses[0];
-  selectThickness(preferred);
+function selectSize(s) {
+  currentConfig.size = s;
+  renderSizeOptions();
+  updateLiveSummary();
 }
 
-function selectThickness(th) {
-  currentSelection.thickness = th;
-  document.querySelectorAll("#thicknessPillsContainer .spec-pill").forEach(p => {
-    p.classList.toggle("active", p.dataset.thickness === th);
-  });
-  evaluateItemMatch();
+function adjustQty(delta) {
+  let q = currentConfig.qty + delta;
+  if (q < 1) q = 1;
+  if (q > 500) q = 500;
+  currentConfig.qty = q;
+  document.getElementById("qtyDisplay").innerText = q;
+  updateLiveSummary();
 }
 
-function renderSizePills(sizes) {
-  const container = document.getElementById("sizePillsContainer");
-  const section = document.getElementById("stepSizeSection");
-  container.innerHTML = "";
-
-  if (sizes.length === 1 && (sizes[0] === "-" || sizes[0] === "One Size")) {
-    currentSelection.size = sizes[0];
-    section.style.display = "none";
-    return;
-  }
-
-  section.style.display = "block";
-  sizes.forEach(sz => {
-    const pill = document.createElement("div");
-    pill.className = "spec-pill size-pill";
-    pill.dataset.size = sz;
-    pill.textContent = sz;
-    pill.onclick = () => selectSize(sz);
-    container.appendChild(pill);
-  });
-
-  const preferred = sizes.includes("L") ? "L" : (sizes.includes("M") ? "M" : sizes[0]);
-  selectSize(preferred);
-}
-
-function selectSize(sz) {
-  currentSelection.size = sz;
-  document.querySelectorAll("#sizePillsContainer .spec-pill").forEach(p => {
-    p.classList.toggle("active", p.dataset.size === sz);
-  });
-  evaluateItemMatch();
-}
-
-// -------------------------------------------------------------
-// Matching & Live Price Evaluation
-// -------------------------------------------------------------
-
-function evaluateItemMatch() {
-  if (!catalogData) return;
-
-  const cat = currentSelection.category;
-  const g = currentSelection.gender;
-  const th = currentSelection.thickness;
-  const sz = currentSelection.size;
-
-  let candidates = catalogData.items.filter(it => it.category === cat);
-
-  if (g) {
-    candidates = candidates.filter(it => it.gender.toLowerCase() === g.toLowerCase() || it.gender === "Unisex");
-  }
-  if (th && th !== "-") {
-    candidates = candidates.filter(it => it.thickness === th || it.thickness === "-");
-  }
-  if (sz && sz !== "-") {
-    candidates = candidates.filter(it => it.size === sz || it.size === "One Size");
-  }
-
-  const matched = candidates.length > 0 ? candidates[0] : null;
-  currentSelection.matchedItem = matched;
-
-  const codeEl = document.getElementById("summaryItemCode");
-  const nameEl = document.getElementById("summaryItemName");
-  const specsEl = document.getElementById("summarySpecsDetails");
-  const priceEl = document.getElementById("summaryItemPrice");
-  const addBtn = document.getElementById("btnAddToCart");
-
-  const sym = I18N[currentLang].currencySymbol;
-
-  if (matched) {
-    codeEl.textContent = matched.code;
-    nameEl.textContent = currentLang === "ar" ? matched.name_ar : matched.name_en;
-    specsEl.textContent = currentLang === "ar"
-      ? `الفئة: ${matched.category_ar} | المقاس: ${matched.size} | السمك: ${matched.thickness} | الجنس: ${matched.gender_ar}`
-      : `Category: ${matched.category} | Size: ${matched.size} | Lead: ${matched.thickness} | Cut: ${matched.gender}`;
-    
-    priceEl.textContent = matched.price_sar.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    addBtn.disabled = false;
-    addBtn.style.opacity = "1";
-    
-    const totFormatted = (matched.price_sar * currentSelection.qty).toLocaleString("en-US", { minimumFractionDigits: 2 });
-    addBtn.innerHTML = `<span>${I18N[currentLang].btnAddToCartTxt} (${totFormatted} ${sym})</span>`;
-  } else {
-    codeEl.textContent = "N/A";
-    nameEl.textContent = currentLang === "ar" ? "المواصفة غير متوفرة بقائمة الأسعار." : "Specification not available in price list.";
-    specsEl.textContent = currentLang === "ar" ? "يرجى تجربة مقاس أو سمك مختلف." : "Please select an alternate size or thickness.";
-    priceEl.textContent = "0.00";
-    addBtn.disabled = true;
-    addBtn.style.opacity = "0.5";
-  }
-}
-
-function changeQty(delta) {
-  const input = document.getElementById("itemQtyInput");
-  let val = parseInt(input.value) || 1;
-  val = Math.max(1, Math.min(500, val + delta));
-  input.value = val;
-  currentSelection.qty = val;
-  evaluateItemMatch();
-}
-
-function validateQty(input) {
-  let val = parseInt(input.value) || 1;
-  val = Math.max(1, Math.min(500, val));
-  input.value = val;
-  currentSelection.qty = val;
-  evaluateItemMatch();
-}
-
+// ==========================================================================
+// Logo Upload Handling
+// ==========================================================================
 async function handleLogoUpload(input) {
-  if (!input.files || input.files.length === 0) return;
+  if (!input.files || !input.files[0]) return;
   const file = input.files[0];
-  const statusEl = document.getElementById("logoUploadStatus");
-  const previewContainer = document.getElementById("logoPreviewContainer");
-  const previewImg = document.getElementById("logoPreviewImg");
-
-  statusEl.textContent = currentLang === "ar" ? "⏳ جارٍ رفع الشعار..." : "⏳ Uploading logo...";
-  statusEl.style.color = "var(--teal-primary)";
+  const indicator = document.getElementById("logoUploadIndicator");
+  indicator.innerText = currentLang === "ar" ? "جاري الرفع..." : "Uploading...";
 
   const formData = new FormData();
   formData.append("file", file);
@@ -474,739 +484,369 @@ async function handleLogoUpload(input) {
       method: "POST",
       body: formData
     });
-
-    if (!res.ok) throw new Error("Upload failed");
     const data = await res.json();
-
-    currentSelection.logoFilename = data.filename;
-    currentSelection.logoUrl = data.url;
-
-    statusEl.textContent = `✓ ${file.name}`;
-    statusEl.style.color = "#10b981";
-
-    if (file.type.startsWith("image/")) {
-      previewImg.src = data.url;
-      previewContainer.style.display = "block";
+    if (data.success) {
+      uploadedLogoFilename = data.filename;
+      currentConfig.logo_filename = data.filename;
+      indicator.innerText = `✓ ${file.name} (${currentLang === 'ar' ? 'تم الإرفاق بنجاح' : 'Attached'})`;
+      indicator.style.color = "var(--saudi-green)";
+    } else {
+      indicator.innerText = data.detail || (currentLang === 'ar' ? "فشل الرفع" : "Upload failed");
+      indicator.style.color = "#EF4444";
     }
   } catch (err) {
-    statusEl.textContent = currentLang === "ar" ? "❌ خطأ أثناء الرفع" : "❌ Upload error";
-    statusEl.style.color = "#ef4444";
+    indicator.innerText = currentLang === "ar" ? "تعذر رفع الشعار" : "Upload error";
+    indicator.style.color = "#EF4444";
   }
 }
 
-// -------------------------------------------------------------
-// Cart Management
-// -------------------------------------------------------------
+// ==========================================================================
+// Live Summary Update (Zero Prices)
+// ==========================================================================
+function updateLiveSummary() {
+  const catObj = CATALOG_DATA.categories.find(c => c.id === currentConfig.category) || CATALOG_DATA.categories[0];
+  
+  const title = currentLang === "ar" ? catObj.name_ar : catObj.name_en;
+  const format = currentLang === "ar" ? catObj.format_ar : catObj.format_en;
+  
+  document.getElementById("summaryTitle").innerText = title;
+  document.getElementById("summaryCategoryBadge").innerText = format;
+  
+  document.getElementById("sumValCore").innerText = `${currentConfig.core_material} Core`;
+  document.getElementById("sumValThick").innerText = currentConfig.thickness;
+  document.getElementById("sumValColor").innerText = currentConfig.color.split('(')[0];
+  document.getElementById("sumValFit").innerText = `${currentConfig.gender} · ${currentConfig.size}`;
+  document.getElementById("sumValQty").innerText = `${currentConfig.qty} ${currentLang === 'ar' ? 'قطعة' : 'Unit(s)'}`;
+}
 
-function addItemToCart() {
-  const matched = currentSelection.matchedItem;
-  if (!matched) return;
+// ==========================================================================
+// Collections Grid Filter
+// ==========================================================================
+function renderCollectionsGrid(categoryFilter) {
+  const container = document.getElementById("collectionsGrid");
+  if (!container) return;
 
-  const embroidery = document.getElementById("customEmbroideryInput").value.trim();
+  const items = categoryFilter === "all" ? 
+    CATALOG_DATA.collections : 
+    CATALOG_DATA.collections.filter(c => c.category === categoryFilter);
 
-  const cartItem = {
-    code: matched.code,
-    name_ar: matched.name_ar,
-    name_en: matched.name_en,
-    category: matched.category,
-    gender: matched.gender,
-    gender_ar: matched.gender_ar,
-    thickness: matched.thickness,
-    size: matched.size,
-    price_sar: matched.price_sar,
-    qty: currentSelection.qty,
-    embroidery: embroidery,
-    custom_logo: currentSelection.logoFilename || ""
+  container.innerHTML = items.map(col => {
+    const name = currentLang === "ar" ? col.name_ar : col.name_en;
+    const tag = currentLang === "ar" ? col.tag_ar : col.tag_en;
+    const desc = currentLang === "ar" ? col.desc_ar : col.desc_en;
+    return `
+      <div class="collection-card">
+        <div class="collection-card-img-wrap">
+          <img src="${col.image}" alt="${name}" class="collection-card-img">
+          <span class="color-swatch-badge" style="background-color: ${col.hex};"></span>
+        </div>
+        <div class="collection-card-body">
+          <span class="collection-card-tag">${tag}</span>
+          <h4 class="collection-card-title">${name}</h4>
+          <p class="collection-card-desc">${desc}</p>
+          <button type="button" class="btn-select-fabric" onclick="selectColorAndConfigure('${col.id}', '${col.name_en}', '${col.hex}', '${col.tag_en}')">
+            ${currentLang === 'ar' ? 'اختيار هذه الخامة للـ RFQ →' : 'Select for RFQ Configurator →'}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function filterCollections(cat) {
+  document.querySelectorAll(".collection-tab-btn").forEach(btn => btn.classList.remove("active"));
+  if (cat === "all") document.getElementById("tabAll").classList.add("active");
+  if (cat === "saudi") document.getElementById("tabSaudi").classList.add("active");
+  if (cat === "sadu") document.getElementById("tabSadu").classList.add("active");
+  if (cat === "classics") document.getElementById("tabClassics").classList.add("active");
+  renderCollectionsGrid(cat);
+}
+
+function selectColorAndConfigure(colId, nameEn, hex, tagEn) {
+  selectColor(colId, nameEn, hex, tagEn);
+  const el = document.getElementById("rfq-builder");
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+}
+
+// ==========================================================================
+// RFQ Basket Management
+// ==========================================================================
+function loadSavedBasket() {
+  try {
+    const saved = localStorage.getItem("gulfray_rfq_basket");
+    if (saved) {
+      rfqBasket = JSON.parse(saved);
+      updateBasketCount();
+    }
+  } catch (e) {
+    rfqBasket = [];
+  }
+}
+
+function saveBasket() {
+  try {
+    localStorage.setItem("gulfray_rfq_basket", JSON.stringify(rfqBasket));
+  } catch (e) {}
+  updateBasketCount();
+}
+
+function updateBasketCount() {
+  const total = rfqBasket.reduce((sum, it) => sum + (it.qty || 1), 0);
+  document.getElementById("headerCartCount").innerText = total;
+}
+
+function addItemToRfq() {
+  const catObj = CATALOG_DATA.categories.find(c => c.id === currentConfig.category) || CATALOG_DATA.categories[0];
+  const embroideryVal = document.getElementById("inputEmbroidery").value.trim();
+
+  const item = {
+    category: currentConfig.category,
+    name_en: catObj.name_en,
+    name_ar: catObj.name_ar,
+    code: catObj.code,
+    core_material: `${currentConfig.core_material} Core`,
+    collection: currentConfig.collection,
+    color: currentConfig.color,
+    thickness: currentConfig.thickness,
+    size: currentConfig.size,
+    gender: currentConfig.gender,
+    qty: currentConfig.qty,
+    embroidery: embroideryVal,
+    custom_logo: uploadedLogoFilename ? "Attached" : ""
   };
 
-  const existingIdx = cart.findIndex(it => 
-    it.code === cartItem.code && it.embroidery === cartItem.embroidery
-  );
+  rfqBasket.push(item);
+  saveBasket();
 
-  if (existingIdx >= 0) {
-    cart[existingIdx].qty += cartItem.qty;
-  } else {
-    cart.push(cartItem);
-  }
-
-  saveCartToStorage();
-  updateCartBadge();
-
-  const btn = document.getElementById("btnAddToCart");
-  const originalHtml = btn.innerHTML;
-  btn.innerHTML = `<span>${I18N[currentLang].addedSuccess}</span>`;
-  btn.style.background = "#10b981";
+  // Visual Feedback animation
+  const btn = document.querySelector(".btn-add-rfq");
+  btn.style.background = "linear-gradient(135deg, #10B981 0%, #059669 100%)";
+  const origText = document.getElementById("btnAddRfqText").innerText;
+  document.getElementById("btnAddRfqText").innerText = currentLang === "ar" ? "✓ تم الإضافة إلى سلة الاستفسار!" : "✓ Added to RFQ Basket!";
 
   setTimeout(() => {
-    btn.innerHTML = originalHtml;
     btn.style.background = "";
-  }, 1200);
+    document.getElementById("btnAddRfqText").innerText = origText;
+  }, 1800);
 }
 
-function updateCartBadge() {
-  const totalCount = cart.reduce((sum, it) => sum + it.qty, 0);
-  const subtotal = cart.reduce((sum, it) => sum + (it.price_sar * it.qty), 0);
-  const sym = I18N[currentLang].currencySymbol;
-
-  document.getElementById("cartBadge").textContent = totalCount;
-  document.getElementById("cartHeaderTotal").textContent = `${subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${sym}`;
+function openRfqModal() {
+  renderBasketTable();
+  document.getElementById("rfqSuccessBox").style.display = "none";
+  document.getElementById("rfqCustomerForm").style.display = "grid";
+  document.getElementById("rfqModalOverlay").classList.add("open");
 }
 
-function saveCartToStorage() {
-  localStorage.setItem("gulfray_cart", JSON.stringify(cart));
+function closeRfqModal() {
+  document.getElementById("rfqModalOverlay").classList.remove("open");
 }
 
-function loadCartFromStorage() {
-  try {
-    const saved = localStorage.getItem("gulfray_cart");
-    if (saved) cart = JSON.parse(saved);
-  } catch (e) {
-    cart = [];
-  }
-  updateCartBadge();
-}
+function renderBasketTable() {
+  const tbody = document.getElementById("basketTableBody");
+  if (!tbody) return;
 
-function openCartModal() {
-  renderCartModal();
-  document.getElementById("cartModal").classList.add("active");
-}
-
-function closeCartModal() {
-  document.getElementById("cartModal").classList.remove("active");
-}
-
-function renderCartModal() {
-  const container = document.getElementById("cartItemsContainer");
-  container.innerHTML = "";
-  const sym = I18N[currentLang].currencySymbol;
-
-  if (cart.length === 0) {
-    container.innerHTML = `
-      <div style="text-align: center; padding: 40px 10px; color: var(--silver-text);">
-        <div style="font-size: 40px; margin-bottom: 10px;">🛒</div>
-        <b>${I18N[currentLang].cartEmptyMsg}</b>
-      </div>
+  if (rfqBasket.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align: center; padding: 30px; color: var(--slate-400);">
+          ${currentLang === 'ar' ? 'سلة الاستفسار فارغة حالياً. أضف مواصفات من أداة التخصيص بالأسفل.' : 'Your RFQ basket is currently empty. Configure garments below.'}
+        </td>
+      </tr>
     `;
-    document.getElementById("cartSubtotal").textContent = `0.00 ${sym}`;
-    document.getElementById("cartVat").textContent = `0.00 ${sym}`;
-    document.getElementById("cartGrandTotal").textContent = `0.00 ${sym}`;
-    document.getElementById("btnSubmitOrder").disabled = true;
     return;
   }
 
-  document.getElementById("btnSubmitOrder").disabled = false;
-
-  let subtotal = 0;
-  cart.forEach((it, idx) => {
-    const itemTotal = it.price_sar * it.qty;
-    subtotal += itemTotal;
-    const title = currentLang === "ar" ? it.name_ar : (it.name_en || it.name_ar);
-
-    const row = document.createElement("div");
-    row.className = "cart-item-row";
-    row.innerHTML = `
-      <div class="cart-item-info">
-        <b>${title}</b>
-        <div class="cart-item-meta">
-          ${currentLang === "ar" ? "الكود:" : "Code:"} <span style="font-family: monospace; font-weight: bold; color: var(--teal-primary);">${it.code}</span> | 
-          ${currentLang === "ar" ? "الكمية:" : "Qty:"} <b>${it.qty}</b> | 
-          ${it.price_sar.toLocaleString("en-US", { minimumFractionDigits: 2 })} ${sym}
-        </div>
-        ${it.embroidery ? `<div style="font-size: 12px; color: var(--teal-dark); margin-top: 3px;">🧵 ${it.embroidery}</div>` : ""}
-      </div>
-      <div style="display: flex; align-items: center; gap: 14px;">
-        <span class="cart-item-price">${itemTotal.toLocaleString("en-US", { minimumFractionDigits: 2 })} ${sym}</span>
-        <button class="btn-remove-item" onclick="removeCartItem(${idx})" title="Remove">🗑️</button>
-      </div>
+  tbody.innerHTML = rfqBasket.map((it, idx) => {
+    const name = currentLang === "ar" ? it.name_ar : it.name_en;
+    const customTxt = it.embroidery ? `🧵 ${it.embroidery}` : (currentLang === 'ar' ? 'قياسي' : 'Standard');
+    return `
+      <tr>
+        <td style="text-align: center; color: var(--slate-500); font-weight: bold;">${idx + 1}</td>
+        <td>
+          <b style="color: var(--slate-900); font-size: 0.95rem;">${name}</b>
+          <div style="font-size: 0.78rem; color: var(--slate-600); margin-top: 3px;">
+            <b>${it.core_material}</b> · ${it.thickness} · ${it.color.split('(')[0]} · Size: ${it.size} (${it.gender})
+          </div>
+        </td>
+        <td style="font-size: 0.8rem; color: var(--saudi-green); font-weight: 600;">${customTxt}</td>
+        <td style="text-align: center; font-weight: 800; font-size: 1rem; color: var(--slate-900);">${it.qty}</td>
+        <td style="text-align: center;">
+          <button type="button" class="basket-item-del-btn" onclick="removeBasketItem(${idx})">
+            ${currentLang === 'ar' ? 'حذف' : 'Remove'}
+          </button>
+        </td>
+      </tr>
     `;
-    container.appendChild(row);
-  });
-
-  const vat = subtotal * VAT_RATE;
-  const grandTotal = subtotal + vat;
-
-  document.getElementById("cartSubtotal").textContent = `${subtotal.toLocaleString("en-US", { minimumFractionDigits: 2 })} ${sym}`;
-  document.getElementById("cartVat").textContent = `${vat.toLocaleString("en-US", { minimumFractionDigits: 2 })} ${sym}`;
-  document.getElementById("cartGrandTotal").textContent = `${grandTotal.toLocaleString("en-US", { minimumFractionDigits: 2 })} ${sym}`;
+  }).join("");
 }
 
-function removeCartItem(idx) {
-  cart.splice(idx, 1);
-  saveCartToStorage();
-  updateCartBadge();
-  renderCartModal();
+function removeBasketItem(idx) {
+  rfqBasket.splice(idx, 1);
+  saveBasket();
+  renderBasketTable();
 }
 
-// -------------------------------------------------------------
-// Final Order Submission
-// -------------------------------------------------------------
-
-async function submitFinalOrder(e) {
+// ==========================================================================
+// Handle RFQ Form Submission
+// ==========================================================================
+async function handleRfqSubmit(e) {
   e.preventDefault();
 
-  if (cart.length === 0) {
-    alert(I18N[currentLang].cartEmptyMsg);
+  if (rfqBasket.length === 0) {
+    alert(currentLang === "ar" ? "يرجى إضافة صنف واحد على الأقل إلى السلة." : "Please add at least one garment specification to the RFQ basket.");
     return;
   }
 
-  const submitBtn = document.getElementById("btnSubmitOrder");
-  const originalHtml = submitBtn.innerHTML;
+  const submitBtn = document.getElementById("btnSubmitRfq");
   submitBtn.disabled = true;
-  submitBtn.innerHTML = currentLang === "ar" ? "⏳ جارٍ إرسال وتوثيق الطلب..." : "⏳ Submitting official order...";
+  submitBtn.innerText = currentLang === "ar" ? "جاري إرسال الطلب..." : "Submitting RFQ...";
 
   const customerData = {
-    name: document.getElementById("custName").value.trim(),
     organization: document.getElementById("custOrg").value.trim(),
+    name: document.getElementById("custName").value.trim(),
     city: document.getElementById("custCity").value.trim(),
     phone: document.getElementById("custPhone").value.trim(),
     email: document.getElementById("custEmail").value.trim(),
-    payment_method: document.getElementById("custPaymentMethod").value,
     notes: document.getElementById("custNotes").value.trim()
   };
 
   const payload = {
     customer: customerData,
-    items: cart,
-    logo_filename: currentSelection.logoFilename,
-    honeypot: document.getElementById("custHoneypot") ? document.getElementById("custHoneypot").value : ""
+    items: rfqBasket,
+    logo_filename: uploadedLogoFilename,
+    honeypot: document.getElementById("rfqHoneypot").value
   };
 
   try {
-    const res = await fetch("/api/order", {
+    const res = await fetch("/api/rfq", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
 
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.detail || "Order submission failed");
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById("succRefNo").innerText = data.rfq_id;
+      document.getElementById("rfqCustomerForm").style.display = "none";
+      document.getElementById("rfqSuccessBox").style.display = "block";
+
+      // Clear basket after successful dispatch
+      rfqBasket = [];
+      saveBasket();
+      renderBasketTable();
+    } else {
+      alert(data.detail || (currentLang === 'ar' ? "فشل إرسال الطلب" : "Submission failed"));
     }
-    const result = await res.json();
-
-    const successMsg = currentLang === "ar"
-      ? `✓ تم اعتماد وتوثيق طلب الشراء بنجاح!\n\nرقم المرجع: ${result.order_id}\n${result.message}`
-      : `✓ Purchase order successfully registered!\n\nReference Ref: ${result.order_id}\n${result.message}`;
-    alert(successMsg);
-
-    buildPrintableQuotation(result.order_id, customerData, cart, result.financials);
-
-    cart = [];
-    saveCartToStorage();
-    updateCartBadge();
-    closeCartModal();
   } catch (err) {
-    alert((currentLang === "ar" ? "حدث خطأ: " : "Error: ") + err.message);
+    alert(currentLang === "ar" ? "حدث خطأ أثناء الاتصال بالسيرفر. يرجى المحاولة مرة أخرى." : "Error communicating with server. Please try again.");
   } finally {
     submitBtn.disabled = false;
-    submitBtn.innerHTML = originalHtml;
+    submitBtn.innerText = currentLang === "ar" ? "🚀 إرسال طلب عرض السعر الرسمي" : "🚀 Submit Request for Quotation (RFQ)";
   }
 }
 
-// -------------------------------------------------------------
-// Printable Official Quotation Generator
-// -------------------------------------------------------------
-
-function triggerQuotationPrint() {
-  if (cart.length === 0) {
-    alert(I18N[currentLang].cartEmptyMsg);
-    return;
-  }
-
-  const customerData = {
-    name: document.getElementById("custName").value.trim() || (currentLang === "ar" ? "العميل المحترم" : "Valued Client"),
-    organization: document.getElementById("custOrg").value.trim() || (currentLang === "ar" ? "المستشفى / الجهة الطالبة" : "Hospital / Healthcare Center"),
-    city: document.getElementById("custCity").value.trim() || "-",
-    phone: document.getElementById("custPhone").value.trim() || "-",
-    email: document.getElementById("custEmail").value.trim() || "-",
-    payment_method: document.getElementById("custPaymentMethod").value,
-    notes: document.getElementById("custNotes").value.trim()
-  };
-
-  const subtotal = cart.reduce((sum, it) => sum + (it.price_sar * it.qty), 0);
-  const vat = subtotal * VAT_RATE;
-  const grandTotal = subtotal + vat;
-
-  const quoteId = `GR-RFQ-${new Date().toISOString().slice(0,10).replace(/-/g,'')}-${Math.floor(1000 + Math.random() * 9000)}`;
-
-  buildPrintableQuotation(quoteId, customerData, cart, {
-    subtotal: subtotal,
-    vat: vat,
-    grand_total: grandTotal
-  });
-
-  window.print();
+function resetConfigurator() {
+  document.getElementById("inputEmbroidery").value = "";
+  document.getElementById("fileLogoUpload").value = "";
+  document.getElementById("logoUploadIndicator").innerText = currentLang === "ar" ? "لم يتم إرفاق ملف" : "No file chosen";
+  uploadedLogoFilename = null;
+  currentConfig.qty = 1;
+  document.getElementById("qtyDisplay").innerText = 1;
+  updateLiveSummary();
 }
 
-function buildPrintableQuotation(quoteId, customer, items, fin) {
-  const printArea = document.getElementById("printArea");
-  const today = new Date().toLocaleDateString(currentLang === "ar" ? "ar-SA" : "en-US", { year: "numeric", month: "long", day: "numeric" });
+// ==========================================================================
+// Full Bilingual Toggle System
+// ==========================================================================
+function toggleLanguage() {
+  currentLang = currentLang === "en" ? "ar" : "en";
+  document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
+  document.documentElement.setAttribute("lang", currentLang);
+
+  const langBtn = document.getElementById("btnLangToggle");
+  langBtn.innerHTML = currentLang === "ar" ? "<span>🌐 English</span>" : "<span>🌐 العربية</span>";
+
+  // Translate all text nodes
+  applyTranslations();
+
+  // Re-render components with translated names
+  renderStyleOptions();
+  renderCoreOptions();
+  renderLeadOptions();
+  renderColorSwatches();
+  renderGenderOptions();
+  renderSizeOptions();
+  renderCollectionsGrid("all");
+  updateLiveSummary();
+  renderBasketTable();
+}
+
+function applyTranslations() {
   const isAr = currentLang === "ar";
-  const sym = isAr ? "ر.س" : "SAR";
 
-  let itemsHtml = "";
-  items.forEach((it, idx) => {
-    const total = it.price_sar * it.qty;
-    const title = isAr ? it.name_ar : (it.name_en || it.name_ar);
-    itemsHtml += `
-      <tr style="border-bottom: 1px solid #cbd5e1; font-size: 13px;">
-        <td style="padding: 10px; text-align: center;">${idx + 1}</td>
-        <td style="padding: 10px;">
-          <b>${title}</b>
-          <div style="font-size: 11px; color: #475569;">${isAr ? 'كود الصنف:' : 'Code:'} <span style="font-family: monospace; font-weight: bold;">${it.code}</span> | ${it.gender_ar} - ${it.size} - ${it.thickness}</div>
-          ${it.embroidery ? `<div style="font-size: 11px; color: #0d9488;">${isAr ? 'التطريز:' : 'Embroidery:'} ${it.embroidery}</div>` : ""}
-        </td>
-        <td style="padding: 10px; text-align: center; font-weight: bold;">${it.qty}</td>
-        <td style="padding: 10px; text-align: ${isAr ? 'right' : 'left'};">${it.price_sar.toLocaleString("en-US", { minimumFractionDigits: 2 })}</td>
-        <td style="padding: 10px; text-align: ${isAr ? 'right' : 'left'}; font-weight: bold;">${total.toLocaleString("en-US", { minimumFractionDigits: 2 })}</td>
-      </tr>
-    `;
-  });
+  // Nav
+  document.getElementById("navLinkMaterials").innerText = isAr ? "دليل المواد الواقية" : "Core Materials";
+  document.getElementById("navLinkCollections").innerText = isAr ? "المجموعات والسدو" : "Saudi Collections";
+  document.getElementById("navLinkBuilder").innerText = isAr ? "مُنشئ عرض السعر" : "RFQ Configurator";
+  document.getElementById("navLinkCompliance").innerText = isAr ? "الاعتمادات والجودة" : "Certifications";
+  document.getElementById("navLinkWorkflow").innerText = isAr ? "آلية العمل" : "Working with Us";
 
-  printArea.innerHTML = `
-    <div style="max-width: 800px; margin: 0 auto; background: #fff; padding: 25px; border: 1.5px solid #0d9488; font-family: ${isAr ? "'Cairo', sans-serif" : "'Inter', sans-serif"}; direction: ${isAr ? 'rtl' : 'ltr'}; text-align: ${isAr ? 'right' : 'left'};">
-      
-      <!-- Quotation Header with Official Logo -->
-      <table style="width: 100%; border-bottom: 3px solid #0f766e; padding-bottom: 15px; margin-bottom: 20px;">
-        <tr>
-          <td style="vertical-align: middle; width: 85px;">
-            <img src="/images/gulfray_logo_transparent.png" alt="GulfRay Logo" style="height: 75px; width: auto;">
-          </td>
-          <td style="vertical-align: middle; padding-${isAr ? 'right' : 'left'}: 15px;">
-            <div style="font-size: 22px; font-weight: 900; color: #042f2e;">${isAr ? 'GulfRay® | شركة سقالة حلول الوقاية' : 'GulfRay® | Siqalah Shielding Solutions'}</div>
-            <div style="font-size: 12px; color: #0d9488; font-weight: 700;">${isAr ? 'مصنع لإنتاج Radiation Protection Aprons وحلول الوقاية من الأشعة' : 'Manufacturer of Radiation Protection Aprons & Radiation Shielding Solutions'}</div>
-            <div style="font-size: 11px; color: #64748b; margin-top: 3px;">${isAr ? 'المملكة العربية السعودية • سجل تجاري معتمد • ترخيص هيئة الغذاء والدواء' : 'Kingdom of Saudi Arabia • SFDA Licensed • CE & ISO 13485 Certified'}</div>
-          </td>
-          <td style="text-align: ${isAr ? 'left' : 'right'}; vertical-align: middle;">
-            <div style="border: 2px solid #0d9488; background: #f0fdfa; padding: 8px 16px; border-radius: 8px; display: inline-block; text-align: center;">
-              <div style="font-size: 13px; font-weight: 800; color: #0f766e;">${isAr ? 'عرض سعر رسمي / RFQ' : 'Official RFQ Quotation'}</div>
-              <div style="font-size: 12px; font-family: monospace; font-weight: bold; color: #042f2e; margin-top: 3px;">${quoteId}</div>
-            </div>
-          </td>
-        </tr>
-      </table>
+  // Hero
+  document.getElementById("heroBadge").innerHTML = isAr ? 
+    "<span>🛡️ حماية بمعايير عالمية وصناعة سعودية · Protection with Identity</span>" : 
+    "<span>🛡️ Protection with Identity · حماية بمعايير عالمية وصناعة سعودية</span>";
+  
+  document.getElementById("heroTitle").innerHTML = isAr ?
+    "حماية أخف وزناً وخالية من الرصاص <span class='highlight-green'>صُنعت بفخر</span> في <span class='highlight-lavender'>المملكة</span>." :
+    "Lighter, Lead-Free <span class='highlight-green'>Radiation Protection</span> Tailored in the <span class='highlight-lavender'>Kingdom</span>.";
 
-      <!-- Meta info -->
-      <table style="width: 100%; margin-bottom: 20px; font-size: 13px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px;">
-        <tr>
-          <td style="padding: 6px;"><b>${isAr ? 'تاريخ العرض:' : 'Date:'}</b> ${today}</td>
-          <td style="padding: 6px;"><b>${isAr ? 'المستشفى / الجهة:' : 'Entity / Hospital:'}</b> <span style="font-weight: bold; color: #042f2e;">${customer.organization}</span></td>
-        </tr>
-        <tr>
-          <td style="padding: 6px;"><b>${isAr ? 'اسم المسؤول:' : 'Contact Person:'}</b> ${customer.name}</td>
-          <td style="padding: 6px;"><b>${isAr ? 'المدينة:' : 'City:'}</b> ${customer.city}</td>
-        </tr>
-        <tr>
-          <td style="padding: 6px;"><b>${isAr ? 'رقم الجوال:' : 'Mobile:'}</b> <span dir="ltr">${customer.phone}</span></td>
-          <td style="padding: 6px;"><b>${isAr ? 'طريقة السداد:' : 'Payment Method:'}</b> ${customer.payment_method}</td>
-        </tr>
-      </table>
+  document.getElementById("heroSubtitle").innerText = isAr ?
+    "أول مصنع سعودي متخصص في إنتاج ملابس وإكسسوارات الوقاية من الإشعاع الطبي. مصمم بمواد واقية خالية من الرصاص ومختبرة بالحزمة العريضة، مع لمسات تطريز السدو التراثي وخيارات المقاسات الخاصة للمستشفيات." :
+    "Saudi Arabia's premier medical manufacturer of lightweight, certified radiation protection aprons. Engineered with broad-beam verified lead-free cores, bespoke Saudi Sadu heritage embroidery, and custom hospital sizing.";
 
-      <!-- Line Items -->
-      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid #cbd5e1;">
-        <thead>
-          <tr style="background-color: #042f2e; color: #fff; font-size: 13px;">
-            <th style="padding: 8px; width: 30px; text-align: center;">#</th>
-            <th style="padding: 8px; text-align: ${isAr ? 'right' : 'left'};">${isAr ? 'الصنف والمواصفات' : 'Product & Specs'}</th>
-            <th style="padding: 8px; width: 60px; text-align: center;">${isAr ? 'الكمية' : 'Qty'}</th>
-            <th style="padding: 8px; width: 110px; text-align: ${isAr ? 'right' : 'left'};">${isAr ? 'سعر الوحدة' : 'Unit Price'} (${sym})</th>
-            <th style="padding: 8px; width: 120px; text-align: ${isAr ? 'right' : 'left'};">${isAr ? 'الإجمالي' : 'Total'} (${sym})</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${itemsHtml}
-        </tbody>
-      </table>
+  document.getElementById("btnHeroRfq").innerHTML = isAr ? "<span>✨ تخصيص وطلب عرض السعر (RFQ)</span>" : "<span>✨ Configure & Request Quotation (RFQ)</span>";
+  document.getElementById("btnHeroMaterials").innerHTML = isAr ? "<span>🔬 استعراض دليل المواد الواقية</span>" : "<span>🔬 Explore Core Materials Guide</span>";
 
-      <!-- Totals -->
-      <table style="width: 50%; margin-${isAr ? 'right' : 'left'}: auto; margin-bottom: 25px; font-size: 13px; border-collapse: collapse;">
-        <tr>
-          <td style="padding: 6px 0; color: #475569;">${isAr ? 'المجموع الفرعي:' : 'Subtotal:'}</td>
-          <td style="padding: 6px 0; text-align: ${isAr ? 'left' : 'right'}; font-weight: bold;">${fin.subtotal.toLocaleString("en-US", { minimumFractionDigits: 2 })} ${sym}</td>
-        </tr>
-        <tr>
-          <td style="padding: 6px 0; color: #475569;">${isAr ? 'ضريبة القيمة المضافة 15% (VAT):' : 'VAT (15%):'}</td>
-          <td style="padding: 6px 0; text-align: ${isAr ? 'left' : 'right'}; font-weight: bold;">${fin.vat.toLocaleString("en-US", { minimumFractionDigits: 2 })} ${sym}</td>
-        </tr>
-        <tr style="border-top: 2px solid #0f766e;">
-          <td style="padding: 8px 0; font-size: 15px; font-weight: 900; color: #042f2e;">${isAr ? 'الإجمالي النهائي شامل الضريبة:' : 'Grand Total (Incl. VAT):'}</td>
-          <td style="padding: 8px 0; text-align: ${isAr ? 'left' : 'right'}; font-size: 17px; font-weight: 900; color: #0d9488;">${fin.grand_total.toLocaleString("en-US", { minimumFractionDigits: 2 })} ${sym}</td>
-        </tr>
-      </table>
+  // Materials Guide
+  document.getElementById("materialsTag").innerText = isAr ? "03 · دليل المواد الواقية المتقدمة" : "03 · PROTECTIVE CORE MATERIALS";
+  document.getElementById("materialsTitle").innerText = isAr ? "ثلاث مواد خالية من الرصاص. معيار أمان واحد." : "Three Lead-Free Cores. One Standard of Safety.";
+  document.getElementById("materialsDesc").innerText = isAr ?
+    "مستوحى من أعلى المعايير الطبية العالمية، يوفر GulfRay ثلاث مواد واقية خالية تماماً من الرصاص السام ومطابقة للمواصفات الدولية، ومحددة بالسمك المكافئ الصريح (mm Pb-eq)." :
+    "Inspired by leading global shielding science, GulfRay offers three verified lead-free attenuation cores. All three are 100% toxic-lead-free, compliant with international standards, and specified in true mm lead equivalence (Pb-eq).";
 
-      <!-- Official Terms & Stamps -->
-      <div style="font-size: 11px; color: #64748b; line-height: 1.6; border-top: 1px solid #cbd5e1; padding-top: 12px; margin-bottom: 30px;">
-        • ${isAr ? 'الأسعار سارية المفعول لمدة 30 يوماً من تاريخ إصدار هذا العرض.' : 'Quotation valid for 30 days from date of issue.'}<br>
-        • ${isAr ? 'مآزر GulfRay مطابقة للمواصفات العالمية للحماية الإشعاعية (CE & ISO 13485 Compliant).' : 'GulfRay aprons comply with global radiation safety standards (CE & ISO 13485).'}<br>
-        • ${isAr ? 'الضمان: ضمان تصنيعي شامل لمدة سنتين من تاريخ التوريد.' : 'Warranty: 2 years comprehensive manufacturer warranty.'}
-      </div>
+  document.getElementById("umBadge").innerText = isAr ? "UM · الأخف وزناً على الإطلاق" : "UM · Ultra-Lightest";
+  document.getElementById("umSub").innerText = isAr ? "أخف بنسبة 28% من الرصاص التقليدي" : "About 28% lighter than traditional lead";
+  document.getElementById("nplBadge").innerText = isAr ? "NPL · معتمد بالحزمة العريضة" : "NPL · Broad-Beam UK Verified";
+  document.getElementById("nplSub").innerText = isAr ? "المعيار الذهبي بهندسة الحزمة العريضة" : "Broad-beam gold-standard geometry";
+  document.getElementById("mlBadge").innerText = isAr ? "ML · الخيار الاقتصادي الأعلى قيمة" : "ML · Most Economical";
+  document.getElementById("mlSub").innerText = isAr ? "أعلى كفاءة لميزانيات المستشفيات الكبيرة" : "Accessible price for larger departments";
 
-      <table style="width: 100%; text-align: center; font-size: 13px;">
-        <tr>
-          <td style="width: 50%;">
-            <b>${isAr ? 'شركة سقالة حلول الوقاية - GulfRay' : 'GulfRay - Siqalah Shielding Solutions'}</b><br><br>
-            <div style="border-bottom: 1px dashed #94a3b8; width: 160px; margin: 0 auto; height: 35px;"></div>
-            <small style="color: #64748b;">${isAr ? 'الختم والتوقيع المعتمد' : 'Authorized Signature & Stamp'}</small>
-          </td>
-          <td style="width: 50%;">
-            <b>${isAr ? 'اعتماد المستشفى / العميل' : 'Client / Hospital Acceptance'}</b><br><br>
-            <div style="border-bottom: 1px dashed #94a3b8; width: 160px; margin: 0 auto; height: 35px;"></div>
-            <small style="color: #64748b;">${isAr ? 'توقيع واستلام أمر الشراء' : 'Purchase Order Signature'}</small>
-          </td>
-        </tr>
-      </table>
+  // RFQ Builder Section
+  document.getElementById("rfqTag").innerText = isAr ? "نظام طلب عروض الأسعار التفاعلي" : "INTERACTIVE B2B SPECIFIER";
+  document.getElementById("rfqTitle").innerText = isAr ? "مُنشئ مواصفات عرض السعر المخصص" : "Bespoke RFQ Configurator";
+  document.getElementById("rfqDesc").innerText = isAr ?
+    "حدد موديل الرداء الطبي، نوع المادة الواقية، سمك الحماية، تطريز السدو، وشعار المستشفى. الموقع لا يحتوي على أي أسعار؛ مواصفاتك المعتمدة تُرسل فوراً إلى فريق المبيعات الهندسي." :
+    "Select your garment style, core material, lead thickness, bespoke Saudi embroidery, and hospital logo. Zero financial calculations; your custom specification is dispatched directly to our medical sales team.";
 
-    </div>
-  `;
-}
+  document.getElementById("step1Title").innerText = isAr ? "1. الموديل والشكل الطبي" : "1. Garment Style & Format";
+  document.getElementById("step2Title").innerText = isAr ? "2. نوع المادة الواقية الخالية من الرصاص" : "2. Protective Core Material";
+  document.getElementById("step3Title").innerText = isAr ? "3. سمك الرصاص المكافئ (Pb-eq)" : "3. Lead Equivalence (Pb-eq)";
+  document.getElementById("step4Title").innerText = isAr ? "4. اللون، القماش ونقشة السدو" : "4. Fabric Color & Pattern";
+  document.getElementById("step5Title").innerText = isAr ? "5. المقاس والجنس" : "5. Sizing & Cut";
+  document.getElementById("step6Title").innerText = isAr ? "6. التخصيص الفاخر (اختياري)" : "6. Bespoke Personalization (Optional)";
 
-// -------------------------------------------------------------
-// Catalog Explorer Table View
-// -------------------------------------------------------------
+  document.getElementById("lblEmbroidery").innerText = isAr ? "🧵 اسم الطبيب أو القسم للتطريز:" : "🧵 Embroidered Physician or Department Name:";
+  document.getElementById("lblLogo").innerText = isAr ? "📎 إرفاق شعار المستشفى / المركز الطبي:" : "📎 Upload Hospital / Healthcare Center Logo:";
+  document.getElementById("lblQuantity").innerText = isAr ? "الكمية المطلوبة (بالقطعة):" : "Quantity (Units):";
+  document.getElementById("btnAddRfqText").innerText = isAr ? "➕ إضافة هذه المواصفات إلى سلة الاستفسار" : "➕ Add Configuration to RFQ Basket";
+  document.getElementById("btnViewRfqNow").innerText = isAr ? "مراجعة وإرسال سلة عرض السعر (RFQ) →" : "Review & Submit RFQ Basket →";
 
-function switchView(mode) {
-  const viewConfig = document.getElementById("viewConfig");
-  const viewCatalog = document.getElementById("viewCatalog");
-  const tabConfig = document.getElementById("tabBtnConfig");
-  const tabCatalog = document.getElementById("tabBtnCatalog");
+  // Modal
+  document.getElementById("modalRfqTitle").innerText = isAr ? "طلب عرض السعر الرسمي (RFQ)" : "Official Request for Quotation (RFQ)";
+  document.getElementById("modalPolicyTitle").innerText = isAr ? "ℹ️ سياسة التوريد بدون أسعار:" : "ℹ️ Procurement Policy Note:";
+  document.getElementById("modalPolicyDesc").innerText = isAr ? 
+    " هذا النظام مخصص لإصدار وتوثيق المواصفات الفنية لطلبات عروض الأسعار. سيقوم فريق مبيعات GulfRay بإرسال عرض السعر المالي المعتمد شاملاً خصومات الكميات ومدة التوريد." :
+    " This portal generates certified technical RFQs. Official commercial quotations with institutional volume discounts and delivery timelines will be officially dispatched by GulfRay sales engineers.";
 
-  if (mode === "config") {
-    viewConfig.style.display = "grid";
-    viewCatalog.style.display = "none";
-    tabConfig.classList.add("active");
-    tabCatalog.classList.remove("active");
-  } else {
-    viewConfig.style.display = "none";
-    viewCatalog.style.display = "block";
-    tabConfig.classList.remove("active");
-    tabCatalog.classList.add("active");
-    renderCatalogTable();
-  }
-}
-
-function populateCatalogTableFilter() {
-  const select = document.getElementById("catalogCategoryFilter");
-  select.innerHTML = `<option value="">${I18N[currentLang].optAllCategories}</option>`;
-  catalogData.categories.forEach(cat => {
-    const opt = document.createElement("option");
-    opt.value = cat;
-    opt.textContent = `${currentLang === 'ar' ? (catalogData.tree[cat].category_ar || cat) : cat} (${cat})`;
-    select.appendChild(opt);
-  });
-}
-
-function filterCatalogTable() {
-  renderCatalogTable();
-}
-
-function renderCatalogTable() {
-  if (!catalogData) return;
-  const tbody = document.getElementById("catalogTableBody");
-  tbody.innerHTML = "";
-
-  const search = document.getElementById("catalogSearchInput").value.toLowerCase().trim();
-  const selectedCat = document.getElementById("catalogCategoryFilter").value;
-
-  let items = catalogData.items;
-
-  if (selectedCat) {
-    items = items.filter(it => it.category === selectedCat);
-  }
-
-  if (search) {
-    items = items.filter(it => 
-      it.code.toLowerCase().includes(search) ||
-      it.name_ar.toLowerCase().includes(search) ||
-      it.name_en.toLowerCase().includes(search) ||
-      it.category.toLowerCase().includes(search) ||
-      it.size.toLowerCase().includes(search)
-    );
-  }
-
-  if (items.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 25px; color: var(--silver-text);">${currentLang === 'ar' ? 'لا توجد أصناف مطابقة للبحث.' : 'No items match your search.'}</td></tr>`;
-    return;
-  }
-
-  items.forEach(it => {
-    const tr = document.createElement("tr");
-    tr.style.borderBottom = "1px solid var(--silver-border)";
-    const catName = currentLang === "ar" ? it.category_ar : it.category;
-    const genderName = currentLang === "ar" ? it.gender_ar : it.gender;
-    const isAr = currentLang === "ar";
-    
-    tr.innerHTML = `
-      <td style="padding: 10px; font-family: monospace; font-weight: bold; color: var(--teal-primary);">${it.code}</td>
-      <td style="padding: 10px;">${catName}</td>
-      <td style="padding: 10px;">${genderName}</td>
-      <td style="padding: 10px; font-family: monospace;">${it.size}</td>
-      <td style="padding: 10px;">${it.thickness}</td>
-      <td style="padding: 10px; text-align: ${isAr ? 'left' : 'right'}; font-weight: bold;">${it.price_sar.toLocaleString("en-US", { minimumFractionDigits: 2 })}</td>
-      <td style="padding: 10px; text-align: center;">
-        <button onclick="addCatalogItemDirectly('${it.code}')" style="background: var(--teal-deep); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer;">
-          + ${currentLang === 'ar' ? 'إضافة' : 'Add'}
-        </button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-function addCatalogItemDirectly(code) {
-  const item = catalogData.items.find(it => it.code === code);
-  if (!item) return;
-
-  const cartItem = {
-    code: item.code,
-    name_ar: item.name_ar,
-    name_en: item.name_en,
-    category: item.category,
-    gender: item.gender,
-    gender_ar: item.gender_ar,
-    thickness: item.thickness,
-    size: item.size,
-    price_sar: item.price_sar,
-    qty: 1,
-    embroidery: "",
-    custom_logo: ""
-  };
-
-  const existingIdx = cart.findIndex(it => it.code === cartItem.code && !it.embroidery);
-  if (existingIdx >= 0) {
-    cart[existingIdx].qty += 1;
-  } else {
-    cart.push(cartItem);
-  }
-
-  saveCartToStorage();
-  updateCartBadge();
-  const title = currentLang === "ar" ? item.name_ar : (item.name_en || item.name_ar);
-  alert(`${I18N[currentLang].addedSuccess}\n(${title})`);
-}
-
-// -------------------------------------------------------------
-// Admin Dashboard (Price List & Dynamic Email Management)
-// -------------------------------------------------------------
-let currentAdminPin = "";
-let adminSettingsCache = null;
-
-function openAdminModal() {
-  currentAdminPin = "";
-  document.getElementById("adminPinInput").value = "";
-  document.getElementById("adminPinError").style.display = "none";
-  document.getElementById("adminPinStage").style.display = "block";
-  document.getElementById("adminPanelStage").style.display = "none";
-  document.getElementById("adminUpdateMessage").style.display = "none";
-  document.getElementById("adminModal").classList.add("active");
-}
-
-function closeAdminModal() {
-  document.getElementById("adminModal").classList.remove("active");
-}
-
-async function verifyAdminPin() {
-  const pinInput = document.getElementById("adminPinInput");
-  const pin = pinInput.value.trim();
-  const errEl = document.getElementById("adminPinError");
-
-  if (!pin) {
-    errEl.textContent = currentLang === "ar" ? "يرجى كتابة الرمز السري." : "Please enter PIN.";
-    errEl.style.display = "block";
-    return;
-  }
-
-  try {
-    const res = await fetch("/api/admin/get-settings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pin: pin })
-    });
-
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.detail || "Invalid PIN");
-    }
-
-    currentAdminPin = pin;
-    adminSettingsCache = data;
-
-    // Populate UI
-    const emails = data.notification_emails || [];
-    document.getElementById("adminEmailsTextarea").value = emails.join("\n");
-
-    const smtp = data.smtp || {};
-    document.getElementById("smtpEnabledCheck").checked = smtp.enabled || false;
-    document.getElementById("smtpHostInput").value = smtp.host || "smtp.office365.com";
-    document.getElementById("smtpUserInput").value = smtp.user || "";
-    document.getElementById("smtpPassInput").value = "";
-
-    // Show Panel Stage
-    document.getElementById("adminPinStage").style.display = "none";
-    document.getElementById("adminPanelStage").style.display = "block";
-    switchAdminTab("emails");
-  } catch (err) {
-    errEl.textContent = err.message;
-    errEl.style.display = "block";
-  }
-}
-
-function switchAdminTab(tab) {
-  const tabs = ["emails", "price", "smtp"];
-  tabs.forEach(t => {
-    const btn = document.getElementById(`adminTabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
-    const content = document.getElementById(`adminTab${t.charAt(0).toUpperCase() + t.slice(1)}`);
-    if (btn) btn.classList.toggle("active", t === tab);
-    if (content) content.style.display = t === tab ? "block" : "none";
-  });
-  document.getElementById("adminUpdateMessage").style.display = "none";
-}
-
-async function saveAdminEmails() {
-  const text = document.getElementById("adminEmailsTextarea").value;
-  const emails = text.split("\n").map(e => e.trim()).filter(e => e && e.includes("@"));
-  const msgEl = document.getElementById("adminUpdateMessage");
-
-  if (emails.length === 0) {
-    alert(currentLang === "ar" ? "يرجى كتابة إيميل واحد صالح على الأقل." : "Please enter at least one valid email.");
-    return;
-  }
-
-  try {
-    const res = await fetch("/api/admin/save-settings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        pin: currentAdminPin,
-        notification_emails: emails,
-        smtp_enabled: document.getElementById("smtpEnabledCheck").checked,
-        smtp_host: document.getElementById("smtpHostInput").value.trim(),
-        smtp_user: document.getElementById("smtpUserInput").value.trim()
-      })
-    });
-
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || "Failed to save");
-
-    msgEl.style.background = "#dcfce7";
-    msgEl.style.color = "#15803d";
-    msgEl.innerHTML = `✓ ${data.message}`;
-    msgEl.style.display = "block";
-  } catch (err) {
-    msgEl.style.background = "#fee2e2";
-    msgEl.style.color = "#b91c1c";
-    msgEl.innerHTML = `❌ ${err.message}`;
-    msgEl.style.display = "block";
-  }
-}
-
-async function saveSmtpSettings() {
-  const text = document.getElementById("adminEmailsTextarea").value;
-  const emails = text.split("\n").map(e => e.trim()).filter(e => e && e.includes("@"));
-  const msgEl = document.getElementById("adminUpdateMessage");
-
-  const payload = {
-    pin: currentAdminPin,
-    notification_emails: emails,
-    smtp_enabled: document.getElementById("smtpEnabledCheck").checked,
-    smtp_host: document.getElementById("smtpHostInput").value.trim(),
-    smtp_user: document.getElementById("smtpUserInput").value.trim(),
-    smtp_password: document.getElementById("smtpPassInput").value
-  };
-
-  try {
-    const res = await fetch("/api/admin/save-settings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || "Failed to save");
-
-    msgEl.style.background = "#dcfce7";
-    msgEl.style.color = "#15803d";
-    msgEl.innerHTML = `✓ تم حفظ إعدادات البريد بنجاح!`;
-    msgEl.style.display = "block";
-  } catch (err) {
-    msgEl.style.background = "#fee2e2";
-    msgEl.style.color = "#b91c1c";
-    msgEl.innerHTML = `❌ ${err.message}`;
-    msgEl.style.display = "block";
-  }
-}
-
-async function testSmtpConnection() {
-  const msgEl = document.getElementById("adminUpdateMessage");
-  msgEl.style.background = "#e0f2fe";
-  msgEl.style.color = "#0369a1";
-  msgEl.innerHTML = "⏳ جارٍ إرسال رسالة اختبارية إلى كافة الإيميلات المسجلة...";
-  msgEl.style.display = "block";
-
-  try {
-    const res = await fetch("/api/admin/send-test-email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pin: currentAdminPin })
-    });
-
-    const data = await res.json();
-    if (!res.ok || !data.success) {
-      throw new Error(data.message || data.detail || "فشل الاتصال");
-    }
-
-    msgEl.style.background = "#dcfce7";
-    msgEl.style.color = "#15803d";
-    msgEl.innerHTML = `✓ ${data.message}`;
-  } catch (err) {
-    msgEl.style.background = "#fee2e2";
-    msgEl.style.color = "#b91c1c";
-    msgEl.innerHTML = `❌ ${err.message}`;
-  }
-}
-
-async function submitPriceListUpdate(e) {
-  e.preventDefault();
-  const fileInput = document.getElementById("adminExcelFileInput");
-  const msgEl = document.getElementById("adminUpdateMessage");
-  const submitBtn = document.getElementById("btnAdminUploadSubmit");
-
-  if (!fileInput.files || fileInput.files.length === 0) {
-    alert(currentLang === "ar" ? "يرجى اختيار ملف الإكسل" : "Please select an Excel file");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("pin", currentAdminPin);
-  formData.append("file", fileInput.files[0]);
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = currentLang === "ar" ? "⏳ جارٍ الفحص والتحديث محلياً..." : "⏳ Verifying and updating locally...";
-  msgEl.style.display = "none";
-
-  try {
-    const res = await fetch("/api/admin/upload-pricelist", {
-      method: "POST",
-      body: formData
-    });
-
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.detail || "Update failed");
-    }
-
-    msgEl.style.background = "#dcfce7";
-    msgEl.style.color = "#15803d";
-    msgEl.innerHTML = `✓ ${data.message}`;
-    msgEl.style.display = "block";
-
-    await loadCatalog();
-  } catch (err) {
-    msgEl.style.background = "#fee2e2";
-    msgEl.style.color = "#b91c1c";
-    msgEl.innerHTML = `❌ ${err.message}`;
-    msgEl.style.display = "block";
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = I18N[currentLang].txtAdminUploadBtn;
-  }
+  document.getElementById("btnSubmitRfq").innerText = isAr ? "🚀 إرسال طلب عرض السعر الرسمي" : "🚀 Submit Request for Quotation (RFQ)";
 }

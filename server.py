@@ -11,10 +11,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel, EmailStr
 
-from price_engine import engine, PriceEngine
-from mailer import send_order_email, load_config
+from catalog_engine import catalog_engine
+from mailer import send_rfq_emails, load_config, save_config
 
-app = FastAPI(title="GulfRay Medical Quotation System - Secure Enterprise Edition", version="2.1")
+app = FastAPI(title="GulfRay Medical - Radiation Protection RFQ Portal", version="3.0")
 
 # Ensure required directories exist
 os.makedirs("uploads", exist_ok=True)
@@ -22,29 +22,28 @@ os.makedirs("outbox", exist_ok=True)
 os.makedirs("static", exist_ok=True)
 os.makedirs("static/css", exist_ok=True)
 os.makedirs("static/js", exist_ok=True)
+os.makedirs("static/images", exist_ok=True)
 
 # -------------------------------------------------------------
 # Security & Rate Limiting Infrastructure
 # -------------------------------------------------------------
-# Track requests per IP to prevent spam and brute-force
-order_rate_limits = defaultdict(list)     # ip -> list of timestamps
-admin_pin_attempts = defaultdict(list)    # ip -> list of failed attempt timestamps
+rfq_rate_limits = defaultdict(list)        # ip -> list of timestamps
+admin_pin_attempts = defaultdict(list)     # ip -> list of failed attempt timestamps
 
-MAX_ORDERS_PER_WINDOW = 3                 # Max 3 orders every 5 minutes per IP
-ORDER_WINDOW_SECONDS = 300                # 5 minutes
-MAX_PIN_FAILURES = 5                      # Max 5 wrong PIN attempts
-LOCKOUT_SECONDS = 900                     # 15 minutes lockout
+MAX_RFQS_PER_WINDOW = 5                    # Max 5 RFQ submissions every 5 minutes per IP
+RFQ_WINDOW_SECONDS = 300                   # 5 minutes
+MAX_PIN_FAILURES = 5                       # Max 5 wrong PIN attempts
+LOCKOUT_SECONDS = 900                      # 15 minutes lockout
 
-def check_order_rate_limit(client_ip: str):
+def check_rfq_rate_limit(client_ip: str):
     now = time.time()
-    # Filter out timestamps older than the window
-    order_rate_limits[client_ip] = [t for t in order_rate_limits[client_ip] if now - t < ORDER_WINDOW_SECONDS]
-    if len(order_rate_limits[client_ip]) >= MAX_ORDERS_PER_WINDOW:
+    rfq_rate_limits[client_ip] = [t for t in rfq_rate_limits[client_ip] if now - t < RFQ_WINDOW_SECONDS]
+    if len(rfq_rate_limits[client_ip]) >= MAX_RFQS_PER_WINDOW:
         raise HTTPException(
             status_code=429,
-            detail="تم تجاوز الحد المسموح به لإرسال الطلبات مؤقتاً لحماية النظام من الإغراق. يرجى الانتظار 5 دقائق."
+            detail="تم تجاوز الحد المسموح به لإرسال طلبات عروض الأسعار مؤقتاً لحماية النظام من الإغراق. يرجى الانتظار بضع دقائق."
         )
-    order_rate_limits[client_ip].append(now)
+    rfq_rate_limits[client_ip].append(now)
 
 def check_admin_lockout(client_ip: str):
     now = time.time()
@@ -59,33 +58,33 @@ def record_pin_failure(client_ip: str):
     admin_pin_attempts[client_ip].append(time.time())
 
 # -------------------------------------------------------------
-# Request Models
+# Request Models (ZERO PRICES)
 # -------------------------------------------------------------
-class MatchRequest(BaseModel):
-    category: str
-    gender: Optional[str] = None
-    thickness: Optional[str] = None
-    size: Optional[str] = None
-    code: Optional[str] = None
-
 class CustomerModel(BaseModel):
     name: str
     organization: str
     city: str
     phone: str
     email: str
-    payment_method: str
     notes: Optional[str] = ""
 
-class CartItemModel(BaseModel):
-    code: str
-    qty: int
+class RFQItemModel(BaseModel):
+    category: str
+    name_en: Optional[str] = ""
+    name_ar: Optional[str] = ""
+    code: Optional[str] = ""
+    core_material: Optional[str] = "UM (Ultra-Lightest)"
+    collection: Optional[str] = "Saudi Editions (Saudi Green)"
+    thickness: Optional[str] = "0.50 mm Pb"
+    size: Optional[str] = "L"
+    gender: Optional[str] = "Unisex"
+    qty: int = 1
     embroidery: Optional[str] = ""
     custom_logo: Optional[str] = ""
 
-class OrderRequest(BaseModel):
+class RFQRequest(BaseModel):
     customer: CustomerModel
-    items: List[CartItemModel]
+    items: List[RFQItemModel]
     logo_filename: Optional[str] = None
     honeypot: Optional[str] = ""  # Invisible bot trap
 
@@ -94,292 +93,144 @@ class OrderRequest(BaseModel):
 # -------------------------------------------------------------
 @app.get("/api/catalog")
 def get_catalog():
+    """Returns the full catalog metadata, core materials, and collections with zero prices."""
     cfg = load_config()
-    catalog_tree = engine.get_catalog_tree()
-    return {
-        "company_name_ar": cfg.get("company_name_ar", "GulfRay® | شركة سقالة حلول الوقاية"),
-        "company_name_en": cfg.get("company_name_en", "GulfRay® | Siqalah Shielding Solutions"),
-        "company_subtitle_ar": cfg.get("company_subtitle_ar", "مصنع لإنتاج Radiation Protection Aprons وحلول الوقاية من الأشعة"),
-        "company_subtitle_en": cfg.get("company_subtitle_en", "Manufacturer of Radiation Protection Aprons & Radiation Shielding Solutions"),
-        "vat_rate": cfg.get("vat_rate", 0.15),
-        "currency_ar": cfg.get("currency_ar", "ر.س"),
-        "currency_en": cfg.get("currency_en", "SAR"),
-        "categories": catalog_tree["categories"],
-        "tree": catalog_tree["tree"],
-        "total_items": catalog_tree["total_items"],
-        "items": engine.items
+    catalog_data = catalog_engine.get_full_catalog_data()
+    catalog_data["company_name_ar"] = cfg.get("company_name_ar", "GulfRay® | شركة سقالة حلول الوقاية")
+    catalog_data["company_name_en"] = cfg.get("company_name_en", "GulfRay® | Siqalah Shielding Solutions")
+    catalog_data["company_subtitle_ar"] = cfg.get("company_subtitle_ar", "مصنع لإنتاج ملابس وحلول الوقاية من الأشعة")
+    catalog_data["company_subtitle_en"] = cfg.get("company_subtitle_en", "First Saudi Manufacturer of Radiation Protection Aprons & Shielding")
+    return catalog_data
+
+@app.post("/api/rfq")
+def submit_rfq(rfq_data: RFQRequest, request: Request):
+    """
+    Handles customer RFQ submission:
+    - Validates bot honeypot
+    - Validates rate limiting
+    - Generates official RFQ ID
+    - Sends notifications to sales team + customer confirmation email
+    """
+    client_ip = request.client.host if request.client else "127.0.0.1"
+    
+    # Honeypot validation
+    if rfq_data.honeypot and rfq_data.honeypot.strip():
+        # Fake success response for automated bots
+        return {
+            "success": True,
+            "rfq_id": f"GR-RFQ-{datetime.now().strftime('%Y%m%d%H%M%S')}",
+            "message": "Request for Quotation submitted successfully."
+        }
+
+    # Rate limiting check
+    check_rfq_rate_limit(client_ip)
+
+    if not rfq_data.items:
+        raise HTTPException(status_code=400, detail="لا يمكن إرسال طلب عرض سعر بدون تحديد صنف واحد على الأقل.")
+
+    # Validate quantities
+    for item in rfq_data.items:
+        if item.qty <= 0 or item.qty > 5000:
+            raise HTTPException(status_code=400, detail="الكمية المطلوبة يجب أن تكون بين 1 و 5000 قطعة لكل صنف.")
+
+    rfq_id = f"GR-RFQ-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+    created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    rfq_record = {
+        "rfq_id": rfq_id,
+        "created_at": created_at,
+        "customer": rfq_data.customer.dict(),
+        "items": [it.dict() for it in rfq_data.items],
+        "logo_filename": rfq_data.logo_filename,
+        "client_ip": client_ip
     }
 
-@app.post("/api/match")
-def match_item(req: MatchRequest):
-    item = engine.match_item(
-        category=req.category,
-        gender=req.gender,
-        thickness=req.thickness,
-        size=req.size,
-        code=req.code
-    )
-    if not item:
-        raise HTTPException(status_code=404, detail="No matching item found for given specs.")
-    return item
+    # Dispatch emails via transactional engine
+    success, email_msg = send_rfq_emails(rfq_record)
+
+    return {
+        "success": True,
+        "rfq_id": rfq_id,
+        "message_ar": f"تم استلام طلب عرض السعر بنجاح برقم {rfq_id}. تم إرسال رسالة تأكيد إلى بريدك الإلكتروني وسيتم التواصل معك بالعرض المعتمد خلال 24 ساعة.",
+        "message_en": f"Your RFQ ({rfq_id}) has been submitted successfully. A confirmation email has been dispatched to your inbox and our technical shielding team will provide your official quotation within 24 business hours.",
+        "email_status": email_msg
+    }
 
 @app.post("/api/upload-logo")
 async def upload_logo(file: UploadFile = File(...)):
-    ext = os.path.splitext(file.filename)[1].lower()
-    if ext not in [".png", ".jpg", ".jpeg", ".svg", ".webp", ".pdf"]:
-        raise HTTPException(status_code=400, detail="Invalid file type. Allowed: PNG, JPG, JPEG, SVG, WEBP, PDF")
-    
-    unique_filename = f"logo_{uuid.uuid4().hex[:10]}{ext}"
-    dest_path = os.path.join("uploads", unique_filename)
-    
-    with open(dest_path, "wb") as buffer:
+    """Handles hospital/department logo uploads for custom apron embroidery/screen printing."""
+    allowed_exts = {".png", ".jpg", ".jpeg", ".pdf", ".svg"}
+    filename = file.filename or "logo"
+    ext = os.path.splitext(filename)[1].lower()
+
+    if ext not in allowed_exts:
+        raise HTTPException(status_code=400, detail="نوع الملف غير مدعوم. يرجى إرفاق صورة (PNG, JPG, SVG) أو ملف PDF.")
+
+    clean_filename = f"logo_{uuid.uuid4().hex[:10]}{ext}"
+    target_path = os.path.join("uploads", clean_filename)
+
+    with open(target_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
-        
-    return {"filename": unique_filename, "url": f"/uploads/{unique_filename}"}
 
-@app.post("/api/order")
-def create_order(req: OrderRequest, request: Request):
-    client_ip = request.client.host if request.client else "unknown"
+    # Size check (Max 8 MB)
+    if os.path.getsize(target_path) > 8 * 1024 * 1024:
+        os.remove(target_path)
+        raise HTTPException(status_code=400, detail="حجم الملف كبير جداً. الحد الأقصى المسموح به هو 8 ميجابايت.")
 
-    # 1. Anti-Bot Honeypot Shield
-    if req.honeypot and req.honeypot.strip():
-        # If honeypot is filled, it's an automated spam bot
-        return {"success": True, "order_id": "REJECTED-SPAM", "message": "OK"}
-
-    # 2. Anti-Spam / Rate Limiting Check
-    check_order_rate_limit(client_ip)
-
-    if not req.items:
-        raise HTTPException(status_code=400, detail="Cart is empty.")
-    
-    # 3. Input Validation
-    phone = req.customer.phone.strip()
-    if len(phone) < 8 or not any(char.isdigit() for char in phone):
-        raise HTTPException(status_code=400, detail="رقم الجوال المدخل غير صحيح.")
-    
-    if "@" not in req.customer.email or "." not in req.customer.email:
-        raise HTTPException(status_code=400, detail="صيغة البريد الإلكتروني غير صحيحة.")
-
-    cfg = load_config()
-    vat_rate = cfg.get("vat_rate", 0.15)
-    
-    # 4. CRITICAL FINANCIAL SECURITY: Zero-Trust Price Verification
-    # The server NEVER trusts client-submitted prices!
-    # All prices are strictly looked up from the official Excel database on the server.
-    verified_items = []
-    subtotal = 0.0
-
-    for item_req in req.items:
-        code = item_req.code.strip()
-        if code not in engine.items_by_code:
-            raise HTTPException(status_code=400, detail=f"كود الصنف ({code}) غير موجود في قاعدة الأسعار المعتمدة.")
-        
-        official_item = engine.items_by_code[code]
-        qty = max(1, min(500, int(item_req.qty)))
-        official_price = float(official_item["price_sar"])
-        
-        verified_items.append({
-            "code": official_item["code"],
-            "name_ar": official_item["name_ar"],
-            "name_en": official_item["name_en"],
-            "category": official_item["category"],
-            "category_ar": official_item.get("category_ar", official_item["category"]),
-            "gender": official_item["gender"],
-            "gender_ar": official_item["gender_ar"],
-            "thickness": official_item["thickness"],
-            "size": official_item["size"],
-            "price_sar": official_price,
-            "qty": qty,
-            "embroidery": item_req.embroidery[:100] if item_req.embroidery else "",
-            "custom_logo": item_req.custom_logo
-        })
-        subtotal += official_price * qty
-
-    vat = subtotal * vat_rate
-    grand_total = subtotal + vat
-    
-    order_id = f"GR-RFQ-{datetime.now().strftime('%Y%m%d%H%M%S')}"
-    created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
-    
-    logo_path = os.path.join("uploads", req.logo_filename) if req.logo_filename else None
-    if logo_path and not os.path.exists(logo_path):
-        logo_path = None
-
-    order_payload = {
-        "order_id": order_id,
-        "created_at": created_at,
-        "client_ip": client_ip,
-        "customer": req.customer.model_dump(),
-        "items": verified_items,
-        "subtotal": round(subtotal, 2),
-        "vat": round(vat, 2),
-        "grand_total": round(grand_total, 2),
-        "logo_path": logo_path,
-        "logo_filename": req.logo_filename
-    }
-
-    success, msg = send_order_email(order_payload)
-    
     return {
         "success": True,
-        "order_id": order_id,
-        "created_at": created_at,
-        "message": msg,
-        "financials": {
-            "subtotal": round(subtotal, 2),
-            "vat": round(vat, 2),
-            "grand_total": round(grand_total, 2)
-        }
+        "filename": clean_filename,
+        "url": f"/uploads/{clean_filename}"
     }
 
-class AdminSettingsModel(BaseModel):
-    pin: str
-    notification_emails: List[str]
-    smtp_enabled: Optional[bool] = False
-    smtp_host: Optional[str] = "smtp.office365.com"
-    smtp_port: Optional[int] = 587
-    smtp_user: Optional[str] = ""
-    smtp_password: Optional[str] = ""
-    sender_name: Optional[str] = "GulfRay Orders System"
-
-@app.post("/api/admin/get-settings")
-def get_admin_settings(request: Request, payload: Dict):
-    client_ip = request.client.host if request.client else "unknown"
-    check_admin_lockout(client_ip)
-    
-    pin = payload.get("pin", "").strip()
-    cfg = load_config()
-    expected_pin = str(cfg.get("admin_pin", "9988"))
-    
-    if pin != expected_pin:
-        record_pin_failure(client_ip)
-        remaining = MAX_PIN_FAILURES - len(admin_pin_attempts[client_ip])
-        raise HTTPException(status_code=401, detail=f"الرمز السري غير صحيح. المحاولات المتبقية: {remaining}")
-    
-    admin_pin_attempts[client_ip] = []
-    
-    smtp = cfg.get("smtp", {})
-    return {
-        "notification_emails": cfg.get("notification_emails", []),
-        "smtp": {
-            "enabled": smtp.get("enabled", False),
-            "host": smtp.get("host", "smtp.office365.com"),
-            "port": smtp.get("port", 587),
-            "user": smtp.get("user", ""),
-            "has_password": bool(smtp.get("password")),
-            "sender_name": smtp.get("sender_name", "GulfRay Orders System")
-        }
-    }
-
-@app.post("/api/admin/save-settings")
-def save_admin_settings(request: Request, req: AdminSettingsModel):
-    client_ip = request.client.host if request.client else "unknown"
-    check_admin_lockout(client_ip)
-    
-    cfg = load_config()
-    expected_pin = str(cfg.get("admin_pin", "9988"))
-    
-    if req.pin.strip() != expected_pin:
-        record_pin_failure(client_ip)
-        raise HTTPException(status_code=401, detail="الرمز السري غير صحيح.")
-    
-    # Clean email list
-    clean_emails = [e.strip() for e in req.notification_emails if e.strip() and "@" in e]
-    cfg["notification_emails"] = clean_emails
-    
-    # Update SMTP settings if provided
-    if req.smtp_host:
-        cfg["smtp"]["host"] = req.smtp_host.strip()
-    if req.smtp_port:
-        cfg["smtp"]["port"] = req.smtp_port
-    if req.smtp_user is not None:
-        cfg["smtp"]["user"] = req.smtp_user.strip()
-        cfg["smtp"]["sender_email"] = req.smtp_user.strip()
-    if req.smtp_password and req.smtp_password.strip():
-        cfg["smtp"]["password"] = req.smtp_password.strip()
-    if req.sender_name:
-        cfg["smtp"]["sender_name"] = req.sender_name.strip()
-    cfg["smtp"]["enabled"] = req.smtp_enabled
-    
-    from mailer import save_config
-    save_config(cfg)
-    
-    return {
-        "success": True,
-        "message": f"تم حفظ الإعدادات بنجاح! تم تحديث قائمة الإيميلات ({len(clean_emails)} إيميل مسجل).",
-        "notification_emails": clean_emails
-    }
-
-@app.post("/api/admin/send-test-email")
-def test_email_endpoint(request: Request, payload: Dict):
-    client_ip = request.client.host if request.client else "unknown"
-    check_admin_lockout(client_ip)
-    
-    pin = payload.get("pin", "").strip()
-    cfg = load_config()
-    if pin != str(cfg.get("admin_pin", "9988")):
-        raise HTTPException(status_code=401, detail="الرمز السري غير صحيح.")
-    
-    from mailer import send_test_email
-    success, msg = send_test_email()
-    return {"success": success, "message": msg}
-
-@app.post("/api/admin/upload-pricelist")
-async def upload_pricelist(request: Request, pin: str = Form(...), file: UploadFile = File(...)):
-    client_ip = request.client.host if request.client else "unknown"
-    
-    # 1. Anti-Brute Force Protection
-    check_admin_lockout(client_ip)
-
-    cfg = load_config()
-    expected_pin = str(cfg.get("admin_pin", "9988"))
-    
-    if pin.strip() != expected_pin:
-        record_pin_failure(client_ip)
-        remaining = MAX_PIN_FAILURES - len(admin_pin_attempts[client_ip])
-        raise HTTPException(
-            status_code=401,
-            detail=f"الرمز السري غير صحيح. المحاولات المتبقية قبل القفل: {remaining}"
-        )
-    
-    # Clear failures on successful PIN
-    admin_pin_attempts[client_ip] = []
-
-    if not file.filename.endswith((".xlsx", ".xls")):
-        raise HTTPException(status_code=400, detail="نوع الملف غير مدعوم، يرجى رفع ملف إكسل .xlsx")
-    
-    # Backup existing file
-    backup_path = f"GulfRay price list_backup_{datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
-    if os.path.exists("GulfRay price list.xlsx"):
-        shutil.copy("GulfRay price list.xlsx", backup_path)
-    
-    temp_target = "GulfRay price list_temp.xlsx"
-    with open(temp_target, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-        
-    temp_engine = PriceEngine(excel_path=temp_target)
-    if not temp_engine.items:
-        os.remove(temp_target)
-        raise HTTPException(status_code=400, detail="تعذر قراءة بيانات الأصناف من الملف المرفوع. تأكد من وجود ورقة العمل والأعمدة المطلوبة.")
-    
-    shutil.move(temp_target, "GulfRay price list.xlsx")
-    engine.load_data()
-    
-    return {
-        "success": True,
-        "message": f"تم تحديث قائمة الأسعار بنجاح! تم تحميل {len(engine.items)} صنفاً عبر {len(engine.categories)} فئات رئيسية.",
-        "total_items": len(engine.items),
-        "categories": engine.categories
-    }
-
-@app.get("/api/outbox/{order_id}/html")
-def get_outbox_html(order_id: str):
-    file_path = os.path.join("outbox", f"{order_id}.html")
+@app.get("/api/outbox/{rfq_id}/html")
+def get_outbox_html(rfq_id: str, type: str = "team"):
+    suffix = "_customer.html" if type == "customer" else "_team.html"
+    file_path = os.path.join("outbox", f"{rfq_id}{suffix}")
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="Email not found.")
     with open(file_path, "r", encoding="utf-8") as f:
         return HTMLResponse(content=f.read())
 
+# -------------------------------------------------------------
+# Admin Settings (Protected by PIN)
+# -------------------------------------------------------------
+@app.get("/api/admin/config")
+def get_admin_config(pin: str, request: Request):
+    client_ip = request.client.host if request.client else "127.0.0.1"
+    check_admin_lockout(client_ip)
+    
+    cfg = load_config()
+    if pin != cfg.get("admin_pin", "9988"):
+        record_pin_failure(client_ip)
+        raise HTTPException(status_code=401, detail="الرمز السري غير صحيح.")
+
+    # Return config with masked password
+    safe_cfg = json.loads(json.dumps(cfg))
+    if "smtp" in safe_cfg and "password" in safe_cfg["smtp"]:
+        safe_cfg["smtp"]["password"] = "******"
+    return safe_cfg
+
+@app.post("/api/admin/config")
+def update_admin_config(update_data: Dict, pin: str, request: Request):
+    client_ip = request.client.host if request.client else "127.0.0.1"
+    check_admin_lockout(client_ip)
+    
+    cfg = load_config()
+    if pin != cfg.get("admin_pin", "9988"):
+        record_pin_failure(client_ip)
+        raise HTTPException(status_code=401, detail="الرمز السري غير صحيح.")
+
+    # Update allowed fields
+    if "notification_emails" in update_data:
+        cfg["notification_emails"] = update_data["notification_emails"]
+    if "admin_pin" in update_data and update_data["admin_pin"]:
+        cfg["admin_pin"] = str(update_data["admin_pin"])
+
+    save_config(cfg)
+    return {"success": True, "message": "تم حفظ الإعدادات بنجاح."}
+
+# Mount static and uploads
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
 

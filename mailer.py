@@ -16,257 +16,399 @@ def save_config(cfg: Dict):
     with open("config.json", "w", encoding="utf-8") as f:
         json.dump(cfg, f, ensure_ascii=False, indent=2)
 
-def generate_email_html(order: Dict) -> str:
-    """Generates an ultra-professional, transactional HTML email for B2B procurement."""
-    items = order.get("items", [])
-    customer = order.get("customer", {})
-    ref_no = order.get("order_id", f"GR-RFQ-{datetime.now().strftime('%Y%m%d%H%M%S')}")
-    created_at = order.get("created_at", datetime.now().strftime("%Y-%m-%d %H:%M"))
-    
-    subtotal = float(order.get("subtotal", 0.0))
-    vat = float(order.get("vat", 0.0))
-    grand_total = float(order.get("grand_total", 0.0))
-    currency = "SAR / ر.س"
+def generate_team_rfq_html(rfq: Dict) -> str:
+    """Generates a formal, executive RFQ notification email for the GulfRay sales & engineering team."""
+    items = rfq.get("items", [])
+    customer = rfq.get("customer", {})
+    rfq_id = rfq.get("rfq_id", f"GR-RFQ-{datetime.now().strftime('%Y%m%d%H%M%S')}")
+    created_at = rfq.get("created_at", datetime.now().strftime("%Y-%m-%d %H:%M"))
 
     items_rows_html = ""
     for idx, item in enumerate(items, 1):
-        item_tot = float(item.get("price_sar", 0)) * int(item.get("qty", 1))
-        custom_note = ""
+        custom_embroidery = ""
         if item.get("embroidery"):
-            custom_note += f"<br><small style='color: #0d9488;'>🧵 التطريز المطلوب: <b>{item.get('embroidery')}</b></small>"
+            custom_embroidery = f"<div style='margin-top: 4px; color: #006C35; font-size: 12px;'>🧵 <b>التطريز المخصص:</b> {item.get('embroidery')}</div>"
+        
+        logo_note = ""
         if item.get("custom_logo"):
-            custom_note += f"<br><small style='color: #0284c7;'>📎 مرفق شعار مخصص</small>"
+            logo_note = f"<div style='margin-top: 2px; color: #684F8C; font-size: 12px;'>📎 <b>شعار المستشفى:</b> تم إرفاق ملف الشعار مع الطلب</div>"
+
+        core_mat = item.get("core_material", "Lead-Free UM (Ultra-Lightest)")
+        collection = item.get("collection", "Saudi Editions (Saudi Green)")
+        lead_eq = item.get("thickness", "0.50 mm Pb")
+        size = item.get("size", "L")
+        gender = item.get("gender", "Unisex")
 
         items_rows_html += f"""
         <tr style="border-bottom: 1px solid #e2e8f0; font-size: 13px;">
-            <td style="padding: 12px 10px; color: #64748b; text-align: center;">{idx}</td>
-            <td style="padding: 12px 10px;">
-                <b style="color: #0f172a; font-size: 14px;">{item.get('name_ar', '')}</b>
-                <div style="color: #64748b; font-size: 12px; margin-top: 2px;">كود الصنف: <span style="font-family: monospace; font-weight: bold; color: #0f766e;">{item.get('code', '')}</span></div>
-                <div style="color: #475569; font-size: 12px;">المواصفات: {item.get('gender_ar', '')} | {item.get('size', '')} | {item.get('thickness', '')}</div>
-                {custom_note}
+            <td style="padding: 12px 10px; color: #64748b; text-align: center; vertical-align: top;">{idx}</td>
+            <td style="padding: 12px 10px; vertical-align: top;">
+                <b style="color: #0f172a; font-size: 14px;">{item.get('name_en', item.get('name_ar', 'Radiation Protection Apron'))}</b>
+                <div style="color: #047857; font-weight: 600; font-size: 12px; margin-top: 2px;">{item.get('name_ar', '')}</div>
+                <div style="color: #64748b; font-size: 12px; margin-top: 4px;">
+                    <b>الكود:</b> <span style="font-family: monospace; color: #006C35; font-weight: bold;">{item.get('code', 'N/A')}</span> | 
+                    <b>الفئة:</b> {item.get('category', '')}
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 10px; margin-top: 6px; font-size: 12px; color: #334155;">
+                    <div>🛡️ <b>المادة الواقية:</b> {core_mat}</div>
+                    <div>🎨 <b>المجموعة واللون:</b> {collection}</div>
+                    <div>⚖️ <b>سمك الرصاص:</b> {lead_eq} | <b>المقاس والجنس:</b> {size} ({gender})</div>
+                </div>
+                {custom_embroidery}
+                {logo_note}
             </td>
-            <td style="padding: 12px 10px; text-align: center; font-weight: bold; color: #0f172a;">{item.get('qty', 1)}</td>
-            <td style="padding: 12px 10px; text-align: right; color: #334155;">{item.get('price_sar', 0):,.2f}</td>
-            <td style="padding: 12px 10px; text-align: right; font-weight: bold; color: #0f172a;">{item_tot:,.2f}</td>
+            <td style="padding: 12px 10px; text-align: center; font-weight: bold; color: #0f172a; font-size: 15px; vertical-align: top;">
+                {item.get('qty', 1)}
+            </td>
         </tr>
         """
 
-    payment_method_labels = {
-        "bank_transfer": "تحويل بنكي رسمي (Bank Transfer)",
-        "lpo": "تعميد رسمي / أمر شراء دفع آجل للمستشفيات (LPO / Credit)",
-        "cod": "نقداً / شبكة عند التوريد (COD)"
-    }
-    pay_label = payment_method_labels.get(customer.get("payment_method"), customer.get("payment_method", "غير محدد"))
+    notes_html = ""
+    if customer.get("notes"):
+        notes_html = f"""
+        <div style="background: #fdfaf5; border: 1px solid #fde68a; border-radius: 8px; padding: 14px; margin-top: 20px;">
+            <b style="color: #b45309; font-size: 13px;">📝 ملاحظات العميل / مرجع المناقصة:</b>
+            <p style="margin: 6px 0 0; color: #78350f; font-size: 13px; line-height: 1.5;">{customer.get('notes')}</p>
+        </div>
+        """
 
-    html_content = f"""<!DOCTYPE html>
-<html dir="rtl" lang="ar">
+    return f"""<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>طلب عرض سعر جديد - GulfRay</title>
+<meta charset="utf-8">
+<title>GulfRay RFQ - {rfq_id}</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: 'Segoe UI', Tahoma, Arial, sans-serif; direction: rtl; text-align: right; color: #1e293b;">
-    <div style="max-width: 680px; margin: 25px auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
+<body style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background-color: #f1f5f9; margin: 0; padding: 25px 15px; color: #1e293b;">
+    <div style="max-width: 680px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
         
-        <!-- Header with Official GulfRay Shield Logo -->
-        <div style="background: linear-gradient(135deg, #042f2e 0%, #0f766e 50%, #14b8a6 100%); padding: 30px 25px; color: #ffffff; text-align: center; border-bottom: 3.5px solid #2dd4bf;">
-            <div style="font-size: 24px; font-weight: 800; letter-spacing: 0.5px; color: #ffffff;">GulfRay® | شركة سقالة حلول الوقاية</div>
-            <div style="font-size: 13px; color: #ccfbf1; margin-top: 5px; font-weight: 600;">مصنع لإنتاج Radiation Protection Aprons وحلول الوقاية من الأشعة</div>
-            <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.18); border: 1px solid #2dd4bf; border-radius: 20px; padding: 5px 18px; margin-top: 15px; font-size: 13px; font-weight: 600; color: #ffffff;">
-                طلب عرض سعر جديد / RFQ Quotation Request
+        <!-- Header with Saudi Heritage Banner -->
+        <div style="background: linear-gradient(135deg, #004d26 0%, #006C35 50%, #684F8C 100%); padding: 25px; color: #ffffff; text-align: center;">
+            <div style="font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #C5A869; font-weight: bold;">
+                Saudi Arabia's First Radiation Shielding Manufacturer
+            </div>
+            <h1 style="margin: 8px 0 4px; font-size: 22px; font-weight: 800; letter-spacing: 0.5px;">
+                GulfRay® | شركة سقالة حلول الوقاية
+            </h1>
+            <div style="font-size: 13px; opacity: 0.95;">
+                إشعار طلب عرض سعر جديد (Request For Quotation - RFQ)
             </div>
         </div>
 
+        <!-- Meta Bar -->
+        <div style="background: #FAF8F5; border-bottom: 2px solid #C5A869; padding: 12px 25px; font-size: 13px; display: flex; justify-content: space-between;">
+            <div>رقم الطلب: <b style="color: #006C35; font-family: monospace; font-size: 14px;">{rfq_id}</b></div>
+            <div style="color: #64748b;">تاريخ الاستلام: <b>{created_at}</b></div>
+        </div>
+
         <div style="padding: 25px;">
-            <!-- Order Meta Bar -->
-            <div style="background-color: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 15px; margin-bottom: 25px;">
-                <table style="width: 100%; border-collapse: collapse;">
+            <!-- Customer Card -->
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 18px; margin-bottom: 22px;">
+                <h3 style="margin: 0 0 12px; font-size: 15px; color: #006C35; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">
+                    🏥 بيانات المستشفى والجهة الطالبة:
+                </h3>
+                <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
                     <tr>
-                        <td style="padding: 4px; font-size: 13px;"><b>رقم الطلب:</b> <span style="font-family: monospace; font-size: 14px; color: #0f766e; font-weight: bold;">{ref_no}</span></td>
-                        <td style="padding: 4px; font-size: 13px; text-align: left;"><b>التاريخ:</b> <span style="color: #64748b;">{created_at}</span></td>
+                        <td style="padding: 5px 0; color: #64748b; width: 140px;">اسم الجهة / المستشفى:</td>
+                        <td style="padding: 5px 0; font-weight: bold; color: #0f172a;">{customer.get('organization', 'N/A')}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0; color: #64748b;">المسؤول / الطبيب:</td>
+                        <td style="padding: 5px 0; font-weight: bold; color: #0f172a;">{customer.get('name', 'N/A')}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0; color: #64748b;">المدينة / المنطقة:</td>
+                        <td style="padding: 5px 0; color: #334155;">{customer.get('city', 'N/A')}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0; color: #64748b;">رقم التواصل:</td>
+                        <td style="padding: 5px 0; font-weight: bold; color: #006C35; direction: ltr; text-align: right;">{customer.get('phone', 'N/A')}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0; color: #64748b;">البريد الإلكتروني:</td>
+                        <td style="padding: 5px 0; color: #0284c7; direction: ltr; text-align: right;">{customer.get('email', 'N/A')}</td>
                     </tr>
                 </table>
             </div>
 
-            <!-- Customer Details Card -->
-            <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin-bottom: 25px; background-color: #ffffff;">
-                <div style="font-size: 15px; font-weight: bold; color: #042f2e; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px;">
-                    👤 بيانات العميل والجهة الطالبة
-                </div>
-                <table style="width: 100%; font-size: 13px; line-height: 1.8;">
-                    <tr>
-                        <td style="width: 50%;"><b>اسم المسؤول:</b> {customer.get('name', '-')}</td>
-                        <td style="width: 50%;"><b>المستشفى / الجهة:</b> <span style="color: #0d9488; font-weight: bold;">{customer.get('organization', '-')}</span></td>
+            <!-- Items Table (ZERO PRICES) -->
+            <h3 style="margin: 0 0 12px; font-size: 15px; color: #0f172a;">
+                📋 الأصناف والمواصفات المطلوبة للتسعير:
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                <thead>
+                    <tr style="background: #006C35; color: #ffffff; font-size: 12px;">
+                        <th style="padding: 10px; text-align: center; width: 40px;">#</th>
+                        <th style="padding: 10px; text-align: right;">المواصفات وخيارات التصنيع</th>
+                        <th style="padding: 10px; text-align: center; width: 80px;">الكمية</th>
                     </tr>
-                    <tr>
-                        <td><b>المدينة:</b> {customer.get('city', '-')}</td>
-                        <td><b>رقم الجوال:</b> <span dir="ltr" style="font-family: monospace;">{customer.get('phone', '-')}</span></td>
-                    </tr>
-                    <tr>
-                        <td><b>البريد الإلكتروني:</b> <span dir="ltr">{customer.get('email', '-')}</span></td>
-                        <td><b>طريقة السداد المحددة:</b> <span style="color: #0f766e; font-weight: bold;">{pay_label}</span></td>
-                    </tr>
-                    {f"<tr><td colspan='2' style='padding-top: 6px;'><b>ملاحظات إضافية:</b> {customer.get('notes')}</td></tr>" if customer.get('notes') else ""}
-                </table>
-            </div>
+                </thead>
+                <tbody>
+                    {items_rows_html}
+                </tbody>
+            </table>
 
-            <!-- Items Table -->
-            <div style="margin-bottom: 25px; overflow-x: auto;">
-                <div style="font-size: 15px; font-weight: bold; color: #042f2e; margin-bottom: 10px;">
-                    📋 تفاصيل الأصناف ومواصفات المآزر المطلوبة
-                </div>
-                <table style="width: 100%; border-collapse: collapse; border: 1px solid #cbd5e1; border-radius: 8px;">
-                    <thead>
-                        <tr style="background-color: #042f2e; color: #ffffff; font-size: 13px;">
-                            <th style="padding: 10px; width: 35px; text-align: center;">#</th>
-                            <th style="padding: 10px; text-align: right;">الصنف والمواصفات</th>
-                            <th style="padding: 10px; width: 60px; text-align: center;">الكمية</th>
-                            <th style="padding: 10px; width: 95px; text-align: right;">سعر الوحدة ({currency})</th>
-                            <th style="padding: 10px; width: 95px; text-align: right;">الإجمالي ({currency})</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {items_rows_html}
-                    </tbody>
-                </table>
-            </div>
+            {notes_html}
 
-            <!-- Financial Summary Box -->
-            <div style="background-color: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 18px; margin-bottom: 25px;">
-                <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
-                    <tr>
-                        <td style="padding: 6px 0; color: #475569;">المجموع الفرعي (Subtotal):</td>
-                        <td style="padding: 6px 0; text-align: left; font-weight: bold; color: #042f2e;">{subtotal:,.2f} {currency}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 6px 0; color: #475569;">ضريبة القيمة المضافة 15% (VAT):</td>
-                        <td style="padding: 6px 0; text-align: left; font-weight: bold; color: #042f2e;">{vat:,.2f} {currency}</td>
-                    </tr>
-                    <tr style="border-top: 2px solid #0f766e;">
-                        <td style="padding: 10px 0 4px 0; font-size: 16px; font-weight: 800; color: #042f2e;">الإجمالي النهائي شامل الضريبة:</td>
-                        <td style="padding: 10px 0 4px 0; text-align: left; font-size: 18px; font-weight: 800; color: #0d9488;">{grand_total:,.2f} {currency}</td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Notice / Terms -->
-            <div style="font-size: 12px; color: #64748b; line-height: 1.6; background-color: #f1f5f9; padding: 12px; border-radius: 6px;">
-                • الأسعار صالحة لمدة 30 يوماً من تاريخ هذا الطلب.<br>
-                • مآزر GulfRay مصنعة ومختبرة وفقاً لأعلى معايير الحماية الإشعاعية العالمية (CE & ISO 13485 Compliant).<br>
-                • للتواصل المباشر مع إدارة المبيعات: <b>orders@ims-medical.com</b>
+            <!-- Required Action for Sales Team -->
+            <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px; margin-top: 20px;">
+                <b style="color: #1d4ed8; font-size: 13px;">⚡ الإجراء المطلوب من فريق مبيعات GulfRay:</b>
+                <p style="margin: 6px 0 0; color: #1e40af; font-size: 12px; line-height: 1.6;">
+                    1. مراجعة مواصفات الرصاص والمقاسات والألوان المطلوبة.<br>
+                    2. إعداد عرض السعر الرسمي المعتمد شاملاً مدة التوريد وضمان الجودة.<br>
+                    3. التواصل مع العميل عبر البريد الإلكتروني أو الهاتف خلال 24 ساعة عمل.
+                </p>
             </div>
         </div>
 
         <!-- Footer -->
-        <div style="background-color: #042f2e; color: #ccfbf1; font-size: 12px; padding: 18px; text-align: center;">
-            © {datetime.now().year} GulfRay® - شركة سقالة حلول الوقاية. جميع الحقوق محفوظة.
+        <div style="background: #0f172a; color: #94a3b8; padding: 18px 25px; text-align: center; font-size: 11px;">
+            <p style="margin: 0 0 6px; color: #ffffff; font-weight: bold; font-size: 12px;">
+                GulfRay® | شركة سقالة حلول الوقاية (Siqalah Shielding Solutions)
+            </p>
+            <p style="margin: 0 0 4px;">
+                المملكة العربية السعودية | صنع في السعودية بموجب أعلى المعايير الطبية الدولية IEC / ASTM / BS EN
+            </p>
+            <p style="margin: 0; opacity: 0.7;">
+                نظام إدارة طلبات عروض الأسعار الإلكتروني - بريد آلي معتمد
+            </p>
         </div>
     </div>
 </body>
 </html>"""
-    return html_content
 
-def send_order_email(order: Dict) -> Tuple[bool, str]:
-    config = load_config()
-    smtp_cfg = config.get("smtp", {})
-    notification_emails = config.get("notification_emails", [
+def generate_customer_rfq_html(rfq: Dict) -> str:
+    """Generates a luxury, bilingual confirmation email sent directly to the prospective healthcare customer."""
+    items = rfq.get("items", [])
+    customer = rfq.get("customer", {})
+    rfq_id = rfq.get("rfq_id", f"GR-RFQ-{datetime.now().strftime('%Y%m%d%H%M%S')}")
+    created_at = rfq.get("created_at", datetime.now().strftime("%Y-%m-%d %H:%M"))
+
+    items_summary_rows = ""
+    for idx, item in enumerate(items, 1):
+        core_mat = item.get("core_material", "Lead-Free UM (Ultra-Lightest)")
+        collection = item.get("collection", "Saudi Editions (Saudi Green)")
+        lead_eq = item.get("thickness", "0.50 mm Pb")
+        size = item.get("size", "L")
+
+        items_summary_rows += f"""
+        <tr style="border-bottom: 1px solid #e2e8f0; font-size: 13px;">
+            <td style="padding: 10px; text-align: center; color: #64748b;">{idx}</td>
+            <td style="padding: 10px;">
+                <b style="color: #0f172a;">{item.get('name_en', 'Radiation Protection Apron')}</b>
+                <div style="color: #64748b; font-size: 12px; margin-top: 3px;">
+                    {item.get('name_ar', '')} | <b>{core_mat}</b> | {lead_eq} | {collection} | Size: {size}
+                </div>
+            </td>
+            <td style="padding: 10px; text-align: center; font-weight: bold; color: #006C35;">{item.get('qty', 1)}</td>
+        </tr>
+        """
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Acknowledgment: Request for Quotation {rfq_id} - GulfRay®</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 25px 15px; color: #1e293b;">
+    <div style="max-width: 650px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
+        
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #004d26 0%, #006C35 60%, #C5A869 100%); padding: 30px 25px; color: #ffffff; text-align: center;">
+            <div style="font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #FAF8F5; font-weight: bold;">
+                Saudi Arabia's First Radiation Shielding Manufacturer
+            </div>
+            <h1 style="margin: 8px 0 4px; font-size: 24px; font-weight: 800;">
+                GulfRay® | Siqalah Shielding Solutions
+            </h1>
+            <div style="font-size: 14px; opacity: 0.95;">
+                شركة سقالة حلول الوقاية - مصنع حلول الوقاية من الإشعاع
+            </div>
+        </div>
+
+        <!-- Ref Banner -->
+        <div style="background: #FAF8F5; border-bottom: 2px solid #C5A869; padding: 14px 25px; font-size: 13px; text-align: center;">
+            <span style="color: #64748b;">RFQ Reference Number:</span> 
+            <b style="color: #006C35; font-size: 15px; font-family: monospace; margin-left: 6px;">{rfq_id}</b>
+        </div>
+
+        <div style="padding: 30px 25px;">
+            <!-- Formal English Greeting -->
+            <div style="border-bottom: 1px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 20px;">
+                <p style="font-size: 15px; font-weight: 600; color: #0f172a; margin: 0 0 10px;">
+                    Dear {customer.get('name', 'Valued Client')},
+                </p>
+                <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 10px;">
+                    Thank you for your interest in <b>GulfRay® medical radiation protection solutions</b>. We have officially received your <b>Request for Quotation (RFQ)</b> for <b>{customer.get('organization', 'your healthcare facility')}</b>.
+                </p>
+                <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0;">
+                    Our specialized technical sales and radiation shielding engineers are currently reviewing your custom specifications, material cores, and lead equivalences. A formal, comprehensive quotation with certified delivery timelines will be forwarded to your email within <b>24 business hours</b>.
+                </p>
+            </div>
+
+            <!-- Formal Arabic Greeting -->
+            <div style="border-bottom: 1px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 20px; text-align: right; direction: rtl;">
+                <p style="font-size: 15px; font-weight: 600; color: #006C35; margin: 0 0 10px;">
+                    سعادة {customer.get('name', 'العميل الكريم')} المحترم،
+                </p>
+                <p style="font-size: 14px; line-height: 1.7; color: #334155; margin: 0 0 10px;">
+                    نشكركم لاختياركم <b>GulfRay® | شركة سقالة حلول الوقاية</b>، أول مصنع سعودي متخصص في إنتاج ملابس وإكسسوارات الوقاية من الإشعاع الطبي.
+                </p>
+                <p style="font-size: 14px; line-height: 1.7; color: #334155; margin: 0;">
+                    نؤكد لكم استلام طلبكم المسجل برقم <b>({rfq_id})</b>. يقوم فريقنا الاستشاري حالياً بدراسة المواصفات والتطريزات المطلوبة، وسيتم إرسال عرض السعر الرسمي المعتمد والتواصل معكم خلال <b>24 ساعة عمل</b>.
+                </p>
+            </div>
+
+            <!-- Requested Items Summary (ZERO PRICES) -->
+            <h4 style="margin: 0 0 12px; font-size: 14px; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px;">
+                Summary of Requested Garments & Specifications:
+            </h4>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
+                <thead>
+                    <tr style="background: #006C35; color: #ffffff; font-size: 12px;">
+                        <th style="padding: 8px 10px; text-align: center; width: 40px;">#</th>
+                        <th style="padding: 8px 10px; text-align: left;">Item & Configuration</th>
+                        <th style="padding: 8px 10px; text-align: center; width: 60px;">Qty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {items_summary_rows}
+                </tbody>
+            </table>
+
+            <!-- Factory & Direct Advisory Contact Card -->
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 18px; margin-bottom: 20px; font-size: 13px; text-align: center;">
+                <b style="color: #006C35; font-size: 14px; display: block; margin-bottom: 6px;">
+                    Direct Procurement Advisory / استشارات التوريد المباشرة:
+                </b>
+                <div style="color: #0f172a; font-weight: bold; margin-bottom: 6px;">
+                    Tarek Bakkar | طارق بكار
+                </div>
+                <div style="margin-bottom: 6px;">
+                    📞 Mobile: <a href="tel:+966562414524" style="color: #006C35; font-weight: bold; text-decoration: none;">+966 56 241 4524</a> &nbsp;|&nbsp; 
+                    ✉️ Email: <a href="mailto:tarek@Ims-medical.com" style="color: #0284c7; text-decoration: none;">tarek@Ims-medical.com</a>
+                </div>
+                <div style="margin-top: 10px;">
+                    <a href="https://maps.app.goo.gl/D3wPydgN2Z1XWUgc7?g_st=ic" target="_blank" style="display: inline-block; background: #006C35; color: #ffffff; padding: 7px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 12px;">
+                        📍 View GulfRay Factory Location (Google Maps) ↗
+                    </a>
+                </div>
+            </div>
+
+            <!-- Factory Certifications Callout -->
+            <div style="background: #FAF8F5; border: 1px solid #C5A869; border-radius: 8px; padding: 15px; font-size: 12px; color: #475569; text-align: center;">
+                <div style="font-weight: bold; color: #006C35; margin-bottom: 4px;">
+                    🛡️ Tested & Verified by Leading Global Laboratories
+                </div>
+                <div>
+                    National Physical Laboratory (UK) · BS EN 61331-1:2014 Broad-Beam · ASTM F2547-18 · SGS REACH Screening · US FDA Compliant
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="background: #0f172a; color: #94a3b8; padding: 22px 25px; text-align: center; font-size: 12px;">
+            <p style="margin: 0 0 6px; color: #ffffff; font-weight: bold;">
+                GulfRay® | Siqalah Shielding Solutions
+            </p>
+            <p style="margin: 0 0 4px; font-size: 11px;">
+                Kingdom of Saudi Arabia · Made in KSA with Pride · info@gulfray.com.sa
+            </p>
+            <p style="margin: 0; font-size: 10px; opacity: 0.7;">
+                This is an automated acknowledgment confirming receipt of your official RFQ.
+            </p>
+        </div>
+    </div>
+</body>
+</html>"""
+
+def send_rfq_emails(rfq: Dict) -> Tuple[bool, str]:
+    """
+    Sends:
+    1. Detailed RFQ notification to the GulfRay sales team (with attached logo if uploaded).
+    2. Formal acknowledgment letter to the customer's email.
+    Saves backups into outbox/.
+    """
+    cfg = load_config()
+    smtp_cfg = cfg.get("smtp", {})
+    rfq_id = rfq.get("rfq_id", f"GR-RFQ-{datetime.now().strftime('%Y%m%d%H%M%S')}")
+    
+    # Save outbox backup
+    os.makedirs("outbox", exist_ok=True)
+    with open(os.path.join("outbox", f"{rfq_id}.json"), "w", encoding="utf-8") as f:
+        json.dump(rfq, f, ensure_ascii=False, indent=2)
+
+    team_html = generate_team_rfq_html(rfq)
+    customer_html = generate_customer_rfq_html(rfq)
+
+    with open(os.path.join("outbox", f"{rfq_id}_team.html"), "w", encoding="utf-8") as f:
+        f.write(team_html)
+    with open(os.path.join("outbox", f"{rfq_id}_customer.html"), "w", encoding="utf-8") as f:
+        f.write(customer_html)
+
+    if not smtp_cfg.get("enabled", True):
+        return True, f"Saved to outbox (SMTP disabled). RFQ ID: {rfq_id}"
+
+    team_recipients = cfg.get("notification_emails", [
         "asaeed@ims-medical.com",
         "tarek@Ims-medical.com",
-        "atharwat@ims-medical.com"
+        "atharwat@ims-medical.com",
+        "aabdelrahman@ims-medical.com"
     ])
     
-    customer = order.get("customer", {})
-    customer_email = customer.get("email")
+    customer_email = rfq.get("customer", {}).get("email", "").strip()
 
-    recipients = [e.strip() for e in notification_emails if e and "@" in e]
-    if customer_email and "@" in customer_email:
-        recipients.append(customer_email.strip())
-
-    recipients = list(set(recipients))
-
-    subject = f"طلب شراء جديد GulfRay | {order.get('order_id', '')} - {customer.get('organization', customer.get('name', 'عميل جديد'))}"
-    html_body = generate_email_html(order)
-
-    os.makedirs("outbox", exist_ok=True)
-    outbox_file = os.path.join("outbox", f"{order.get('order_id', 'order')}.html")
-    outbox_json = os.path.join("outbox", f"{order.get('order_id', 'order')}.json")
-
-    with open(outbox_file, "w", encoding="utf-8") as f:
-        f.write(html_body)
-    with open(outbox_json, "w", encoding="utf-8") as f:
-        json.dump(order, f, ensure_ascii=False, indent=2)
-
-    # Check if SMTP is configured and active
-    if not smtp_cfg.get("enabled", False) or not smtp_cfg.get("user") or not smtp_cfg.get("password"):
-        return True, f"تم توثيق طلب الشراء بنجاح وحفظه في صندوق الصادر ({outbox_file}). بانتظار إدخال كلمة مرور البريد المرسل لتسليمه مباشرة للمستلمين."
+    host = smtp_cfg.get("host", "smtp.gmail.com")
+    port = smtp_cfg.get("port", 587)
+    user = smtp_cfg.get("user")
+    password = smtp_cfg.get("password")
+    sender = smtp_cfg.get("sender_email", user)
+    sender_name = smtp_cfg.get("sender_name", "GulfRay RFQ System")
 
     try:
-        msg = MIMEMultipart("alternative")
-        msg["Subject"] = subject
-        msg["From"] = f"{smtp_cfg.get('sender_name', 'GulfRay Orders')} <{smtp_cfg.get('sender_email', smtp_cfg.get('user'))}>"
-        msg["To"] = ", ".join(recipients)
-        msg.attach(MIMEText(html_body, "html", "utf-8"))
+        server = smtplib.SMTP(host, port, timeout=20)
+        if smtp_cfg.get("use_tls", True):
+            server.starttls()
+        if user and password:
+            server.login(user, password)
 
-        logo_path = order.get("logo_path")
-        if logo_path and os.path.exists(logo_path):
-            with open(logo_path, "rb") as f:
-                part = MIMEBase("application", "octet-stream")
-                part.set_payload(f.read())
+        # 1. Send Email to GulfRay Sales Team
+        msg_team = MIMEMultipart("mixed")
+        msg_team["Subject"] = f"🔔 [New RFQ] طلب عرض سعر جديد - {rfq.get('customer', {}).get('organization', 'Client')} - {rfq_id}"
+        msg_team["From"] = f"{sender_name} <{sender}>"
+        msg_team["To"] = ", ".join(team_recipients)
+
+        msg_body = MIMEMultipart("alternative")
+        msg_body.attach(MIMEText(team_html, "html", "utf-8"))
+        msg_team.attach(msg_body)
+
+        # Attach customer logo if provided
+        logo_filename = rfq.get("logo_filename")
+        if logo_filename:
+            logo_path = os.path.join("uploads", logo_filename)
+            if os.path.exists(logo_path):
+                with open(logo_path, "rb") as lf:
+                    part = MIMEBase("application", "octet-stream")
+                    part.set_payload(lf.read())
                 encoders.encode_base64(part)
-                part.add_header("Content-Disposition", f"attachment; filename={os.path.basename(logo_path)}")
-                msg.attach(part)
+                part.add_header("Content-Disposition", f'attachment; filename="Hospital_Logo_{logo_filename}"')
+                msg_team.attach(part)
 
-        host = smtp_cfg.get("host", "smtp.office365.com")
-        port = int(smtp_cfg.get("port", 587))
-        use_tls = smtp_cfg.get("use_tls", True)
+        server.sendmail(sender, team_recipients, msg_team.as_string())
 
-        server = smtplib.SMTP(host, port, timeout=15)
-        if use_tls:
-            server.starttls()
-        server.login(smtp_cfg.get("user"), smtp_cfg.get("password"))
-        server.sendmail(smtp_cfg.get("sender_email", smtp_cfg.get("user")), recipients, msg.as_string())
+        # 2. Send Acknowledgment Email to Customer
+        if customer_email and "@" in customer_email:
+            msg_cust = MIMEMultipart("alternative")
+            msg_cust["Subject"] = f"GulfRay® | Acknowledgment of Request for Quotation ({rfq_id})"
+            msg_cust["From"] = f"{sender_name} <{sender}>"
+            msg_cust["To"] = customer_email
+            msg_cust.attach(MIMEText(customer_html, "html", "utf-8"))
+            try:
+                server.sendmail(sender, [customer_email], msg_cust.as_string())
+            except Exception as e_cust:
+                print(f"Warning: Failed to send customer confirmation: {e_cust}")
+
         server.quit()
+        return True, f"Successfully dispatched RFQ {rfq_id} to GulfRay sales team and client confirmation."
 
-        return True, f"تم إرسال الإيميل الرسمي بنجاح إلى: {', '.join(recipients)}"
     except Exception as e:
-        return False, f"تم حفظ الطلب محلياً بنجاح، ولكن تعذر الإرسال عبر SMTP: {str(e)}"
-
-def send_test_email() -> Tuple[bool, str]:
-    config = load_config()
-    smtp_cfg = config.get("smtp", {})
-    notification_emails = config.get("notification_emails", [])
-    
-    if not smtp_cfg.get("enabled", False) or not smtp_cfg.get("user") or not smtp_cfg.get("password"):
-        return False, "بيانات البريد المرسل (SMTP) غير مفعلة أو لم يتم إدخال اسم المستخدم وكلمة المرور."
-
-    recipients = [e.strip() for e in notification_emails if e and "@" in e]
-    if not recipients:
-        return False, "لا توجد إيميلات محددة لاستقبال التنبيهات."
-
-    subject = "رسالة اختبار اتصال نظام GulfRay Orders System"
-    body = """مرحباً بك،
-هذه رسالة اختبارية لتأكيد نجاح اتصال خادم البريد بنظام طلبات عروض أسعار ومبيعات مصنع GulfRay.
-إذا وصلتك هذه الرسالة، فهذا يعني أن كافة الطلبيات القادمة ستصلك وتصل لباقي الإيميلات المحددة فوراً."""
-
-    try:
-        msg = MIMEMultipart()
-        msg["Subject"] = subject
-        msg["From"] = f"{smtp_cfg.get('sender_name', 'GulfRay System')} <{smtp_cfg.get('sender_email', smtp_cfg.get('user'))}>"
-        msg["To"] = ", ".join(recipients)
-        msg.attach(MIMEText(body, "plain", "utf-8"))
-
-        host = smtp_cfg.get("host", "smtp.office365.com")
-        port = int(smtp_cfg.get("port", 587))
-        use_tls = smtp_cfg.get("use_tls", True)
-
-        server = smtplib.SMTP(host, port, timeout=15)
-        if use_tls:
-            server.starttls()
-        server.login(smtp_cfg.get("user"), smtp_cfg.get("password"))
-        server.sendmail(smtp_cfg.get("sender_email", smtp_cfg.get("user")), recipients, msg.as_string())
-        server.quit()
-
-        return True, f"تم إرسال الإيميل التجريبي بنجاح إلى: {', '.join(recipients)}"
-    except Exception as e:
-        return False, f"فشل الاتصال بخادم البريد: {str(e)}"
+        return False, f"SMTP Error sending RFQ emails: {str(e)}"

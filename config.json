@@ -1,12 +1,16 @@
 {
   "company_name_ar": "GulfRay® | شركة سقالة حلول الوقاية",
   "company_name_en": "GulfRay® | Siqalah Shielding Solutions",
-  "company_subtitle_ar": "مصنع لإنتاج Radiation Protection Aprons وحلول الوقاية من الأشعة",
-  "company_subtitle_en": "Manufacturer of Radiation Protection Aprons & Radiation Shielding Solutions",
+  "company_subtitle_ar": "مصنع لإنتاج ملابس وحلول الوقاية من الأشعة",
+  "company_subtitle_en": "First Saudi Manufacturer of Radiation Protection Aprons & Shielding",
+  "contact_person": "Tarek Bakkar | طارق بكار",
+  "contact_email": "tarek@Ims-medical.com",
+  "contact_phone": "+966 56 241 4524",
+  "factory_maps_url": "https://maps.app.goo.gl/D3wPydgN2Z1XWUgc7?g_st=ic",
   "admin_pin": "9988",
   "notification_emails": [
-    "asaeed@ims-medical.com",
     "tarek@Ims-medical.com",
+    "asaeed@ims-medical.com",
     "atharwat@ims-medical.com",
     "aabdelrahman@ims-medical.com"
   ],
@@ -21,6 +25,6 @@
     "password": "tdjg dbuu wmzs imws",
     "use_tls": true,
     "sender_email": "ahmed.professional.sa@gmail.com",
-    "sender_name": "GulfRay Orders System"
+    "sender_name": "GulfRay RFQ System"
   }
 }
