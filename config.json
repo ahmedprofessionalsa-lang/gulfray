@@ -1,0 +1,26 @@
+{
+  "company_name_ar": "GulfRay® | شركة سقالة حلول الوقاية",
+  "company_name_en": "GulfRay® | Siqalah Shielding Solutions",
+  "company_subtitle_ar": "مصنع لإنتاج Radiation Protection Aprons وحلول الوقاية من الأشعة",
+  "company_subtitle_en": "Manufacturer of Radiation Protection Aprons & Radiation Shielding Solutions",
+  "admin_pin": "9988",
+  "notification_emails": [
+    "asaeed@ims-medical.com",
+    "tarek@Ims-medical.com",
+    "atharwat@ims-medical.com",
+    "aabdelrahman@ims-medical.com"
+  ],
+  "vat_rate": 0.15,
+  "currency_ar": "ر.س",
+  "currency_en": "SAR",
+  "smtp": {
+    "enabled": true,
+    "host": "smtp.gmail.com",
+    "port": 587,
+    "user": "ahmed.professional.sa@gmail.com",
+    "password": "tdjg dbuu wmzs imws",
+    "use_tls": true,
+    "sender_email": "ahmed.professional.sa@gmail.com",
+    "sender_name": "GulfRay Orders System"
+  }
+}

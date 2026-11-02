@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GulfRay® | Siqalah Shielding Solutions - Radiation Protection Aprons Factory</title>
+  <link rel="stylesheet" href="/css/style.css?v=2.6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body dir="ltr">
+
+  <!-- Site Header (Burmed Style + Official GulfRay Shield Logo) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-wrapper">
+        <img src="/images/gulfray_logo_transparent.png" alt="GulfRay Shield Logo" class="brand-logo-img">
+        <div class="brand-titles">
+          <h1 id="headerBrandTitle">GulfRay® | Siqalah Shielding Solutions</h1>
+          <span id="headerBrandSubtitle">Manufacturer of Radiation Protection Aprons & Radiation Shielding Solutions</span>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <!-- Language Switcher -->
+        <button class="btn-lang-toggle" id="btnLangToggle" onclick="toggleLanguage()" title="Switch Language">
+          <span>🌐 العربية</span>
+        </button>
+
+        <!-- Cart Button -->
+        <button class="btn-header-cart" id="btnOpenCart" onclick="openCartModal()">
+          <span id="txtHeaderCart">🛒 Purchase Order</span>
+          <span class="cart-count-badge" id="cartBadge">0</span>
+          <span id="cartHeaderTotal" style="font-size: 13px; font-weight: bold; margin-left: 4px;">0.00 SAR</span>
+        </button>
+
+        <!-- Admin Price Update Button -->
+        <button class="btn-admin-gear" onclick="openAdminModal()" title="Update Prices (Admin)">
+          <span id="txtAdminBtn">⚙️ Update Prices (Admin)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Burmed Style Hero Technical Strip -->
+  <section class="hero-medical-strip">
+    <div class="container">
+      <div class="hero-text">
+        <div class="hero-tag">
+          <span>🛡️ Core Shielding Technology • Certified CE & ISO 13485 Standards</span>
+        </div>
+        <h2 class="hero-title" id="heroTitle">
+          Advanced Core Material & Radiation Shielding Solutions
+        </h2>
+        <p class="hero-desc" id="heroDesc">
+          A specialized national manufacturing plant producing lightweight, high-protection lead aprons and medical radiation shielding solutions, engineered for optimal weight distribution and doctor comfort.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    
+    <!-- KPI Analytics Banner -->
+    <section class="kpi-banner">
+      <div class="kpi-card">
+        <div class="kpi-icon">📋</div>
+        <div class="kpi-info">
+          <div class="kpi-label" id="kpiLabelCat">Approved Categories</div>
+          <div class="kpi-value" id="kpiCategories">9 Main Categories</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">🛡️</div>
+        <div class="kpi-info">
+          <div class="kpi-label" id="kpiLabelItems">Registered SKUs</div>
+          <div class="kpi-value" id="kpiItemsCount">109 Products</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">⚡</div>
+        <div class="kpi-info">
+          <div class="kpi-label" id="kpiLabelLead">Lead Equivalence</div>
+          <div class="kpi-value">0.50 & 0.35 mm Pb</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">🏷️</div>
+        <div class="kpi-info">
+          <div class="kpi-label" id="kpiLabelPrice">Official Price List</div>
+          <div class="kpi-value" id="kpiPriceVal" style="color: var(--teal-primary);">SAR (Excl. 15% VAT)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View Mode Switcher -->
+    <div class="view-tabs">
+      <button class="tab-btn active" id="tabBtnConfig" onclick="switchView('config')">
+        <span id="tabConfigTxt">✨ Interactive Apron Configurator</span>
+      </button>
+      <button class="tab-btn" id="tabBtnCatalog" onclick="switchView('catalog')">
+        <span id="tabCatalogTxt">📊 Catalog & Price Explorer</span>
+      </button>
+    </div>
+
+    <!-- VIEW 1: Interactive Configurator -->
+    <div id="viewConfig" class="configurator-grid">
+      
+      <!-- Selection Steps Panel -->
+      <div class="selection-panel">
+        
+        <!-- Step 1: Category -->
+        <div class="step-section">
+          <div class="step-title">
+            <span class="step-num">1</span>
+            <span id="step1Title">اختر فئة المريول أو الإكسسوار (Product Category)</span>
+          </div>
+          <div class="category-pills-grid" id="categoryPillsContainer">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Step 2: Gender -->
+        <div class="step-section" id="stepGenderSection">
+          <div class="step-title">
+            <span class="step-num">2</span>
+            <span id="step2Title">التصميم والجنس (Gender / Cut)</span>
+          </div>
+          <div class="pills-group" id="genderPillsContainer">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Step 3: Lead Thickness -->
+        <div class="step-section" id="stepThicknessSection">
+          <div class="step-title">
+            <span class="step-num">3</span>
+            <span id="step3Title">سمك الرصاص المكافئ للحماية (Lead Equivalence)</span>
+          </div>
+          <div class="pills-group" id="thicknessPillsContainer">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Step 4: Size -->
+        <div class="step-section" id="stepSizeSection">
+          <div class="step-title">
+            <span class="step-num">4</span>
+            <span id="step4Title">المقاس (Size)</span>
+          </div>
+          <div class="pills-group" id="sizePillsContainer">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Step 5: Customization -->
+        <div class="step-section">
+          <div class="step-title">
+            <span class="step-num">5</span>
+            <span id="step5Title">التخصيص الفاخر وإرفاق الشعار (Customization) - اختياري</span>
+          </div>
+          <div class="customization-box">
+            <div class="form-group">
+              <label id="lblEmbroidery">🧵 تطريز مخصص على المريول (اسم الطبيب أو اسم القسم):</label>
+              <input type="text" id="customEmbroideryInput" class="form-control" placeholder="مثال: Dr. Ahmed Saeed - Radiology Dept">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label id="lblLogo">📎 إرفاق شعار المستشفى / المركز الطبي (Hospital Logo):</label>
+              <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <input type="file" id="logoFileInput" accept="image/*,.pdf" style="display: none;" onchange="handleLogoUpload(this)">
+                <button type="button" class="file-upload-btn" id="btnUploadLogo" onclick="document.getElementById('logoFileInput').click()">
+                  📤 اختر ملف الشعار من جهازك
+                </button>
+                <span id="logoUploadStatus" style="font-size: 13px; color: var(--silver-text);">لم يتم إرفاق ملف بعد</span>
+              </div>
+              <div id="logoPreviewContainer" style="margin-top: 10px; display: none;">
+                <img id="logoPreviewImg" src="" alt="شعار العميل" style="max-height: 50px; border-radius: 6px; border: 1px solid #cbd5e1; padding: 4px; background: #fff;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Sticky Summary Card -->
+      <aside class="summary-card">
+        <div class="summary-card-header">
+          <div class="summary-card-title" id="summaryCardTitle">ملخص الصنف المختار</div>
+          <div class="summary-badge-code" id="summaryItemCode">---</div>
+        </div>
+
+        <div class="selected-item-name" id="summaryItemName">
+          يرجى تحديد الفئة والمواصفات من القائمة
+        </div>
+
+        <div style="font-size: 13px; color: var(--silver-text); margin-bottom: 14px;" id="summarySpecsDetails">
+          المواصفات: -
+        </div>
+
+        <div class="price-display-box">
+          <div class="price-label" id="summaryPriceLbl">السعر الرسمي المعتمد للصنف</div>
+          <div class="price-amount" id="summaryItemPrice">0.00</div>
+          <div class="price-currency" id="summaryCurrencyLbl">ريال سعودي (غير شامل VAT)</div>
+        </div>
+
+        <!-- Quantity Counter -->
+        <div style="text-align: center; margin-bottom: 8px; font-weight: bold; font-size: 13px; color: var(--text-muted);" id="qtyLabel">
+          الكمية المطلوبة (Quantity)
+        </div>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" onclick="changeQty(-1)">-</button>
+          <input type="number" id="itemQtyInput" class="qty-input" value="1" min="1" max="500" onchange="validateQty(this)">
+          <button type="button" class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+
+        <!-- Add Button -->
+        <button type="button" class="btn-add-cart" id="btnAddToCart" onclick="addItemToCart()">
+          <span id="btnAddToCartTxt">🛒 إضافة إلى طلب عرض السعر</span>
+        </button>
+
+        <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--silver-border); font-size: 12px; color: var(--silver-text); text-align: center;" id="txtComplianceBadge">
+          ✓ منتجات مصنعة محلياً ومعتمدة وفق مواصفات CE و ISO للحماية الإشعاعية.
+        </div>
+      </aside>
+
+    </div>
+
+    <!-- VIEW 2: Data Catalog Table View (Power BI style) -->
+    <div id="viewCatalog" style="display: none; background: #fff; border: 1px solid var(--silver-border); border-radius: 14px; padding: 22px; box-shadow: var(--shadow-card);">
+      <div style="display: flex; gap: 15px; margin-bottom: 18px; flex-wrap: wrap;">
+        <input type="text" id="catalogSearchInput" class="form-control" style="flex: 1; min-width: 250px;" placeholder="🔍 ابحث برقم الكود، الفئة، أو المقاس..." oninput="filterCatalogTable()">
+        <select id="catalogCategoryFilter" class="form-control" style="width: 250px;" onchange="filterCatalogTable()">
+          <option value="" id="optAllCategories">جميع الفئات (All Categories)</option>
+        </select>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+          <thead>
+            <tr style="background-color: var(--teal-deep); color: #fff;">
+              <th style="padding: 12px;" id="thCode">الكود (Item Code)</th>
+              <th style="padding: 12px;" id="thCategory">الفئة (Category)</th>
+              <th style="padding: 12px;" id="thSpecs">النوع والمواصفة</th>
+              <th style="padding: 12px;" id="thSize">المقاس</th>
+              <th style="padding: 12px;" id="thThickness">السمك Pb</th>
+              <th style="padding: 12px;" id="thPrice">السعر (SAR)</th>
+              <th style="padding: 12px; text-align: center;" id="thAction">إجراء</th>
+            </tr>
+          </thead>
+          <tbody id="catalogTableBody">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- CART & CHECKOUT MODAL -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="cartModalTitle">📋 تفاصيل طلب الشراء / عرض السعر (RFQ)</div>
+        <button class="modal-close" onclick="closeCartModal()">&times;</button>
+      </div>
+
+      <!-- Cart Items List -->
+      <div id="cartItemsContainer">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Financial Totals -->
+      <div class="financial-box">
+        <div class="fin-row">
+          <span id="lblSubtotal">المجموع الفرعي (Subtotal):</span>
+          <span id="cartSubtotal" style="font-weight: bold;">0.00 ر.س</span>
+        </div>
+        <div class="fin-row">
+          <span id="lblVat">ضريبة القيمة المضافة 15% (VAT):</span>
+          <span id="cartVat" style="font-weight: bold;">0.00 ر.س</span>
+        </div>
+        <div class="fin-row grand-total">
+          <span id="lblGrandTotal">الإجمالي النهائي شامل الضريبة:</span>
+          <span id="cartGrandTotal">0.00 ر.س</span>
+        </div>
+      </div>
+
+      <!-- Customer Profile Form -->
+      <form id="orderForm" onsubmit="submitFinalOrder(event)">
+        <!-- Honeypot Bot Trap (Invisible to humans) -->
+        <div style="display: none !important;" aria-hidden="true">
+          <input type="text" id="custHoneypot" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div style="font-size: 16px; font-weight: 800; color: var(--teal-deep); margin-bottom: 12px; border-bottom: 1px solid var(--silver-border); padding-bottom: 6px;" id="hdrCustomerDetails">
+          👤 بيانات العميل وجهة الشراء
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label id="lblCustName">اسم المسؤول / الطبيب: *</label>
+            <input type="text" id="custName" class="form-control" required placeholder="مثال: د. عبدالله التميمي">
+          </div>
+          <div class="form-group">
+            <label id="lblCustOrg">اسم المستشفى / المركز الطبي: *</label>
+            <input type="text" id="custOrg" class="form-control" required placeholder="مثال: مستشفى المواساة">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label id="lblCustCity">المدينة: *</label>
+            <input type="text" id="custCity" class="form-control" required placeholder="مثال: الرياض / جدة">
+          </div>
+          <div class="form-group">
+            <label id="lblCustPhone">رقم الجوال / الواتساب: *</label>
+            <input type="tel" id="custPhone" class="form-control" required placeholder="مثال: 05XXXXXXXX" dir="ltr">
+          </div>
+          <div class="form-group">
+            <label id="lblCustEmail">البريد الإلكتروني للعميل: *</label>
+            <input type="email" id="custEmail" class="form-control" required placeholder="لتلقي نسخة الطلب" dir="ltr">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label id="lblPaymentMethod">طريقة السداد المعتمدة لدى جهتكم: *</label>
+          <select id="custPaymentMethod" class="form-control" required>
+            <option value="bank_transfer" id="optBankTransfer">تحويل بنكي رسمي (Bank Transfer)</option>
+            <option value="lpo" id="optLpo">أمر شراء حكومي / تعميد ودفع آجل للمستشفيات (LPO / Credit Term)</option>
+            <option value="cod" id="optCod">نقداً / شبكة عند التوريد (Cash / Card on Delivery)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label id="lblCustNotes">ملاحظات إضافية أو شروط خاصة:</label>
+          <textarea id="custNotes" class="form-control" rows="2" placeholder="أي تفاصيل خاصة بالتسليم أو مواعيد التوريد المطلوبة..."></textarea>
+        </div>
+
+        <!-- Notice -->
+        <div style="font-size: 12px; color: var(--silver-text); margin-bottom: 18px; line-height: 1.5; background: var(--teal-subtle); border: 1px solid #99f6e4; padding: 10px; border-radius: 8px;" id="txtOrderNotice">
+          📬 عند الضغط على "إرسال طلب الشراء"، سيتم توثيق الطلب وإرسال نسخة كاملة وفورية إلى إدارة مبيعات GulfRay (asaeed@ims-medical.com, tarek@Ims-medical.com, atharwat@ims-medical.com) بالإضافة إلى نسخة إلى إيميلك المسجل.
+        </div>
+
+        <!-- Buttons -->
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button type="submit" id="btnSubmitOrder" class="btn-add-cart" style="flex: 2;">
+            <span id="txtSubmitBtn">✉️ اعتماد وإرسال طلب الشراء الرسمي</span>
+          </button>
+          <button type="button" class="tab-btn active" style="flex: 1; justify-content: center; background: #334155;" onclick="triggerQuotationPrint()">
+            <span id="txtPrintBtn">📄 طباعة / PDF فوري</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ADMIN CONTROL PANEL MODAL (Price List & Email Settings) -->
+  <div class="modal-overlay" id="adminModal">
+    <div class="modal-content" style="max-width: 580px;">
+      <div class="modal-header">
+        <div class="modal-title" id="adminModalTitle">⚙️ لوحة إدارة الأسعار والإيميلات (Admin)</div>
+        <button class="modal-close" onclick="closeAdminModal()">&times;</button>
+      </div>
+
+      <!-- PIN verification stage -->
+      <div id="adminPinStage">
+        <p style="font-size: 13px; color: var(--silver-text); margin-bottom: 14px;">
+          أدخل الرمز السري للإدارة للوصول إلى تعديل قائمة الأسعار وإدارة إيميلات استلام الطلبيات:
+        </p>
+        <div class="form-group">
+          <label id="lblAdminPin">الرمز السري (PIN):</label>
+          <input type="password" id="adminPinInput" class="form-control" required placeholder="أدخل الرمز السري">
+        </div>
+        <div id="adminPinError" style="font-size: 13px; color: #ef4444; margin-bottom: 12px; display: none;"></div>
+        <button type="button" class="btn-add-cart" onclick="verifyAdminPin()">
+          <span>🔓 تسجيل الدخول للوحة الإدارة</span>
+        </button>
+      </div>
+
+      <!-- Admin Panel Tabs (shown after PIN) -->
+      <div id="adminPanelStage" style="display: none;">
+        
+        <!-- Tab Switcher -->
+        <div style="display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid var(--silver-border); padding-bottom: 10px;">
+          <button type="button" class="tab-btn active" id="adminTabBtnEmails" onclick="switchAdminTab('emails')">
+            <span>📧 إيميلات الاستلام</span>
+          </button>
+          <button type="button" class="tab-btn" id="adminTabBtnPrice" onclick="switchAdminTab('price')">
+            <span>📊 تحديث الأسعار</span>
+          </button>
+          <button type="button" class="tab-btn" id="adminTabBtnSmtp" onclick="switchAdminTab('smtp')">
+            <span>⚡ خادم الإرسال</span>
+          </button>
+        </div>
+
+        <!-- TAB 1: Notification Emails -->
+        <div id="adminTabEmails">
+          <p style="font-size: 13px; color: var(--silver-text); margin-bottom: 12px;">
+            حدد الإيميلات التي ترغب في أن تصلها تنبيهات وتفاصيل كافة طلبيات الشراء (اكتب كل إيميل في سطر):
+          </p>
+          <div class="form-group">
+            <textarea id="adminEmailsTextarea" class="form-control" rows="5" placeholder="asaeed@ims-medical.com&#10;tarek@Ims-medical.com&#10;atharwat@ims-medical.com" dir="ltr" style="font-family: monospace; font-size: 13px; line-height: 1.6;"></textarea>
+          </div>
+          <button type="button" class="btn-add-cart" onclick="saveAdminEmails()">
+            <span>💾 حفظ قائمة الإيميلات المعتمدة</span>
+          </button>
+        </div>
+
+        <!-- TAB 2: Price List Update -->
+        <div id="adminTabPrice" style="display: none;">
+          <p style="font-size: 13px; color: var(--silver-text); margin-bottom: 12px;">
+            اختر ملف <code>GulfRay price list.xlsx</code> الجديد ليقوم النظام بتحديث الأسعار فورياً ومحلياً:
+          </p>
+          <form id="adminUploadForm" onsubmit="submitPriceListUpdate(event)">
+            <div class="form-group">
+              <input type="file" id="adminExcelFileInput" class="form-control" accept=".xlsx,.xls" required>
+            </div>
+            <button type="submit" id="btnAdminUploadSubmit" class="btn-add-cart">
+              <span id="txtAdminUploadBtn">🔄 تحديث وتطبيق الأسعار الجديدة</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- TAB 3: SMTP Server Settings -->
+        <div id="adminTabSmtp" style="display: none;">
+          <p style="font-size: 13px; color: var(--silver-text); margin-bottom: 12px;">
+            إعدادات حساب البريد المرسل (SMTP) لتسليم الرسائل مباشرة عبر الإنترنت لصناديق الوارد:
+          </p>
+          <div class="form-group">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="smtpEnabledCheck">
+              <b>تفعيل إرسال الإيميلات المباشر عبر الإنترنت</b>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>خادم البريد (Host):</label>
+            <input type="text" id="smtpHostInput" class="form-control" value="smtp.office365.com" dir="ltr">
+            <small style="color: var(--silver-text); font-size: 11px;">لـ Office 365: smtp.office365.com | لـ Gmail: smtp.gmail.com</small>
+          </div>
+          <div class="form-group">
+            <label>البريد المرسل (User / Email):</label>
+            <input type="email" id="smtpUserInput" class="form-control" placeholder="orders@ims-medical.com" dir="ltr">
+          </div>
+          <div class="form-group">
+            <label>كلمة مرور البريد (Password / App Password):</label>
+            <input type="password" id="smtpPassInput" class="form-control" placeholder="كلمة المرور">
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 14px;">
+            <button type="button" class="btn-add-cart" style="flex: 2;" onclick="saveSmtpSettings()">
+              <span>💾 حفظ إعدادات البريد</span>
+            </button>
+            <button type="button" class="tab-btn active" style="flex: 1; justify-content: center; background: #0284c7;" onclick="testSmtpConnection()">
+              <span>📨 اختبار الإرسال</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Status Message -->
+        <div id="adminUpdateMessage" style="font-size: 13px; margin-top: 14px; padding: 10px; border-radius: 6px; display: none;"></div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PRINTABLE OFFICIAL A4 QUOTATION / PURCHASE ORDER -->
+  <div class="print-area" id="printArea">
+    <!-- Rendered dynamically on print request -->
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
