@@ -285,7 +285,7 @@ def generate_customer_rfq_html(rfq: Dict) -> str:
                 </div>
                 <div style="margin-bottom: 6px;">
                     📞 Mobile: <a href="tel:+966562414524" style="color: #006C35; font-weight: bold; text-decoration: none;">+966 56 241 4524</a> &nbsp;|&nbsp; 
-                    ✉️ Email: <a href="mailto:tarek@Ims-medical.com" style="color: #0284c7; text-decoration: none;">tarek@Ims-medical.com</a>
+                    ✉️ Email: <a href="mailto:operations@gulfray.com.sa" style="color: #0284c7; text-decoration: none;">operations@gulfray.com.sa</a>
                 </div>
                 <div style="margin-top: 10px;">
                     <a href="https://maps.app.goo.gl/D3wPydgN2Z1XWUgc7?g_st=ic" target="_blank" style="display: inline-block; background: #006C35; color: #ffffff; padding: 7px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 12px;">
