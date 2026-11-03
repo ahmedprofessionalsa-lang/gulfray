@@ -81,15 +81,13 @@ def generate_team_rfq_html(rfq: Dict) -> str:
 <body style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background-color: #f1f5f9; margin: 0; padding: 25px 15px; color: #1e293b;">
     <div style="max-width: 680px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
         
-        <!-- Header with Saudi Heritage Banner -->
-        <div style="background: linear-gradient(135deg, #004d26 0%, #006C35 50%, #684F8C 100%); padding: 25px; color: #ffffff; text-align: center;">
-            <div style="font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #C5A869; font-weight: bold;">
-                Saudi Arabia's First Radiation Shielding Manufacturer
-            </div>
-            <h1 style="margin: 8px 0 4px; font-size: 22px; font-weight: 800; letter-spacing: 0.5px;">
+        <!-- Header with Official GulfRay Shield Logo -->
+        <div style="background-color: #ffffff; padding: 25px 20px 18px; text-align: center; border-bottom: 3px solid #006C35;">
+            <img src="https://gulfray-medical.onrender.com/images/gulfray_logo_transparent.png" alt="GulfRay Shield Logo" style="height: 92px; max-height: 95px; width: auto; display: block; margin: 0 auto 10px;">
+            <h1 style="margin: 0 0 4px; font-size: 21px; font-weight: 800; color: #004d26; letter-spacing: 0.5px;">
                 GulfRay® | شركة سقالة حلول الوقاية
             </h1>
-            <div style="font-size: 13px; opacity: 0.95;">
+            <div style="font-size: 13px; color: #64748b; font-weight: 600;">
                 إشعار طلب عرض سعر جديد (Request For Quotation - RFQ)
             </div>
         </div>
@@ -163,13 +161,13 @@ def generate_team_rfq_html(rfq: Dict) -> str:
         <!-- Footer -->
         <div style="background: #0f172a; color: #94a3b8; padding: 18px 25px; text-align: center; font-size: 11px;">
             <p style="margin: 0 0 6px; color: #ffffff; font-weight: bold; font-size: 12px;">
-                GulfRay® | شركة سقالة حلول الوقاية (Siqalah Shielding Solutions)
+                GulfRay® | شركة سقالة حلول الوقاية
             </p>
             <p style="margin: 0 0 4px;">
                 المملكة العربية السعودية | صنع في السعودية بموجب أعلى المعايير الطبية الدولية IEC / ASTM / BS EN
             </p>
             <p style="margin: 0; opacity: 0.7;">
-                نظام إدارة طلبات عروض الأسعار الإلكتروني - بريد آلي معتمد
+                نظام إدارة طلبات عروض الأسعار الإلكتروني - operations@gulfray.com.sa
             </p>
         </div>
     </div>
@@ -177,7 +175,7 @@ def generate_team_rfq_html(rfq: Dict) -> str:
 </html>"""
 
 def generate_customer_rfq_html(rfq: Dict) -> str:
-    """Generates a luxury, bilingual confirmation email sent directly to the prospective healthcare customer."""
+    """Generates a concise, luxury confirmation email for prospective clients with logo, clear details, and zero fluff."""
     items = rfq.get("items", [])
     customer = rfq.get("customer", {})
     rfq_id = rfq.get("rfq_id", f"GR-RFQ-{datetime.now().strftime('%Y%m%d%H%M%S')}")
@@ -189,17 +187,19 @@ def generate_customer_rfq_html(rfq: Dict) -> str:
         collection = item.get("collection", "Saudi Editions (Saudi Green)")
         lead_eq = item.get("thickness", "0.50 mm Pb")
         size = item.get("size", "L")
+        embroidery_txt = f"<br><small style='color: #006C35;'>🧵 {item.get('embroidery')}</small>" if item.get("embroidery") else ""
 
         items_summary_rows += f"""
         <tr style="border-bottom: 1px solid #e2e8f0; font-size: 13px;">
             <td style="padding: 10px; text-align: center; color: #64748b;">{idx}</td>
             <td style="padding: 10px;">
                 <b style="color: #0f172a;">{item.get('name_en', 'Radiation Protection Apron')}</b>
-                <div style="color: #64748b; font-size: 12px; margin-top: 3px;">
-                    {item.get('name_ar', '')} | <b>{core_mat}</b> | {lead_eq} | {collection} | Size: {size}
+                <div style="color: #64748b; font-size: 12px; margin-top: 2px;">
+                    {item.get('name_ar', '')} | <b>{core_mat}</b> | {lead_eq} | {collection} | Size: {size} ({item.get('gender', 'Unisex')})
+                    {embroidery_txt}
                 </div>
             </td>
-            <td style="padding: 10px; text-align: center; font-weight: bold; color: #006C35;">{item.get('qty', 1)}</td>
+            <td style="padding: 10px; text-align: center; font-weight: bold; color: #006C35; font-size: 14px;">{item.get('qty', 1)}</td>
         </tr>
         """
 
@@ -207,67 +207,54 @@ def generate_customer_rfq_html(rfq: Dict) -> str:
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Acknowledgment: Request for Quotation {rfq_id} - GulfRay®</title>
+<title>Acknowledgment: RFQ {rfq_id} - GulfRay®</title>
 </head>
-<body style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 25px 15px; color: #1e293b;">
-    <div style="max-width: 650px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
+<body style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 20px 10px; color: #1e293b;">
+    <div style="max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
         
-        <!-- Header -->
-        <div style="background: linear-gradient(135deg, #004d26 0%, #006C35 60%, #C5A869 100%); padding: 30px 25px; color: #ffffff; text-align: center;">
-            <div style="font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #FAF8F5; font-weight: bold;">
-                Saudi Arabia's First Radiation Shielding Manufacturer
-            </div>
-            <h1 style="margin: 8px 0 4px; font-size: 24px; font-weight: 800;">
-                GulfRay® | Siqalah Shielding Solutions
+        <!-- Header with Official GulfRay Shield Logo -->
+        <div style="background-color: #ffffff; padding: 26px 20px 20px; text-align: center; border-bottom: 3px solid #006C35;">
+            <img src="https://gulfray-medical.onrender.com/images/gulfray_logo_transparent.png" alt="GulfRay Shield Logo" style="height: 92px; max-height: 95px; width: auto; display: block; margin: 0 auto 10px;">
+            <h1 style="margin: 0 0 4px; font-size: 21px; font-weight: 800; color: #004d26; letter-spacing: 0.5px;">
+                GulfRay® | شركة سقالة حلول الوقاية
             </h1>
-            <div style="font-size: 14px; opacity: 0.95;">
-                شركة سقالة حلول الوقاية - مصنع حلول الوقاية من الإشعاع
+            <div style="font-size: 13px; color: #64748b; font-weight: 600;">
+                مصنع إنتاج ملابس وحلول الوقاية من الإشعاع الطبي
             </div>
         </div>
 
-        <!-- Ref Banner -->
-        <div style="background: #FAF8F5; border-bottom: 2px solid #C5A869; padding: 14px 25px; font-size: 13px; text-align: center;">
-            <span style="color: #64748b;">RFQ Reference Number:</span> 
-            <b style="color: #006C35; font-size: 15px; font-family: monospace; margin-left: 6px;">{rfq_id}</b>
+        <!-- RFQ Reference Bar -->
+        <div style="background: #FAF8F5; border-bottom: 2px solid #C5A869; padding: 10px 20px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div>RFQ Ref: <b style="color: #006C35; font-family: monospace; font-size: 14px;">{rfq_id}</b></div>
+            <div style="color: #64748b; font-size: 12px;">Date: <b>{created_at}</b></div>
         </div>
 
-        <div style="padding: 30px 25px;">
-            <!-- Formal English Greeting -->
-            <div style="border-bottom: 1px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 20px;">
-                <p style="font-size: 15px; font-weight: 600; color: #0f172a; margin: 0 0 10px;">
-                    Dear {customer.get('name', 'Valued Client')},
+        <div style="padding: 22px 20px;">
+            <!-- Concise English & Arabic Acknowledgment Message -->
+            <div style="background: #f8fafc; border-left: 4px solid #006C35; border-radius: 4px; padding: 14px 16px; margin-bottom: 20px;">
+                <p style="font-size: 14px; font-weight: 700; color: #0f172a; margin: 0 0 6px;">
+                    Dear {customer.get('name', 'Valued Client')} ({customer.get('organization', 'Healthcare Facility')}),
                 </p>
-                <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 10px;">
-                    Thank you for your interest in <b>GulfRay® medical radiation protection solutions</b>. We have officially received your <b>Request for Quotation (RFQ)</b> for <b>{customer.get('organization', 'your healthcare facility')}</b>.
+                <p style="font-size: 13px; line-height: 1.5; color: #334155; margin: 0 0 10px;">
+                    Thank you for contacting <b>GulfRay®</b>. We have successfully received your <b>Request for Quotation</b>. Our medical shielding engineers are preparing your official quotation with volume pricing and delivery schedule. You will receive it within <b>24 business hours</b>.
                 </p>
-                <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0;">
-                    Our specialized technical sales and radiation shielding engineers are currently reviewing your custom specifications, material cores, and lead equivalences. A formal, comprehensive quotation with certified delivery timelines will be forwarded to your email within <b>24 business hours</b>.
-                </p>
+                <div style="border-top: 1px dashed #cbd5e1; padding-top: 8px; text-align: right; direction: rtl;">
+                    <p style="font-size: 13px; line-height: 1.6; color: #004d26; margin: 0;">
+                        سعادة <b>{customer.get('name', 'العميل الكريم')}</b>، نؤكد استلام طلب عرض السعر لـ <b>({customer.get('organization', 'منشأتكم الموقرة')})</b>. يقوم فريقنا الهندسي بإعداد العرض الرسمي المعتمد وسيتم إرساله والتواصل معكم خلال <b>24 ساعة عمل</b>.
+                    </p>
+                </div>
             </div>
 
-            <!-- Formal Arabic Greeting -->
-            <div style="border-bottom: 1px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 20px; text-align: right; direction: rtl;">
-                <p style="font-size: 15px; font-weight: 600; color: #006C35; margin: 0 0 10px;">
-                    سعادة {customer.get('name', 'العميل الكريم')} المحترم،
-                </p>
-                <p style="font-size: 14px; line-height: 1.7; color: #334155; margin: 0 0 10px;">
-                    نشكركم لاختياركم <b>GulfRay® | شركة سقالة حلول الوقاية</b>، أول مصنع سعودي متخصص في إنتاج ملابس وإكسسوارات الوقاية من الإشعاع الطبي.
-                </p>
-                <p style="font-size: 14px; line-height: 1.7; color: #334155; margin: 0;">
-                    نؤكد لكم استلام طلبكم المسجل برقم <b>({rfq_id})</b>. يقوم فريقنا الاستشاري حالياً بدراسة المواصفات والتطريزات المطلوبة، وسيتم إرسال عرض السعر الرسمي المعتمد والتواصل معكم خلال <b>24 ساعة عمل</b>.
-                </p>
-            </div>
-
-            <!-- Requested Items Summary (ZERO PRICES) -->
-            <h4 style="margin: 0 0 12px; font-size: 14px; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px;">
-                Summary of Requested Garments & Specifications:
+            <!-- Requested Items Summary Table -->
+            <h4 style="margin: 0 0 10px; font-size: 13px; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px;">
+                📋 Summary of Requested Specifications / ملخص المواصفات:
             </h4>
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px;">
                 <thead>
                     <tr style="background: #006C35; color: #ffffff; font-size: 12px;">
-                        <th style="padding: 8px 10px; text-align: center; width: 40px;">#</th>
-                        <th style="padding: 8px 10px; text-align: left;">Item & Configuration</th>
-                        <th style="padding: 8px 10px; text-align: center; width: 60px;">Qty</th>
+                        <th style="padding: 8px; text-align: center; width: 35px;">#</th>
+                        <th style="padding: 8px; text-align: left;">Item & Specifications</th>
+                        <th style="padding: 8px; text-align: center; width: 50px;">Qty</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -275,46 +262,36 @@ def generate_customer_rfq_html(rfq: Dict) -> str:
                 </tbody>
             </table>
 
-            <!-- Factory & Direct Advisory Contact Card -->
-            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 18px; margin-bottom: 20px; font-size: 13px; text-align: center;">
-                <b style="color: #006C35; font-size: 14px; display: block; margin-bottom: 6px;">
+            <!-- Direct Contact Card -->
+            <div style="background: #FAF8F5; border: 1px solid #C5A869; border-radius: 8px; padding: 14px; text-align: center; margin-bottom: 15px;">
+                <b style="color: #006C35; font-size: 13px; display: block; margin-bottom: 4px;">
                     Direct Procurement Advisory / استشارات التوريد المباشرة:
                 </b>
-                <div style="color: #0f172a; font-weight: bold; margin-bottom: 6px;">
-                    Tarek Bakkar | طارق بكار
+                <div style="color: #0f172a; font-weight: bold; font-size: 14px; margin-bottom: 4px;">
+                    Ahmed Tharwat | أحمد ثروت
                 </div>
-                <div style="margin-bottom: 6px;">
-                    📞 Mobile: <a href="tel:+966562414524" style="color: #006C35; font-weight: bold; text-decoration: none;">+966 56 241 4524</a> &nbsp;|&nbsp; 
-                    ✉️ Email: <a href="mailto:operations@gulfray.com.sa" style="color: #0284c7; text-decoration: none;">operations@gulfray.com.sa</a>
-                </div>
-                <div style="margin-top: 10px;">
-                    <a href="https://maps.app.goo.gl/D3wPydgN2Z1XWUgc7?g_st=ic" target="_blank" style="display: inline-block; background: #006C35; color: #ffffff; padding: 7px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 12px;">
-                        📍 View GulfRay Factory Location (Google Maps) ↗
-                    </a>
-                </div>
-            </div>
-
-            <!-- Factory Certifications Callout -->
-            <div style="background: #FAF8F5; border: 1px solid #C5A869; border-radius: 8px; padding: 15px; font-size: 12px; color: #475569; text-align: center;">
-                <div style="font-weight: bold; color: #006C35; margin-bottom: 4px;">
-                    🛡️ Tested & Verified by Leading Global Laboratories
+                <div style="font-size: 13px; margin-bottom: 8px;">
+                    📞 <a href="tel:+966562414524" style="color: #006C35; font-weight: bold; text-decoration: none;">+966 56 241 4524</a> &nbsp;|&nbsp; 
+                    ✉️ <a href="mailto:operations@gulfray.com.sa" style="color: #0284c7; text-decoration: none;">operations@gulfray.com.sa</a>
                 </div>
                 <div>
-                    National Physical Laboratory (UK) · BS EN 61331-1:2014 Broad-Beam · ASTM F2547-18 · SGS REACH Screening · US FDA Compliant
+                    <a href="https://maps.app.goo.gl/D3wPydgN2Z1XWUgc7?g_st=ic" target="_blank" style="display: inline-block; background: #006C35; color: #ffffff; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 11px;">
+                        📍 View Factory Location (Google Maps) ↗
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
-        <div style="background: #0f172a; color: #94a3b8; padding: 22px 25px; text-align: center; font-size: 12px;">
-            <p style="margin: 0 0 6px; color: #ffffff; font-weight: bold;">
-                GulfRay® | Siqalah Shielding Solutions
+        <!-- Clean Footer -->
+        <div style="background: #0f172a; color: #94a3b8; padding: 16px 20px; text-align: center; font-size: 11px;">
+            <p style="margin: 0 0 4px; color: #ffffff; font-weight: bold; font-size: 12px;">
+                GulfRay® | شركة سقالة حلول الوقاية
             </p>
-            <p style="margin: 0 0 4px; font-size: 11px;">
-                Kingdom of Saudi Arabia · Made in KSA with Pride · info@gulfray.com.sa
+            <p style="margin: 0 0 4px;">
+                المملكة العربية السعودية · صنع في السعودية بموجب أعلى المعايير الطبية IEC / ASTM / BS EN
             </p>
-            <p style="margin: 0; font-size: 10px; opacity: 0.7;">
-                This is an automated acknowledgment confirming receipt of your official RFQ.
+            <p style="margin: 0; color: #C5A869;">
+                operations@gulfray.com.sa
             </p>
         </div>
     </div>
