@@ -198,6 +198,57 @@ class CatalogEngine:
             }
         ]
 
+        self.fabric_reference = {
+            "solid_colors": [
+                {"code": "F-01", "hex": "#1D253A", "name_en": "Navy", "name_ar": "كحلي · أزرق ليلي عميق", "rgb": "29 37 58", "cmyk": "50 36 0 77", "used_in": "GR-01, GR-02, MM-01, TU-01, SC-03, SC-05V/S, SC-09, SC-12V/S"},
+                {"code": "F-02", "hex": "#1B6F80", "name_en": "Signature Teal", "name_ar": "تركوازي جلف راي · لون الهوية", "rgb": "27 111 128", "cmyk": "79 13 0 50", "used_in": "GR-01, GR-02, TU-03"},
+                {"code": "F-03", "hex": "#173832", "name_en": "Deep Teal Green", "name_ar": "أخضر بترولي داكن", "rgb": "23 56 50", "cmyk": "59 0 11 78", "used_in": "BS-01, SC-01, SC-04V/S, SC-07, SC-10V/S"},
+                {"code": "F-04", "hex": "#234A3C", "name_en": "Emerald Green", "name_ar": "أخضر زمردي · أخضر غني", "rgb": "35 74 60", "cmyk": "53 0 19 71", "used_in": "GR-05, GR-08, GR-10, GR-11"},
+                {"code": "F-05", "hex": "#9AA08E", "name_en": "Sage", "name_ar": "أخضر مريمية · أخضر رمادي هادئ", "rgb": "154 160 142", "cmyk": "4 0 11 37", "used_in": "BS-03, MM-03"},
+                {"code": "F-06", "hex": "#657E82", "name_en": "Slate Teal", "name_ar": "رمادي بترولي · أزرق رمادي مطفأ", "rgb": "101 126 130", "cmyk": "22 3 0 49", "used_in": "SS-03"},
+                {"code": "F-07", "hex": "#5A6D8E", "name_en": "Slate Blue", "name_ar": "أزرق أردوازي · أزرق رمادي متوسط", "rgb": "90 109 142", "cmyk": "37 23 0 44", "used_in": "SC-03"},
+                {"code": "F-08", "hex": "#1F4E9E", "name_en": "Cobalt Blue", "name_ar": "أزرق كوبالتي · أزرق ملكي ساطع", "rgb": "31 78 158", "cmyk": "80 51 0 38", "used_in": "GR-04"},
+                {"code": "F-09", "hex": "#A887AD", "name_en": "Lavender", "name_ar": "خزامى · بنفسجي فاتح ناعم", "rgb": "168 135 173", "cmyk": "3 22 0 32", "used_in": "GR-06, BS-02, MM-03, SC-02, SC-06V/S"},
+                {"code": "F-10", "hex": "#573649", "name_en": "Aubergine", "name_ar": "باذنجاني · بنفسجي داكن عميق", "rgb": "87 54 73", "cmyk": "0 38 16 66", "used_in": "GR-06, BS-02"},
+                {"code": "F-11", "hex": "#5A2332", "name_en": "Burgundy", "name_ar": "عنابي · أحمر نبيذي داكن", "rgb": "90 35 50", "cmyk": "0 61 44 65", "used_in": "GR-03, GR-07, SC-02, SC-06V/S"},
+                {"code": "F-12", "hex": "#9A1A22", "name_en": "Gulf Red", "name_ar": "أحمر خليجي · أحمر قرمزي قوي", "rgb": "154 26 34", "cmyk": "0 83 78 40", "used_in": "GR-08, GR-09, GR-10, GR-11"},
+                {"code": "F-13", "hex": "#E26C5F", "name_en": "Coral", "name_ar": "مرجاني · برتقالي وردي دافئ", "rgb": "226 108 95", "cmyk": "0 52 58 11", "used_in": "GR-01, GR-03, SS-02, SC-05V/S"},
+                {"code": "F-14", "hex": "#B56F74", "name_en": "Dusty Rose", "name_ar": "وردي ترابي · وردي مطفأ", "rgb": "181 111 116", "cmyk": "0 39 36 29", "used_in": "MM-02, SC-08, SC-11V/S"},
+                {"code": "F-15", "hex": "#C3938F", "name_en": "Blush Pink", "name_ar": "وردي فاتح · وردي باهت ناعم", "rgb": "195 147 143", "cmyk": "0 25 27 24", "used_in": "GR-07"},
+                {"code": "F-16", "hex": "#D58F39", "name_en": "Ochre", "name_ar": "مغرة · أصفر ذهبي ترابي", "rgb": "213 143 57", "cmyk": "0 33 73 16", "used_in": "SS-01"},
+                {"code": "F-17", "hex": "#F5BA4F", "name_en": "Sunflower Yellow", "name_ar": "أصفر عبّاد الشمس", "rgb": "245 186 79", "cmyk": "0 24 68 4", "used_in": "GR-04"},
+                {"code": "F-18", "hex": "#412821", "name_en": "Chocolate Brown", "name_ar": "بني شوكولاتة · بني داكن", "rgb": "65 40 33", "cmyk": "0 38 49 75", "used_in": "SS-01"},
+                {"code": "F-19", "hex": "#D3B599", "name_en": "Sand", "name_ar": "رملي · بيج صحراوي دافئ", "rgb": "211 181 153", "cmyk": "0 14 27 17", "used_in": "GR-01, GR-02"},
+                {"code": "F-20", "hex": "#B8A391", "name_en": "Taupe Stone", "name_ar": "بيج حجري · رملي محايد", "rgb": "184 163 145", "cmyk": "0 11 21 28", "used_in": "SS-03, SC-04V/S"},
+                {"code": "F-21", "hex": "#C5BBB2", "name_en": "Stone Grey", "name_ar": "رمادي حجري · رمادي دافئ", "rgb": "197 187 178", "cmyk": "0 5 10 23", "used_in": "GR-04"},
+                {"code": "F-22", "hex": "#B5B3B0", "name_en": "Pearl Grey", "name_ar": "رمادي لؤلؤي · رمادي فاتح بارد", "rgb": "181 179 176", "cmyk": "0 1 3 29", "used_in": "GR-09"},
+                {"code": "F-23", "hex": "#E7D8C9", "name_en": "Ivory", "name_ar": "عاجي · أبيض كريمي ناعم", "rgb": "231 216 201", "cmyk": "0 6 13 9", "used_in": "GR-05, GR-06, GR-07, GR-08, GR-10, GR-11, BS-03"},
+                {"code": "F-24", "hex": "#3A393C", "name_en": "Charcoal", "name_ar": "رمادي فحمي · رمادي داكن", "rgb": "58 57 60", "cmyk": "3 5 0 76", "used_in": "GR-03, MM-02, TU-02"},
+                {"code": "F-25", "hex": "#1F1E1B", "name_en": "Black", "name_ar": "أسود · أسود كلاسيكي", "rgb": "31 30 27", "cmyk": "0 3 13 88", "used_in": "GR-08, GR-10, TU-03"}
+            ],
+            "printed_fabrics": [
+                {"code": "P08", "name_en": "Sunflower", "name_ar": "عبّاد الشمس", "desc_en": "Sunflower blossoms on cream base", "desc_ar": "زهور عبّاد الشمس على أرضية كريمية", "image": "/images/fabrics/P08_sunflower.jpg", "used_in": "SS-01"},
+                {"code": "P17", "name_en": "Eucalyptus", "name_ar": "أوراق الكينا", "desc_en": "Green branches on crisp white base", "desc_ar": "أغصان خضراء على أرضية بيضاء", "image": "/images/fabrics/P17_eucalyptus.jpg", "used_in": "BS-01, SC-07, SC-10V/S"},
+                {"code": "P18", "name_en": "Spring Flora", "name_ar": "زهور الربيع", "desc_en": "Pink & blue delicate watercolour flowers", "desc_ar": "زهور مائية وردية وزرقاء رقيقة", "image": "/images/fabrics/P18_spring_flora.jpg", "used_in": "SS-02, SC-11V/S"},
+                {"code": "P19", "name_en": "Abstract Botanical", "name_ar": "نباتات تجريدية", "desc_en": "Warm tonal botanical brushstrokes", "desc_ar": "ضربات فرشاة نباتية بدرجات دافئة", "image": "/images/fabrics/P19_abstract_botanical.jpg", "used_in": "SS-03"},
+                {"code": "P20", "name_en": "Watercolour Wave", "name_ar": "أمواج مائية", "desc_en": "Gentle undulating watercolour waves", "desc_ar": "خطوط متموجة انسيابية بألوان مائية", "image": "/images/fabrics/P20_watercolour_wave.jpg", "used_in": "MM-03"},
+                {"code": "P21", "name_en": "Lavender Sketch", "name_ar": "رسم الخزامى", "desc_en": "Hand-sketched purple lavender botanicals", "desc_ar": "زهور بنفسجية مرسومة باليد", "image": "/images/fabrics/P21_lavender_sketch.jpg", "used_in": "BS-02"},
+                {"code": "P22", "name_en": "Micro Floral", "name_ar": "زهور دقيقة", "desc_en": "Subtle miniature floral print on light ground", "desc_ar": "زهور صغيرة ناعمة على أرضية فاتحة", "image": "/images/fabrics/P22_micro_floral.jpg", "used_in": "BS-03"},
+                {"code": "P23", "name_en": "Geometric Lattice", "name_ar": "شبكة هندسية", "desc_en": "Refined repeated pink lattice geometric motif", "desc_ar": "نقش هندسي متكرر بلون وردي", "image": "/images/fabrics/P23_geometric_lattice.jpg", "used_in": "MM-02, SC-08"},
+                {"code": "P40", "name_en": "Blue Camo", "name_ar": "تمويه أزرق", "desc_en": "Contemporary multi-tonal navy tactical camo", "desc_ar": "تمويه تكتيكي بدرجات الكحلي والأزرق", "image": "/images/fabrics/P40_blue_camo.jpg", "used_in": "TU-01"},
+                {"code": "P41", "name_en": "Grey Digital Camo", "name_ar": "تمويه رقمي رمادي", "desc_en": "Modern geometric grey & black digital pixel camo", "desc_ar": "مربعات تمويه رقمي بالرمادي والأسود", "image": "/images/fabrics/P41_grey_digital_camo.jpg", "used_in": "TU-02"},
+                {"code": "P68", "name_en": "Teal Abstract", "name_ar": "تجريدي بترولي", "desc_en": "High-contrast teal & black abstract shapes", "desc_ar": "أشكال تجريدية بالتركوازي والأسود", "image": "/images/fabrics/P68_teal_abstract.jpg", "used_in": "MM-01, TU-03, SC-09, SC-12V/S"}
+            ],
+            "trims": [
+                {"code": "T-01", "hex": "#1F1E1B", "name_en": "Black binding tape", "name_ar": "شريط حواف أسود", "type_en": "Edge binding", "type_ar": "تحديد الحواف", "used_in": "All garments except GR-07, GR-09"},
+                {"code": "T-02", "hex": "#5A2332", "name_en": "Burgundy binding tape", "name_ar": "شريط حواف عنابي", "type_en": "Edge binding", "type_ar": "تحديد الحواف", "used_in": "GR-07"},
+                {"code": "T-03", "hex": "#9A1A22", "name_en": "Red binding tape", "name_ar": "شريط حواف أحمر", "type_en": "Edge binding", "type_ar": "تحديد الحواف", "used_in": "GR-09"},
+                {"code": "T-04", "hex": "#C9AE7C", "name_en": "Gold piping", "name_ar": "قيطان ذهبي", "type_en": "Piping between panels", "type_ar": "قيطان بين القطع", "used_in": "GR-05, GR-06"},
+                {"code": "T-05", "hex": "#E7D8C9", "name_en": "Ivory piping", "name_ar": "قيطان عاجي", "type_en": "Piping between panels", "type_ar": "قيطان بين القطع", "used_in": "GR-07, GR-09"},
+                {"code": "T-06", "hex": "#1F1E1B", "name_en": "Black webbing & Velcro", "name_ar": "أحزمة سوداء وفيلكرو", "type_en": "Belts and closures", "type_ar": "الأحزمة والإغلاقات", "used_in": "All garments"}
+            ]
+        }
+
     def get_full_catalog_data(self) -> Dict:
         """Returns the full catalog specification with zero prices."""
         return {
@@ -205,6 +256,7 @@ class CatalogEngine:
             "categories_meta": self.categories_meta,
             "core_materials": self.core_materials,
             "collections": self.collections,
+            "fabric_reference": self.fabric_reference,
             "quality_certifications": [
                 {
                     "body": "National Physical Laboratory (NPL), UK",

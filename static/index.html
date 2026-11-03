@@ -62,6 +62,7 @@
       <nav class="main-nav">
         <a href="#materials" class="nav-link" id="navLinkMaterials">Core Materials</a>
         <a href="#collections" class="nav-link" id="navLinkCollections">Saudi Collections</a>
+        <a href="#fabrics" class="nav-link" id="navLinkFabrics">Fabric Codes</a>
         <a href="#rfq-builder" class="nav-link" id="navLinkBuilder">RFQ Configurator</a>
         <a href="#compliance" class="nav-link" id="navLinkCompliance">Certifications</a>
         <a href="#workflow" class="nav-link" id="navLinkWorkflow">Working with Us</a>
@@ -346,6 +347,34 @@
     </div>
   </section>
 
+  <!-- SECTION 2.5: 2027 OUTER FABRIC & COLOUR REFERENCE -->
+  <section class="fabric-reference-section" id="fabrics">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-tag" id="fabricsTag">2027 PRODUCTION REFERENCE · FABRIC SPECIFICATIONS</span>
+        <h3 class="section-title" id="fabricsTitle">Outer Fabric, Print & Trim Colour Reference</h3>
+        <p class="section-desc" id="fabricsDesc">
+          Every outer-shell colour, print, and trim used across the official 2027 catalogue. Browse verified HEX codes, physical textile swatches, and factory codes (F-01 to F-25, P08 to P68, T-01 to T-06) for bespoke hospital orders.
+        </p>
+      </div>
+
+      <!-- Fabric Filter Tabs -->
+      <div class="fabric-tabs">
+        <button class="fabric-tab-btn active" onclick="filterFabrics('all')" id="tabFabAll">All Swatches (42)</button>
+        <button class="fabric-tab-btn" onclick="filterFabrics('solids')" id="tabFabSolids">🎨 Solid Colours · F-01 to F-25 (25)</button>
+        <button class="fabric-tab-btn" onclick="filterFabrics('prints')" id="tabFabPrints">🖼️ Printed Fabrics · P08 to P68 (11)</button>
+        <button class="fabric-tab-btn" onclick="filterFabrics('trims')" id="tabFabTrims">🧵 Trims & Piping · T-01 to T-06 (6)</button>
+      </div>
+
+      <!-- Fabrics Display Grid -->
+      <div class="fabric-display-grid" id="fabricsGrid">
+        <!-- Rendered via JS -->
+      </div>
+
+    </div>
+  </section>
+
   <!-- SECTION 3: INTERACTIVE RFQ CONFIGURATOR (ZERO PRICES) -->
   <section class="rfq-builder-section" id="rfq-builder">
     <div class="container">
@@ -411,11 +440,59 @@
               <div class="step-num">4</div>
               <div>
                 <h4 class="step-title" id="step4Title">Fabric Color & Pattern</h4>
-                <p class="step-subtitle" id="step4Sub">Select your heritage or solid hospital tone</p>
+                <p class="step-subtitle" id="step4Sub">Select catalog editions or specify custom 2027 fabric & print codes</p>
               </div>
             </div>
+
+            <!-- Mode Switcher: Presets vs Custom 2027 Codes -->
+            <div class="fabric-mode-switcher">
+              <button type="button" class="fabric-mode-btn active" id="btnModePresets" onclick="setFabricMode('presets')">
+                <span id="txtModePresets">🌟 Catalog Pre-Set Editions</span>
+              </button>
+              <button type="button" class="fabric-mode-btn" id="btnModeCustom" onclick="setFabricMode('custom_codes')">
+                <span id="txtModeCustom">🎯 Custom 2027 Fabric Codes (F · P · T)</span>
+              </button>
+            </div>
+
+            <!-- Container A: Classic Preset Swatches -->
             <div class="color-swatch-selector" id="colorSwatchesGrid">
               <!-- Rendered via JS -->
+            </div>
+
+            <!-- Container B: Custom 2027 Fabric, Print & Trim Codes -->
+            <div class="custom-fabric-builder" id="customFabricBuilder" style="display: none;">
+              <!-- 1. Primary Solid Colour F-01 to F-25 -->
+              <div class="custom-fab-group">
+                <div class="custom-fab-label-bar">
+                  <span class="custom-fab-title" id="lblSolidFabTitle">🎨 Primary Outer Fabric (F-01 to F-25):</span>
+                  <span class="custom-fab-selected-pill" id="selectedSolidBadge">F-04 Emerald Green (#234A3C)</span>
+                </div>
+                <div class="solids-chip-grid" id="solidsChipGrid">
+                  <!-- Rendered via JS: 25 chips -->
+                </div>
+              </div>
+
+              <!-- 2. Printed Pattern Accent P08 to P68 -->
+              <div class="custom-fab-group" style="margin-top: 18px;">
+                <div class="custom-fab-label-bar">
+                  <span class="custom-fab-title" id="lblPrintFabTitle">🖼️ Printed Pattern Accent (Optional):</span>
+                  <span class="custom-fab-selected-pill" id="selectedPrintBadge">None (Solid)</span>
+                </div>
+                <div class="prints-chip-grid" id="printsChipGrid">
+                  <!-- Rendered via JS: 11 prints + solid -->
+                </div>
+              </div>
+
+              <!-- 3. Trims & Piping T-01 to T-06 -->
+              <div class="custom-fab-group" style="margin-top: 18px;">
+                <div class="custom-fab-label-bar">
+                  <span class="custom-fab-title" id="lblTrimFabTitle">🧵 Edge Trim & Piping (T-01 to T-06):</span>
+                  <span class="custom-fab-selected-pill" id="selectedTrimBadge">T-01 Black binding tape</span>
+                </div>
+                <div class="trims-chip-grid" id="trimsChipGrid">
+                  <!-- Rendered via JS: 6 trims -->
+                </div>
+              </div>
             </div>
           </div>
 

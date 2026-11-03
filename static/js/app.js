@@ -247,6 +247,61 @@ const CATALOG_DATA = {
   ]
 };
 
+// ==========================================================================
+// 2027 Outer Fabric & Colour Reference Dataset (Official Catalogue Spec)
+// ==========================================================================
+const FABRIC_REFERENCE = {
+  solid_colors: [
+    { code: 'F-01', hex: '#1D253A', name_en: 'Navy', name_ar: 'كحلي · أزرق ليلي عميق', rgb: '29 37 58', cmyk: '50 36 0 77', used_in: 'GR-01, GR-02, MM-01, TU-01, SC-03, SC-05V/S, SC-09, SC-12V/S' },
+    { code: 'F-02', hex: '#1B6F80', name_en: 'Signature Teal', name_ar: 'تركوازي جلف راي · لون الهوية', rgb: '27 111 128', cmyk: '79 13 0 50', used_in: 'GR-01, GR-02, TU-03' },
+    { code: 'F-03', hex: '#173832', name_en: 'Deep Teal Green', name_ar: 'أخضر بترولي داكن', rgb: '23 56 50', cmyk: '59 0 11 78', used_in: 'BS-01, SC-01, SC-04V/S, SC-07, SC-10V/S' },
+    { code: 'F-04', hex: '#234A3C', name_en: 'Emerald Green', name_ar: 'أخضر زمردي · أخضر غني', rgb: '35 74 60', cmyk: '53 0 19 71', used_in: 'GR-05, GR-08, GR-10, GR-11' },
+    { code: 'F-05', hex: '#9AA08E', name_en: 'Sage', name_ar: 'أخضر مريمية · أخضر رمادي هادئ', rgb: '154 160 142', cmyk: '4 0 11 37', used_in: 'BS-03, MM-03' },
+    { code: 'F-06', hex: '#657E82', name_en: 'Slate Teal', name_ar: 'رمادي بترولي · أزرق رمادي مطفأ', rgb: '101 126 130', cmyk: '22 3 0 49', used_in: 'SS-03' },
+    { code: 'F-07', hex: '#5A6D8E', name_en: 'Slate Blue', name_ar: 'أزرق أردوازي · أزرق رمادي متوسط', rgb: '90 109 142', cmyk: '37 23 0 44', used_in: 'SC-03' },
+    { code: 'F-08', hex: '#1F4E9E', name_en: 'Cobalt Blue', name_ar: 'أزرق كوبالتي · أزرق ملكي ساطع', rgb: '31 78 158', cmyk: '80 51 0 38', used_in: 'GR-04' },
+    { code: 'F-09', hex: '#A887AD', name_en: 'Lavender', name_ar: 'خزامى · بنفسجي فاتح ناعم', rgb: '168 135 173', cmyk: '3 22 0 32', used_in: 'GR-06, BS-02, MM-03, SC-02, SC-06V/S' },
+    { code: 'F-10', hex: '#573649', name_en: 'Aubergine', name_ar: 'باذنجاني · بنفسجي داكن عميق', rgb: '87 54 73', cmyk: '0 38 16 66', used_in: 'GR-06, BS-02' },
+    { code: 'F-11', hex: '#5A2332', name_en: 'Burgundy', name_ar: 'عنابي · أحمر نبيذي داكن', rgb: '90 35 50', cmyk: '0 61 44 65', used_in: 'GR-03, GR-07, SC-02, SC-06V/S' },
+    { code: 'F-12', hex: '#9A1A22', name_en: 'Gulf Red', name_ar: 'أحمر خليجي · أحمر قرمزي قوي', rgb: '154 26 34', cmyk: '0 83 78 40', used_in: 'GR-08, GR-09, GR-10, GR-11' },
+    { code: 'F-13', hex: '#E26C5F', name_en: 'Coral', name_ar: 'مرجاني · برتقالي وردي دافئ', rgb: '226 108 95', cmyk: '0 52 58 11', used_in: 'GR-01, GR-03, SS-02, SC-05V/S' },
+    { code: 'F-14', hex: '#B56F74', name_en: 'Dusty Rose', name_ar: 'وردي ترابي · وردي مطفأ', rgb: '181 111 116', cmyk: '0 39 36 29', used_in: 'MM-02, SC-08, SC-11V/S' },
+    { code: 'F-15', hex: '#C3938F', name_en: 'Blush Pink', name_ar: 'وردي فاتح · وردي باهت ناعم', rgb: '195 147 143', cmyk: '0 25 27 24', used_in: 'GR-07' },
+    { code: 'F-16', hex: '#D58F39', name_en: 'Ochre', name_ar: 'مغرة · أصفر ذهبي ترابي', rgb: '213 143 57', cmyk: '0 33 73 16', used_in: 'SS-01' },
+    { code: 'F-17', hex: '#F5BA4F', name_en: 'Sunflower Yellow', name_ar: 'أصفر عبّاد الشمس', rgb: '245 186 79', cmyk: '0 24 68 4', used_in: 'GR-04' },
+    { code: 'F-18', hex: '#412821', name_en: 'Chocolate Brown', name_ar: 'بني شوكولاتة · بني داكن', rgb: '65 40 33', cmyk: '0 38 49 75', used_in: 'SS-01' },
+    { code: 'F-19', hex: '#D3B599', name_en: 'Sand', name_ar: 'رملي · بيج صحراوي دافئ', rgb: '211 181 153', cmyk: '0 14 27 17', used_in: 'GR-01, GR-02' },
+    { code: 'F-20', hex: '#B8A391', name_en: 'Taupe Stone', name_ar: 'بيج حجري · رملي محايد', rgb: '184 163 145', cmyk: '0 11 21 28', used_in: 'SS-03, SC-04V/S' },
+    { code: 'F-21', hex: '#C5BBB2', name_en: 'Stone Grey', name_ar: 'رمادي حجري · رمادي دافئ', rgb: '197 187 178', cmyk: '0 5 10 23', used_in: 'GR-04' },
+    { code: 'F-22', hex: '#B5B3B0', name_en: 'Pearl Grey', name_ar: 'رمادي لؤلؤي · رمادي فاتح بارد', rgb: '181 179 176', cmyk: '0 1 3 29', used_in: 'GR-09' },
+    { code: 'F-23', hex: '#E7D8C9', name_en: 'Ivory', name_ar: 'عاجي · أبيض كريمي ناعم', rgb: '231 216 201', cmyk: '0 6 13 9', used_in: 'GR-05, GR-06, GR-07, GR-08, GR-10, GR-11, BS-03' },
+    { code: 'F-24', hex: '#3A393C', name_en: 'Charcoal', name_ar: 'رمادي فحمي · رمادي داكن', rgb: '58 57 60', cmyk: '3 5 0 76', used_in: 'GR-03, MM-02, TU-02' },
+    { code: 'F-25', hex: '#1F1E1B', name_en: 'Black', name_ar: 'أسود · أسود كلاسيكي', rgb: '31 30 27', cmyk: '0 3 13 88', used_in: 'GR-08, GR-10, TU-03' }
+  ],
+  printed_fabrics: [
+    { code: 'P08', name_en: 'Sunflower', name_ar: 'عبّاد الشمس', desc_en: 'Sunflower blossoms on cream base', desc_ar: 'زهور عبّاد الشمس على أرضية كريمية', image: '/images/fabrics/P08_sunflower.jpg', used_in: 'SS-01' },
+    { code: 'P17', name_en: 'Eucalyptus', name_ar: 'أوراق الكينا', desc_en: 'Green branches on crisp white base', desc_ar: 'أغصان خضراء على أرضية بيضاء', image: '/images/fabrics/P17_eucalyptus.jpg', used_in: 'BS-01, SC-07, SC-10V/S' },
+    { code: 'P18', name_en: 'Spring Flora', name_ar: 'زهور الربيع', desc_en: 'Pink & blue delicate watercolour flowers', desc_ar: 'زهور مائية وردية وزرقاء رقيقة', image: '/images/fabrics/P18_spring_flora.jpg', used_in: 'SS-02, SC-11V/S' },
+    { code: 'P19', name_en: 'Abstract Botanical', name_ar: 'نباتات تجريدية', desc_en: 'Warm tonal botanical brushstrokes', desc_ar: 'ضربات فرشاة نباتية بدرجات دافئة', image: '/images/fabrics/P19_abstract_botanical.jpg', used_in: 'SS-03' },
+    { code: 'P20', name_en: 'Watercolour Wave', name_ar: 'أمواج مائية', desc_en: 'Gentle undulating watercolour waves', desc_ar: 'خطوط متموجة انسيابية بألوان مائية', image: '/images/fabrics/P20_watercolour_wave.jpg', used_in: 'MM-03' },
+    { code: 'P21', name_en: 'Lavender Sketch', name_ar: 'رسم الخزامى', desc_en: 'Hand-sketched purple lavender botanicals', desc_ar: 'زهور بنفسجية مرسومة باليد', image: '/images/fabrics/P21_lavender_sketch.jpg', used_in: 'BS-02' },
+    { code: 'P22', name_en: 'Micro Floral', name_ar: 'زهور دقيقة', desc_en: 'Subtle miniature floral print on light ground', desc_ar: 'زهور صغيرة ناعمة على أرضية فاتحة', image: '/images/fabrics/P22_micro_floral.jpg', used_in: 'BS-03' },
+    { code: 'P23', name_en: 'Geometric Lattice', name_ar: 'شبكة هندسية', desc_en: 'Refined repeated pink lattice geometric motif', desc_ar: 'نقش هندسي متكرر بلون وردي', image: '/images/fabrics/P23_geometric_lattice.jpg', used_in: 'MM-02, SC-08' },
+    { code: 'P40', name_en: 'Blue Camo', name_ar: 'تمويه أزرق', desc_en: 'Contemporary multi-tonal navy tactical camo', desc_ar: 'تمويه تكتيكي بدرجات الكحلي والأزرق', image: '/images/fabrics/P40_blue_camo.jpg', used_in: 'TU-01' },
+    { code: 'P41', name_en: 'Grey Digital Camo', name_ar: 'تمويه رقمي رمادي', desc_en: 'Modern geometric grey & black digital pixel camo', desc_ar: 'مربعات تمويه رقمي بالرمادي والأسود', image: '/images/fabrics/P41_grey_digital_camo.jpg', used_in: 'TU-02' },
+    { code: 'P68', name_en: 'Teal Abstract', name_ar: 'تجريدي بترولي', desc_en: 'High-contrast teal & black abstract shapes', desc_ar: 'أشكال تجريدية بالتركوازي والأسود', image: '/images/fabrics/P68_teal_abstract.jpg', used_in: 'MM-01, TU-03, SC-09, SC-12V/S' }
+  ],
+  trims: [
+    { code: 'T-01', hex: '#1F1E1B', name_en: 'Black binding tape', name_ar: 'شريط حواف أسود', type_en: 'Edge binding', type_ar: 'تحديد الحواف', used_in: 'All garments except GR-07, GR-09' },
+    { code: 'T-02', hex: '#5A2332', name_en: 'Burgundy binding tape', name_ar: 'شريط حواف عنابي', type_en: 'Edge binding', type_ar: 'تحديد الحواف', used_in: 'GR-07' },
+    { code: 'T-03', hex: '#9A1A22', name_en: 'Red binding tape', name_ar: 'شريط حواف أحمر', type_en: 'Edge binding', type_ar: 'تحديد الحواف', used_in: 'GR-09' },
+    { code: 'T-04', hex: '#C9AE7C', name_en: 'Gold piping', name_ar: 'قيطان ذهبي', type_en: 'Piping between panels', type_ar: 'قيطان بين القطع', used_in: 'GR-05, GR-06' },
+    { code: 'T-05', hex: '#E7D8C9', name_en: 'Ivory piping', name_ar: 'قيطان عاجي', type_en: 'Piping between panels', type_ar: 'قيطان بين القطع', used_in: 'GR-07, GR-09' },
+    { code: 'T-06', hex: '#1F1E1B', name_en: 'Black webbing & Velcro', name_ar: 'أحزمة سوداء وفيلكرو', type_en: 'Belts and closures', type_ar: 'الأحزمة والإغلاقات', used_in: 'All garments' }
+  ]
+};
+
+
 // Current Live Configurator State
 let currentConfig = {
   category: "Full Overlap",
@@ -255,6 +310,13 @@ let currentConfig = {
   collection: "Saudi Editions",
   color: "Saudi Green",
   color_hex: "#006C35",
+  fabric_mode: "presets", // "presets" or "custom_codes"
+  fabric_code: "F-04",
+  fabric_name: "Emerald Green",
+  pattern_code: "None",
+  pattern_name: "Solid (No Print)",
+  trim_code: "T-01",
+  trim_name: "Black binding tape",
   gender: "Male",
   size: "L",
   qty: 1,
@@ -284,6 +346,10 @@ document.addEventListener("DOMContentLoaded", () => {
   renderColorSwatches();
   renderGenderOptions();
   renderSizeOptions();
+  renderFabricsGrid("all");
+  renderCustomSolidChips();
+  renderCustomPrintChips();
+  renderCustomTrimChips();
   updateLiveSummary();
 });
 
@@ -524,7 +590,11 @@ function updateLiveSummary() {
   
   document.getElementById("sumValCore").innerText = `${currentConfig.core_material} Core`;
   document.getElementById("sumValThick").innerText = currentConfig.thickness;
-  document.getElementById("sumValColor").innerText = currentConfig.color.split('(')[0];
+  if (currentConfig.fabric_mode === "custom_codes") {
+    document.getElementById("sumValColor").innerText = `${currentConfig.fabric_code} + ${currentConfig.pattern_code}`;
+  } else {
+    document.getElementById("sumValColor").innerText = currentConfig.color.split('(')[0];
+  }
   document.getElementById("sumValFit").innerText = `${currentConfig.gender} · ${currentConfig.size}`;
   document.getElementById("sumValQty").innerText = `${currentConfig.qty} ${currentLang === 'ar' ? 'قطعة' : 'Unit(s)'}`;
 }
@@ -609,20 +679,25 @@ function addItemToRfq() {
   const catObj = CATALOG_DATA.categories.find(c => c.id === currentConfig.category) || CATALOG_DATA.categories[0];
   const embroideryVal = document.getElementById("inputEmbroidery").value.trim();
 
+  const isCustomFabric = currentConfig.fabric_mode === "custom_codes";
   const item = {
     category: currentConfig.category,
     name_en: catObj.name_en,
     name_ar: catObj.name_ar,
     code: catObj.code,
     core_material: `${currentConfig.core_material} Core`,
-    collection: currentConfig.collection,
-    color: currentConfig.color,
+    collection: isCustomFabric ? `2027 Spec: ${currentConfig.fabric_code} · ${currentConfig.pattern_code} · ${currentConfig.trim_code}` : currentConfig.collection,
+    color: isCustomFabric ? `${currentConfig.fabric_code} (${currentConfig.fabric_name})` : currentConfig.color,
     thickness: currentConfig.thickness,
     size: currentConfig.size,
     gender: currentConfig.gender,
     qty: currentConfig.qty,
     embroidery: embroideryVal,
-    custom_logo: uploadedLogoFilename ? "Attached" : ""
+    custom_logo: uploadedLogoFilename ? "Attached" : "",
+    fabric_code: isCustomFabric ? currentConfig.fabric_code : "",
+    pattern_code: isCustomFabric ? currentConfig.pattern_code : "",
+    trim_code: isCustomFabric ? currentConfig.trim_code : "",
+    fabric_details: isCustomFabric ? `${currentConfig.fabric_code} (${currentConfig.fabric_name}) · Pattern: ${currentConfig.pattern_code} · Trim: ${currentConfig.trim_code}` : ""
   };
 
   rfqBasket.push(item);
@@ -860,6 +935,35 @@ function applyTranslations() {
 
   document.getElementById("btnSubmitRfq").innerText = isAr ? "🚀 إرسال طلب عرض السعر الرسمي" : "🚀 Submit Request for Quotation (RFQ)";
 
+  // Navigation
+  if (document.getElementById("navLinkFabrics")) document.getElementById("navLinkFabrics").innerText = isAr ? "دليل الأقمشة 2027" : "Fabric Codes";
+
+  // 2027 Fabric Reference Section
+  if (document.getElementById("fabricsTag")) document.getElementById("fabricsTag").innerText = isAr ? "دليل الإنتاج المعتمد 2027 · مواصفات الأقمشة والنقشات" : "2027 PRODUCTION REFERENCE · FABRIC SPECIFICATIONS";
+  if (document.getElementById("fabricsTitle")) document.getElementById("fabricsTitle").innerText = isAr ? "الدليل المرجعي لألوان ونقشات وأشرطة أردية GulfRay" : "Outer Fabric, Print & Trim Colour Reference";
+  if (document.getElementById("fabricsDesc")) document.getElementById("fabricsDesc").innerText = isAr ? 
+    "جميع ألوان الأقمشة الخارجية والنقشات والأشرطة المعتمدة في كتالوج 2027 مع أكواد التصنيع الدقيقة (F-01 إلى F-25، P08 إلى P68، T-01 إلى T-06). يمكن للعملاء والجهات الطالبة تحديد الأكواد المطلوبة بدقة هندسية تامة." :
+    "Every outer-shell colour, print, and trim used across the official 2027 catalogue. Browse verified HEX codes, physical textile swatches, and factory codes (F-01 to F-25, P08 to P68, T-01 to T-06) for bespoke hospital orders.";
+
+  if (document.getElementById("tabFabAll")) document.getElementById("tabFabAll").innerText = isAr ? "كافة العينات (42)" : "All Swatches (42)";
+  if (document.getElementById("tabFabSolids")) document.getElementById("tabFabSolids").innerText = isAr ? "🎨 ألوان سادة · F-01 إلى F-25 (25)" : "🎨 Solid Colours · F-01 to F-25 (25)";
+  if (document.getElementById("tabFabPrints")) document.getElementById("tabFabPrints").innerText = isAr ? "🖼️ أقمشة مطبوعة · P08 إلى P68 (11)" : "🖼️ Printed Fabrics · P08 to P68 (11)";
+  if (document.getElementById("tabFabTrims")) document.getElementById("tabFabTrims").innerText = isAr ? "🧵 أشرطة وقيطان · T-01 إلى T-06 (6)" : "🧵 Trims & Piping · T-01 to T-06 (6)";
+
+  if (document.getElementById("txtModePresets")) document.getElementById("txtModePresets").innerText = isAr ? "🌟 مجموعات الكتالوج الجاهزة" : "🌟 Catalog Pre-Set Editions";
+  if (document.getElementById("txtModeCustom")) document.getElementById("txtModeCustom").innerText = isAr ? "🎯 تخصيص حر بأكواد 2027 (F · P · T)" : "🎯 Custom 2027 Fabric Codes (F · P · T)";
+  if (document.getElementById("lblSolidFabTitle")) document.getElementById("lblSolidFabTitle").innerText = isAr ? "🎨 قماش الرداء الخارجي الأساسي (F-01 إلى F-25):" : "🎨 Primary Outer Fabric (F-01 to F-25):";
+  if (document.getElementById("lblPrintFabTitle")) document.getElementById("lblPrintFabTitle").innerText = isAr ? "🖼️ النقشة المطبوعة الإضافية (اختياري):" : "🖼️ Printed Pattern Accent (Optional):";
+  if (document.getElementById("lblTrimFabTitle")) document.getElementById("lblTrimFabTitle").innerText = isAr ? "🧵 شريط الحواف والقيطان (T-01 إلى T-06):" : "🧵 Edge Trim & Piping (T-01 to T-06):";
+
+  // Re-render fabric grids with translated names
+  renderFabricsGrid(currentFabricFilter);
+  if (currentConfig.fabric_mode === "custom_codes") {
+    renderCustomSolidChips();
+    renderCustomPrintChips();
+    renderCustomTrimChips();
+  }
+
   // Collection Tabs
   if (document.getElementById("tabAll")) document.getElementById("tabAll").innerText = isAr ? "كافة المجموعات" : "All Collections";
   if (document.getElementById("tabSaudi")) document.getElementById("tabSaudi").innerText = isAr ? "المجموعات السعودية" : "Saudi Editions";
@@ -916,4 +1020,286 @@ function switchHeroGarment(type) {
     if (titleEl) titleEl.innerText = isAr ? "طقم سترة وتنورة مريول تراكب كامل (GR-05V/S)" : "Full Overlap Vest & Skirt Set (GR-05V/S)";
     if (subEl) subEl.innerText = isAr ? "توزيع هندسي متوازن للوزن بين الكتفين والخصر 360°" : "360° Wrap Protection · Lumbar Weight Distribution";
   }
+}
+
+
+// ==========================================================================
+// 2027 Outer Fabric Reference Guide
+// ==========================================================================
+let currentFabricFilter = "all";
+
+function filterFabrics(filterType) {
+  currentFabricFilter = filterType;
+  const tabs = {
+    all: "tabFabAll",
+    solids: "tabFabSolids",
+    prints: "tabFabPrints",
+    trims: "tabFabTrims"
+  };
+  Object.values(tabs).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("active");
+  });
+  if (tabs[filterType]) {
+    const activeEl = document.getElementById(tabs[filterType]);
+    if (activeEl) activeEl.classList.add("active");
+  }
+  renderFabricsGrid(filterType);
+}
+
+function renderFabricsGrid(filterType) {
+  const container = document.getElementById("fabricsGrid");
+  if (!container) return;
+
+  let items = [];
+  const isAr = currentLang === "ar";
+
+  if (filterType === "all" || filterType === "solids") {
+    FABRIC_REFERENCE.solid_colors.forEach(item => {
+      items.push({
+        type: "solid",
+        code: item.code,
+        name: isAr ? item.name_ar : item.name_en,
+        sub: `HEX: ${item.hex} · RGB: ${item.rgb}`,
+        hex: item.hex,
+        image: null,
+        used: item.used_in,
+        selectText: isAr ? `اختيار كود ${item.code} للتصنيع ←` : `Select ${item.code} for RFQ →`
+      });
+    });
+  }
+
+  if (filterType === "all" || filterType === "prints") {
+    FABRIC_REFERENCE.printed_fabrics.forEach(item => {
+      items.push({
+        type: "print",
+        code: item.code,
+        name: isAr ? item.name_ar : item.name_en,
+        sub: isAr ? item.desc_ar : item.desc_en,
+        hex: null,
+        image: item.image,
+        used: item.used_in,
+        selectText: isAr ? `اختيار نقشة ${item.code} ←` : `Select Print ${item.code} →`
+      });
+    });
+  }
+
+  if (filterType === "all" || filterType === "trims") {
+    FABRIC_REFERENCE.trims.forEach(item => {
+      items.push({
+        type: "trim",
+        code: item.code,
+        name: isAr ? item.name_ar : item.name_en,
+        sub: isAr ? item.type_ar : item.type_en,
+        hex: item.hex,
+        image: null,
+        used: item.used_in,
+        selectText: isAr ? `اختيار ${item.code} كشريط حواف ←` : `Select Trim ${item.code} →`
+      });
+    });
+  }
+
+  container.innerHTML = items.map(it => {
+    let previewHtml = "";
+    if (it.image) {
+      previewHtml = `
+        <div class="fabric-card-preview">
+          <img src="${it.image}" alt="${it.name}">
+          <span class="fabric-badge-code">${it.code}</span>
+        </div>
+      `;
+    } else {
+      previewHtml = `
+        <div class="fabric-card-preview" style="background-color: ${it.hex};">
+          <span class="fabric-badge-code">${it.code}</span>
+          <span class="fabric-card-hex-pill">${it.hex}</span>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="fabric-card">
+        ${previewHtml}
+        <div class="fabric-card-body">
+          <div class="fabric-card-title">${it.name}</div>
+          <div class="fabric-card-sub">${it.sub}</div>
+          <div class="fabric-card-meta">
+            <b>${isAr ? 'المنتجات المطابقة:' : 'Used in:'}</b> ${it.used}
+          </div>
+          <button type="button" class="fabric-select-btn" onclick="selectFabricFromGuide('${it.type}', '${it.code}')">
+            ${it.selectText}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function selectFabricFromGuide(type, code) {
+  setFabricMode("custom_codes");
+  if (type === "solid") {
+    selectCustomSolid(code);
+  } else if (type === "print") {
+    selectCustomPrint(code);
+  } else if (type === "trim") {
+    selectCustomTrim(code);
+  }
+  const el = document.getElementById("rfq-builder");
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+}
+
+// ==========================================================================
+// Custom 2027 Fabric Builder (Step 4)
+// ==========================================================================
+function setFabricMode(mode) {
+  currentConfig.fabric_mode = mode;
+  const btnPresets = document.getElementById("btnModePresets");
+  const btnCustom = document.getElementById("btnModeCustom");
+  const gridPresets = document.getElementById("colorSwatchesGrid");
+  const boxCustom = document.getElementById("customFabricBuilder");
+
+  if (mode === "presets") {
+    if (btnPresets) btnPresets.classList.add("active");
+    if (btnCustom) btnCustom.classList.remove("active");
+    if (gridPresets) gridPresets.style.display = "grid";
+    if (boxCustom) boxCustom.style.display = "none";
+    currentConfig.collection = "Saudi Editions";
+    currentConfig.color = "Saudi Green";
+  } else {
+    if (btnPresets) btnPresets.classList.remove("active");
+    if (btnCustom) btnCustom.classList.add("active");
+    if (gridPresets) gridPresets.style.display = "none";
+    if (boxCustom) boxCustom.style.display = "block";
+    renderCustomSolidChips();
+    renderCustomPrintChips();
+    renderCustomTrimChips();
+    currentConfig.collection = `Custom Spec: ${currentConfig.fabric_code} · ${currentConfig.pattern_code}`;
+    currentConfig.color = `${currentConfig.fabric_code} (${currentConfig.fabric_name})`;
+  }
+  updateLiveSummary();
+}
+
+function renderCustomSolidChips() {
+  const container = document.getElementById("solidsChipGrid");
+  if (!container) return;
+
+  container.innerHTML = FABRIC_REFERENCE.solid_colors.map(col => {
+    const isSel = col.code === currentConfig.fabric_code;
+    return `
+      <div class="solid-chip-item ${isSel ? 'selected' : ''}" style="background-color: ${col.hex};" onclick="selectCustomSolid('${col.code}')" title="${col.code} · ${col.name_en} (${col.hex})">
+        <span class="solid-chip-code">${col.code}</span>
+      </div>
+    `;
+  }).join("");
+
+  const solidObj = FABRIC_REFERENCE.solid_colors.find(c => c.code === currentConfig.fabric_code) || FABRIC_REFERENCE.solid_colors[3];
+  const isAr = currentLang === "ar";
+  const labelEl = document.getElementById("selectedSolidBadge");
+  if (labelEl) {
+    labelEl.innerText = `${solidObj.code} · ${isAr ? solidObj.name_ar : solidObj.name_en} (${solidObj.hex})`;
+  }
+}
+
+function selectCustomSolid(code) {
+  const solidObj = FABRIC_REFERENCE.solid_colors.find(c => c.code === code);
+  if (!solidObj) return;
+
+  currentConfig.fabric_code = solidObj.code;
+  currentConfig.fabric_name = currentLang === "ar" ? solidObj.name_ar : solidObj.name_en;
+  currentConfig.fabric_hex = solidObj.hex;
+  currentConfig.color = `${solidObj.code} (${solidObj.name_en})`;
+  currentConfig.color_hex = solidObj.hex;
+  currentConfig.collection = `Custom Spec: ${solidObj.code} · ${currentConfig.pattern_code}`;
+
+  renderCustomSolidChips();
+  updateLiveSummary();
+}
+
+function renderCustomPrintChips() {
+  const container = document.getElementById("printsChipGrid");
+  if (!container) return;
+
+  const isAr = currentLang === "ar";
+  const items = [
+    { code: "None", name: isAr ? "سادة بدون نقشة" : "Solid (No Print)", image: null }
+  ].concat(FABRIC_REFERENCE.printed_fabrics.map(p => ({
+    code: p.code,
+    name: isAr ? p.name_ar : p.name_en,
+    image: p.image
+  })));
+
+  container.innerHTML = items.map(it => {
+    const isSel = it.code === currentConfig.pattern_code;
+    let thumb = it.image ? 
+      `<img src="${it.image}" alt="${it.name}" class="print-chip-thumb">` :
+      `<div class="print-chip-thumb" style="display: flex; align-items: center; justify-content: center; font-size: 0.72rem; color: var(--slate-500); background: #e2e8f0;">🚫 Solid</div>`;
+
+    return `
+      <div class="print-chip-item ${isSel ? 'selected' : ''}" onclick="selectCustomPrint('${it.code}')">
+        ${thumb}
+        <div class="print-chip-desc">
+          <span>${it.code}</span>
+          <small style="font-weight: 500; color: var(--slate-600);">${it.name.split('(')[0]}</small>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  const labelEl = document.getElementById("selectedPrintBadge");
+  if (labelEl) {
+    if (currentConfig.pattern_code === "None") {
+      labelEl.innerText = isAr ? "سادة بدون نقشة" : "Solid (No Print)";
+    } else {
+      const pObj = FABRIC_REFERENCE.printed_fabrics.find(p => p.code === currentConfig.pattern_code);
+      labelEl.innerText = pObj ? `${pObj.code} · ${isAr ? pObj.name_ar : pObj.name_en}` : currentConfig.pattern_code;
+    }
+  }
+}
+
+function selectCustomPrint(code) {
+  currentConfig.pattern_code = code;
+  if (code === "None") {
+    currentConfig.pattern_name = currentLang === "ar" ? "سادة" : "Solid";
+  } else {
+    const pObj = FABRIC_REFERENCE.printed_fabrics.find(p => p.code === code);
+    currentConfig.pattern_name = pObj ? (currentLang === "ar" ? pObj.name_ar : pObj.name_en) : code;
+  }
+  currentConfig.collection = `Custom Spec: ${currentConfig.fabric_code} · ${currentConfig.pattern_code}`;
+
+  renderCustomPrintChips();
+  updateLiveSummary();
+}
+
+function renderCustomTrimChips() {
+  const container = document.getElementById("trimsChipGrid");
+  if (!container) return;
+
+  const isAr = currentLang === "ar";
+  container.innerHTML = FABRIC_REFERENCE.trims.map(trim => {
+    const isSel = trim.code === currentConfig.trim_code;
+    const name = isAr ? trim.name_ar : trim.name_en;
+    return `
+      <div class="trim-chip-item ${isSel ? 'selected' : ''}" onclick="selectCustomTrim('${trim.code}')">
+        <span class="trim-dot" style="background-color: ${trim.hex};"></span>
+        <span><b>${trim.code}</b> · ${name}</span>
+      </div>
+    `;
+  }).join("");
+
+  const labelEl = document.getElementById("selectedTrimBadge");
+  if (labelEl) {
+    const tObj = FABRIC_REFERENCE.trims.find(t => t.code === currentConfig.trim_code) || FABRIC_REFERENCE.trims[0];
+    labelEl.innerText = `${tObj.code} · ${isAr ? tObj.name_ar : tObj.name_en}`;
+  }
+}
+
+function selectCustomTrim(code) {
+  const tObj = FABRIC_REFERENCE.trims.find(t => t.code === code);
+  if (!tObj) return;
+
+  currentConfig.trim_code = tObj.code;
+  currentConfig.trim_name = currentLang === "ar" ? tObj.name_ar : tObj.name_en;
+
+  renderCustomTrimChips();
+  updateLiveSummary();
 }

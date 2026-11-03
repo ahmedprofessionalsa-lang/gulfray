@@ -39,6 +39,14 @@ def generate_team_rfq_html(rfq: Dict) -> str:
         size = item.get("size", "L")
         gender = item.get("gender", "Unisex")
 
+        fabric_spec_line = ""
+        f_parts = [item.get("fabric_code", ""), item.get("pattern_code", ""), item.get("trim_code", "")]
+        f_spec = " · ".join(p for p in f_parts if p)
+        if f_spec:
+            fabric_spec_line = f"<div>🧵 <b>أكواد القماش المعتمدة 2027:</b> <span style='font-family: monospace; color: #006C35; font-weight: bold;'>{f_spec}</span></div>"
+        elif item.get("fabric_details"):
+            fabric_spec_line = f"<div>🧵 <b>مواصفات القماش:</b> {item.get('fabric_details')}</div>"
+
         items_rows_html += f"""
         <tr style="border-bottom: 1px solid #e2e8f0; font-size: 13px;">
             <td style="padding: 12px 10px; color: #64748b; text-align: center; vertical-align: top;">{idx}</td>
@@ -52,6 +60,7 @@ def generate_team_rfq_html(rfq: Dict) -> str:
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 10px; margin-top: 6px; font-size: 12px; color: #334155;">
                     <div>🛡️ <b>المادة الواقية:</b> {core_mat}</div>
                     <div>🎨 <b>المجموعة واللون:</b> {collection}</div>
+                    {fabric_spec_line}
                     <div>⚖️ <b>سمك الرصاص:</b> {lead_eq} | <b>المقاس والجنس:</b> {size} ({gender})</div>
                 </div>
                 {custom_embroidery}
@@ -195,6 +204,10 @@ def generate_customer_rfq_html(rfq: Dict) -> str:
         size = item.get("size", "L")
         embroidery_txt = f"<br><small style='color: #006C35;'>🧵 {item.get('embroidery')}</small>" if item.get("embroidery") else ""
 
+        f_parts = [item.get("fabric_code", ""), item.get("pattern_code", ""), item.get("trim_code", "")]
+        f_spec = " · ".join(p for p in f_parts if p)
+        fabric_txt = f"<br><small style='color: #047857; font-weight: 600;'>🎨 Fabric & Trim Codes: {f_spec}</small>" if f_spec else ""
+
         items_summary_rows += f"""
         <tr style="border-bottom: 1px solid #e2e8f0; font-size: 13px;">
             <td style="padding: 10px; text-align: center; color: #64748b;">{idx}</td>
@@ -202,6 +215,7 @@ def generate_customer_rfq_html(rfq: Dict) -> str:
                 <b style="color: #0f172a;">{item.get('name_en', 'Radiation Protection Apron')}</b>
                 <div style="color: #64748b; font-size: 12px; margin-top: 2px;">
                     {item.get('name_ar', '')} | <b>{core_mat}</b> | {lead_eq} | {collection} | Size: {size} ({item.get('gender', 'Unisex')})
+                    {fabric_txt}
                     {embroidery_txt}
                 </div>
             </td>

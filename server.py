@@ -81,6 +81,10 @@ class RFQItemModel(BaseModel):
     qty: int = 1
     embroidery: Optional[str] = ""
     custom_logo: Optional[str] = ""
+    fabric_code: Optional[str] = ""
+    pattern_code: Optional[str] = ""
+    trim_code: Optional[str] = ""
+    fabric_details: Optional[str] = ""
 
 class RFQRequest(BaseModel):
     customer: CustomerModel
@@ -93,7 +97,7 @@ class RFQRequest(BaseModel):
 # -------------------------------------------------------------
 @app.get("/api/catalog")
 def get_catalog():
-    """Returns the full catalog metadata, core materials, and collections with zero prices."""
+    """Returns the full catalog metadata, core materials, collections, and fabric reference with zero prices."""
     cfg = load_config()
     catalog_data = catalog_engine.get_full_catalog_data()
     catalog_data["company_name_ar"] = cfg.get("company_name_ar", "GulfRay® | شركة سقالة حلول الوقاية")
@@ -101,6 +105,11 @@ def get_catalog():
     catalog_data["company_subtitle_ar"] = cfg.get("company_subtitle_ar", "مصنع لإنتاج ملابس وحلول الوقاية من الأشعة")
     catalog_data["company_subtitle_en"] = cfg.get("company_subtitle_en", "First Saudi Manufacturer of Radiation Protection Aprons & Shielding")
     return catalog_data
+
+@app.get("/api/fabrics")
+def get_fabrics():
+    """Returns official 2027 outer fabric colour reference: solids, prints, and trims."""
+    return catalog_engine.fabric_reference
 
 @app.post("/api/rfq")
 def submit_rfq(rfq_data: RFQRequest, request: Request):
