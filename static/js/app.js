@@ -266,6 +266,16 @@ let currentConfig = {
 // Initialization
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get("lang") === "ar") {
+    currentLang = "ar";
+    document.documentElement.setAttribute("dir", "rtl");
+    document.documentElement.setAttribute("lang", "ar");
+    const langBtn = document.getElementById("btnLangToggle");
+    if (langBtn) langBtn.innerHTML = "<span>🌐 English</span>";
+    applyTranslations();
+  }
+
   loadSavedBasket();
   renderCollectionsGrid("all");
   renderStyleOptions();
@@ -849,4 +859,55 @@ function applyTranslations() {
     " This portal generates certified technical RFQs. Official commercial quotations with institutional volume discounts and delivery timelines will be officially dispatched by GulfRay sales engineers.";
 
   document.getElementById("btnSubmitRfq").innerText = isAr ? "🚀 إرسال طلب عرض السعر الرسمي" : "🚀 Submit Request for Quotation (RFQ)";
+
+  // Hero Proof Metrics & Showcase
+  if (document.getElementById("heroCardBadgeTag")) {
+    document.getElementById("heroCardBadgeTag").innerText = isAr ? "🇸🇦 معرض المنتجات الحقيقية للمصنع" : "🇸🇦 OFFICIAL PRODUCT SHOWCASE";
+  }
+  if (document.getElementById("heroM1Title")) {
+    document.getElementById("heroM1Title").innerText = isAr ? "أخف وزناً بنسبة 28%" : "28% Lighter Weight";
+    document.getElementById("heroM1Sub").innerText = isAr ? "حشوة UM خالية من الرصاص (2.60 kg/m²)" : "Lead-Free UM Core (2.60 kg/m²)";
+  }
+  if (document.getElementById("heroM2Title")) {
+    document.getElementById("heroM2Title").innerText = isAr ? "اختبار الحزمة العريضة" : "Broad-Beam Verified";
+    document.getElementById("heroM2Sub").innerText = isAr ? "المختبر الفيزيائي الوطني البريطاني NPL" : "UK National Physical Laboratory (NPL)";
+  }
+  if (document.getElementById("heroM3Title")) {
+    document.getElementById("heroM3Title").innerText = isAr ? "100% غير سام وآمن" : "100% Non-Toxic";
+    document.getElementById("heroM3Sub").innerText = isAr ? "مطابق لمواصفات SGS REACH 234 SVHC" : "SGS REACH 234 SVHC Certified";
+  }
+  if (document.getElementById("heroM4Title")) {
+    document.getElementById("heroM4Title").innerText = isAr ? "مصنع وطني سعودي" : "Saudi National Manufacturer";
+    document.getElementById("heroM4Sub").innerText = isAr ? "أول مصنع مرخص في المملكة" : "Kingdom of Saudi Arabia Factory";
+  }
+}
+
+// Interactive Real Garment Showcase Switcher (Hero Section)
+let currentHeroGarment = "green";
+function switchHeroGarment(type) {
+  currentHeroGarment = type;
+  const imgEl = document.getElementById("heroMainImg");
+  const titleEl = document.getElementById("heroBadgeCardTitle");
+  const subEl = document.getElementById("heroBadgeCardSubtitle");
+  const buttons = document.querySelectorAll(".hero-swatch-btn");
+
+  buttons.forEach(btn => btn.classList.remove("active"));
+  const isAr = currentLang === "ar";
+
+  if (type === "green") {
+    if (buttons[0]) buttons[0].classList.add("active");
+    if (imgEl) imgEl.src = "/images/saudi_green_apron.jpg";
+    if (titleEl) titleEl.innerText = isAr ? "المجموعات السعودية · المجموعة 02 (الأخضر السعودي)" : "Saudi Editions · Collection 02 (Saudi Green)";
+    if (subEl) subEl.innerText = isAr ? "رداء استوديو حقيقي · حشوة UM فائقة الخفة بدون رصاص · تطريز سدو" : "Real Studio Garment · Lead-Free UM Core · Sadu Accents";
+  } else if (type === "lavender") {
+    if (buttons[1]) buttons[1].classList.add("active");
+    if (imgEl) imgEl.src = "/images/saudi_lavender_apron.jpg";
+    if (titleEl) titleEl.innerText = isAr ? "المجموعات السعودية · الخزامى السعودي الفاخر" : "Saudi Editions · Royal Saudi Lavender";
+    if (subEl) subEl.innerText = isAr ? "رداء استوديو حقيقي · حشوة NPL المعتمدة · تطريز ذهبي دقيق" : "Real Studio Garment · Broad-Beam NPL Core · Gold Trim";
+  } else if (type === "vest") {
+    if (buttons[2]) buttons[2].classList.add("active");
+    if (imgEl) imgEl.src = "/images/vest_skirt_format.jpg";
+    if (titleEl) titleEl.innerText = isAr ? "طقم سترة وتنورة مريول تراكب كامل (GR-05V/S)" : "Full Overlap Vest & Skirt Set (GR-05V/S)";
+    if (subEl) subEl.innerText = isAr ? "توزيع هندسي متوازن للوزن بين الكتفين والخصر 360°" : "360° Wrap Protection · Lumbar Weight Distribution";
+  }
 }

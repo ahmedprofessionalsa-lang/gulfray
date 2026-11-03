@@ -82,8 +82,14 @@ def generate_team_rfq_html(rfq: Dict) -> str:
     <div style="max-width: 680px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
         
         <!-- Header with Official GulfRay Shield Logo -->
-        <div style="background-color: #ffffff; padding: 25px 20px 18px; text-align: center; border-bottom: 3px solid #006C35;">
-            <img src="https://gulfray-medical.onrender.com/images/gulfray_logo_transparent.png" alt="GulfRay Shield Logo" style="height: 92px; max-height: 95px; width: auto; display: block; margin: 0 auto 10px;">
+        <div style="background-color: #ffffff; padding: 22px 20px 18px; text-align: center; border-bottom: 3px solid #006C35;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 0 auto;">
+                <tr>
+                    <td align="center" style="padding-bottom: 8px;">
+                        <img src="https://gulfray-medical.onrender.com/images/gulfray_logo_transparent.png" alt="GulfRay®" width="140" height="187" style="display: block; width: 140px; height: 187px; max-width: 140px; margin: 0 auto; border: 0; outline: none; text-decoration: none;">
+                    </td>
+                </tr>
+            </table>
             <h1 style="margin: 0 0 4px; font-size: 21px; font-weight: 800; color: #004d26; letter-spacing: 0.5px;">
                 GulfRay® | شركة سقالة حلول الوقاية
             </h1>
@@ -213,9 +219,15 @@ def generate_customer_rfq_html(rfq: Dict) -> str:
     <div style="max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
         
         <!-- Header with Official GulfRay Shield Logo -->
-        <div style="background-color: #ffffff; padding: 26px 20px 20px; text-align: center; border-bottom: 3px solid #006C35;">
-            <img src="https://gulfray-medical.onrender.com/images/gulfray_logo_transparent.png" alt="GulfRay Shield Logo" style="height: 92px; max-height: 95px; width: auto; display: block; margin: 0 auto 10px;">
-            <h1 style="margin: 0 0 4px; font-size: 21px; font-weight: 800; color: #004d26; letter-spacing: 0.5px;">
+        <div style="background-color: #ffffff; padding: 22px 20px 18px; text-align: center; border-bottom: 3px solid #006C35;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 0 auto;">
+                <tr>
+                    <td align="center" style="padding-bottom: 8px;">
+                        <img src="https://gulfray-medical.onrender.com/images/gulfray_logo_transparent.png" alt="GulfRay®" width="140" height="187" style="display: block; width: 140px; height: 187px; max-width: 140px; margin: 0 auto; border: 0; outline: none; text-decoration: none;">
+                    </td>
+                </tr>
+            </table>
+            <h1 style="margin: 0 0 4px; font-size: 20px; font-weight: 800; color: #004d26; letter-spacing: 0.5px;">
                 GulfRay® | شركة سقالة حلول الوقاية
             </h1>
             <div style="font-size: 13px; color: #64748b; font-weight: 600;">
