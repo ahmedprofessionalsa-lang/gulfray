@@ -97,7 +97,7 @@ def get_catalog():
     cfg = load_config()
     catalog_data = catalog_engine.get_full_catalog_data()
     catalog_data["company_name_ar"] = cfg.get("company_name_ar", "GulfRay® | شركة سقالة حلول الوقاية")
-    catalog_data["company_name_en"] = cfg.get("company_name_en", "GulfRay® | Siqalah Shielding Solutions")
+    catalog_data["company_name_en"] = cfg.get("company_name_en", "GulfRay® | شركة سقالة حلول الوقاية")
     catalog_data["company_subtitle_ar"] = cfg.get("company_subtitle_ar", "مصنع لإنتاج ملابس وحلول الوقاية من الأشعة")
     catalog_data["company_subtitle_en"] = cfg.get("company_subtitle_en", "First Saudi Manufacturer of Radiation Protection Aprons & Shielding")
     return catalog_data
