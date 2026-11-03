@@ -860,9 +860,15 @@ function applyTranslations() {
 
   document.getElementById("btnSubmitRfq").innerText = isAr ? "🚀 إرسال طلب عرض السعر الرسمي" : "🚀 Submit Request for Quotation (RFQ)";
 
+  // Collection Tabs
+  if (document.getElementById("tabAll")) document.getElementById("tabAll").innerText = isAr ? "كافة المجموعات" : "All Collections";
+  if (document.getElementById("tabSaudi")) document.getElementById("tabSaudi").innerText = isAr ? "المجموعات السعودية" : "Saudi Editions";
+  if (document.getElementById("tabSadu")) document.getElementById("tabSadu").innerText = isAr ? "🧵 نقشات السدو التراثية" : "🧵 Sadu & Geometric Patterns";
+  if (document.getElementById("tabClassics")) document.getElementById("tabClassics").innerText = isAr ? "⚓ الألوان الكلاسيكية" : "⚓ Signature & Solid Colors";
+
   // Hero Proof Metrics & Showcase
   if (document.getElementById("heroCardBadgeTag")) {
-    document.getElementById("heroCardBadgeTag").innerText = isAr ? "🇸🇦 معرض المنتجات الحقيقية للمصنع" : "🇸🇦 OFFICIAL PRODUCT SHOWCASE";
+    document.getElementById("heroCardBadgeTag").innerText = isAr ? "🛡️ معرض المنتجات الحقيقية للمصنع" : "🛡️ OFFICIAL PRODUCT SHOWCASE";
   }
   if (document.getElementById("heroM1Title")) {
     document.getElementById("heroM1Title").innerText = isAr ? "أخف وزناً بنسبة 28%" : "28% Lighter Weight";
