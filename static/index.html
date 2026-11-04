@@ -570,7 +570,48 @@
 
         <!-- Right: Live Configuration Summary Card -->
         <aside class="builder-summary-sticky">
-          <img src="/images/saudi_green_apron.jpg" id="summaryImg" alt="Selected Style" class="summary-img-preview">
+          
+          <!-- View Mode Switcher Header -->
+          <div class="apron-view-switch-bar">
+            <div class="apron-view-tabs">
+              <button type="button" class="view-tab-btn active" id="btnViewMode3D" onclick="togglePreviewMode('3d')">
+                <span id="tab3DMode">🔄 3D 360° Studio</span>
+              </button>
+              <button type="button" class="view-tab-btn" id="btnViewModePhoto" onclick="togglePreviewMode('photo')">
+                <span id="tabPhotoMode">📷 Photo</span>
+              </button>
+            </div>
+            <span class="apron-angle-pill" id="apron3DAnglePill">0° · Front View</span>
+          </div>
+
+          <!-- 3D Interactive Viewport -->
+          <div class="apron-3d-box" id="apron3DViewportBox">
+            <canvas id="apron3DCanvas" class="apron-3d-canvas"></canvas>
+            
+            <!-- Drag Hint Overlay -->
+            <div class="apron-3d-hint">
+              <span id="txtDragHint">🔄 Drag 360° · Scroll to Zoom</span>
+            </div>
+
+            <!-- 3D Controls Bar -->
+            <div class="apron-3d-controls">
+              <button type="button" class="angle-btn active" id="btnAngleFront" onclick="setApronAngle(0)" title="Front View">
+                <span id="lblAngleFront">Front 0°</span>
+              </button>
+              <button type="button" class="angle-btn" id="btnAngleSide" onclick="setApronAngle(90)" title="Profile View">
+                <span id="lblAngleSide">Side 90°</span>
+              </button>
+              <button type="button" class="angle-btn" id="btnAngleBack" onclick="setApronAngle(180)" title="Back Shielding">
+                <span id="lblAngleBack">Back 180°</span>
+              </button>
+              <button type="button" class="angle-btn active" id="btn3DAutoSpin" onclick="toggleApronAutoSpin()" title="Auto-Rotate">
+                <span id="lbl3DAutoSpin">🔄 Auto-Spin</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Catalog Photo Preview (Toggled via Switcher) -->
+          <img src="/images/saudi_green_apron.jpg" id="summaryImg" alt="Selected Style" class="summary-img-preview" style="display: none;">
           
           <h4 class="summary-title" id="summaryTitle">Full Overlap (Vest & Skirt)</h4>
           <span class="summary-category-badge" id="summaryCategoryBadge">Vest + Skirt Format</span>
@@ -852,7 +893,10 @@
     </div>
   </div>
 
-  <!-- JavaScript -->
-  <script src="/js/app.js?v=3.0"></script>
+  <!-- Three.js Engine & 3D Apron Turntable -->
+  <script src="/js/three.min.js"></script>
+  <script src="/js/apron_3d_viewer.js?v=1.0"></script>
+  <!-- Main Application JavaScript -->
+  <script src="/js/app.js?v=3.1"></script>
 </body>
 </html>

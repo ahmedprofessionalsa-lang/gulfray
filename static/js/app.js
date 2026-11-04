@@ -351,6 +351,33 @@ document.addEventListener("DOMContentLoaded", () => {
   renderCustomPrintChips();
   renderCustomTrimChips();
   updateLiveSummary();
+
+  // Initialize 3D 360° Apron Studio Visualizer
+  if (typeof initApron3DViewer === "function") {
+    initApron3DViewer("apron3DCanvas", "apron3DViewportBox");
+    if (typeof updateApron3DModel === "function") {
+      updateApron3DModel(currentConfig);
+    }
+  }
+
+  // Live real-time embroidery text sync to 3D chest pocket
+  const embInput = document.getElementById("inputEmbroidery");
+  if (embInput) {
+    embInput.addEventListener("input", (e) => {
+      currentConfig.embroidery = e.target.value;
+      if (typeof updateApron3DModel === "function") {
+        updateApron3DModel(currentConfig);
+      }
+    });
+  }
+
+  // Smooth scroll to URL hash on load
+  if (window.location.hash) {
+    setTimeout(() => {
+      const target = document.querySelector(window.location.hash);
+      if (target) target.scrollIntoView({ behavior: "instant", block: "start" });
+    }, 100);
+  }
 });
 
 // ==========================================================================
@@ -597,6 +624,11 @@ function updateLiveSummary() {
   }
   document.getElementById("sumValFit").innerText = `${currentConfig.gender} · ${currentConfig.size}`;
   document.getElementById("sumValQty").innerText = `${currentConfig.qty} ${currentLang === 'ar' ? 'قطعة' : 'Unit(s)'}`;
+
+  // Live 3D Model Update
+  if (typeof updateApron3DModel === "function") {
+    updateApron3DModel(currentConfig);
+  }
 }
 
 // ==========================================================================
@@ -868,93 +900,95 @@ function toggleLanguage() {
 
 function applyTranslations() {
   const isAr = currentLang === "ar";
+  const setText = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
+  const setHtml = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
 
   // Nav
-  document.getElementById("navLinkMaterials").innerText = isAr ? "دليل المواد الواقية" : "Core Materials";
-  document.getElementById("navLinkCollections").innerText = isAr ? "المجموعات والسدو" : "Saudi Collections";
-  document.getElementById("navLinkBuilder").innerText = isAr ? "مُنشئ عرض السعر" : "RFQ Configurator";
-  document.getElementById("navLinkCompliance").innerText = isAr ? "الاعتمادات والجودة" : "Certifications";
-  document.getElementById("navLinkWorkflow").innerText = isAr ? "آلية العمل" : "Working with Us";
+  setText("navLinkMaterials", isAr ? "دليل المواد الواقية" : "Core Materials");
+  setText("navLinkCollections", isAr ? "المجموعات والسدو" : "Saudi Collections");
+  setText("navLinkBuilder", isAr ? "مُنشئ عرض السعر" : "RFQ Configurator");
+  setText("navLinkCompliance", isAr ? "الاعتمادات والجودة" : "Certifications");
+  setText("navLinkWorkflow", isAr ? "آلية العمل" : "Working with Us");
 
   // Hero
-  document.getElementById("heroBadge").innerHTML = isAr ? 
+  setHtml("heroBadge", isAr ? 
     "<span>🛡️ حماية بمعايير عالمية وصناعة سعودية · Protection with Identity</span>" : 
-    "<span>🛡️ Protection with Identity · حماية بمعايير عالمية وصناعة سعودية</span>";
+    "<span>🛡️ Protection with Identity · حماية بمعايير عالمية وصناعة سعودية</span>");
   
-  document.getElementById("heroTitle").innerHTML = isAr ?
+  setHtml("heroTitle", isAr ?
     "حماية أخف وزناً وخالية من الرصاص <span class='highlight-green'>صُنعت بفخر</span> في <span class='highlight-lavender'>المملكة</span>." :
-    "Lighter, Lead-Free <span class='highlight-green'>Radiation Protection</span> Tailored in the <span class='highlight-lavender'>Kingdom</span>.";
+    "Lighter, Lead-Free <span class='highlight-green'>Radiation Protection</span> Tailored in the <span class='highlight-lavender'>Kingdom</span>.");
 
-  document.getElementById("heroSubtitle").innerText = isAr ?
+  setText("heroSubtitle", isAr ?
     "أول مصنع سعودي متخصص في إنتاج ملابس وإكسسوارات الوقاية من الإشعاع الطبي. مصمم بمواد واقية خالية من الرصاص ومختبرة بالحزمة العريضة، مع لمسات تطريز السدو التراثي وخيارات المقاسات الخاصة للمستشفيات." :
-    "Saudi Arabia's premier medical manufacturer of lightweight, certified radiation protection aprons. Engineered with broad-beam verified lead-free cores, bespoke Saudi Sadu heritage embroidery, and custom hospital sizing.";
+    "Saudi Arabia's premier medical manufacturer of lightweight, certified radiation protection aprons. Engineered with broad-beam verified lead-free cores, bespoke Saudi Sadu heritage embroidery, and custom hospital sizing.");
 
-  document.getElementById("btnHeroRfq").innerHTML = isAr ? "<span>✨ تخصيص وطلب عرض السعر (RFQ)</span>" : "<span>✨ Configure & Request Quotation (RFQ)</span>";
-  document.getElementById("btnHeroMaterials").innerHTML = isAr ? "<span>🔬 استعراض دليل المواد الواقية</span>" : "<span>🔬 Explore Core Materials Guide</span>";
+  setHtml("btnHeroRfq", isAr ? "<span>✨ تخصيص وطلب عرض السعر (RFQ)</span>" : "<span>✨ Configure & Request Quotation (RFQ)</span>");
+  setHtml("btnHeroMaterials", isAr ? "<span>🔬 استعراض دليل المواد الواقية</span>" : "<span>🔬 Explore Core Materials Guide</span>");
 
   // Materials Guide
-  document.getElementById("materialsTag").innerText = isAr ? "03 · دليل المواد الواقية المتقدمة" : "03 · PROTECTIVE CORE MATERIALS";
-  document.getElementById("materialsTitle").innerText = isAr ? "ثلاث مواد خالية من الرصاص. معيار أمان واحد." : "Three Lead-Free Cores. One Standard of Safety.";
-  document.getElementById("materialsDesc").innerText = isAr ?
+  setText("materialsTag", isAr ? "03 · دليل المواد الواقية المتقدمة" : "03 · PROTECTIVE CORE MATERIALS");
+  setText("materialsTitle", isAr ? "ثلاث مواد خالية من الرصاص. معيار أمان واحد." : "Three Lead-Free Cores. One Standard of Safety.");
+  setText("materialsDesc", isAr ?
     "مستوحى من أعلى المعايير الطبية العالمية، يوفر GulfRay ثلاث مواد واقية خالية تماماً من الرصاص السام ومطابقة للمواصفات الدولية، ومحددة بالسمك المكافئ الصريح (mm Pb-eq)." :
-    "Inspired by leading global shielding science, GulfRay offers three verified lead-free attenuation cores. All three are 100% toxic-lead-free, compliant with international standards, and specified in true mm lead equivalence (Pb-eq).";
+    "Inspired by leading global shielding science, GulfRay offers three verified lead-free attenuation cores. All three are 100% toxic-lead-free, compliant with international standards, and specified in true mm lead equivalence (Pb-eq).");
 
-  document.getElementById("umBadge").innerText = isAr ? "UM · الأخف وزناً على الإطلاق" : "UM · Ultra-Lightest";
-  document.getElementById("umSub").innerText = isAr ? "أخف بنسبة 28% من الرصاص التقليدي" : "About 28% lighter than traditional lead";
-  document.getElementById("nplBadge").innerText = isAr ? "NPL · معتمد بالحزمة العريضة" : "NPL · Broad-Beam UK Verified";
-  document.getElementById("nplSub").innerText = isAr ? "المعيار الذهبي بهندسة الحزمة العريضة" : "Broad-beam gold-standard geometry";
-  document.getElementById("mlBadge").innerText = isAr ? "ML · الخيار الاقتصادي الأعلى قيمة" : "ML · Most Economical";
-  document.getElementById("mlSub").innerText = isAr ? "أعلى كفاءة لميزانيات المستشفيات الكبيرة" : "Accessible price for larger departments";
+  setText("umBadge", isAr ? "UM · الأخف وزناً على الإطلاق" : "UM · Ultra-Lightest");
+  setText("umSub", isAr ? "أخف بنسبة 28% من الرصاص التقليدي" : "About 28% lighter than traditional lead");
+  setText("nplBadge", isAr ? "NPL · معتمد بالحزمة العريضة" : "NPL · Broad-Beam UK Verified");
+  setText("nplSub", isAr ? "المعيار الذهبي بهندسة الحزمة العريضة" : "Broad-beam gold-standard geometry");
+  setText("mlBadge", isAr ? "ML · الخيار الاقتصادي الأعلى قيمة" : "ML · Most Economical");
+  setText("mlSub", isAr ? "أعلى كفاءة لميزانيات المستشفيات الكبيرة" : "Accessible price for larger departments");
 
   // RFQ Builder Section
-  document.getElementById("rfqTag").innerText = isAr ? "نظام طلب عروض الأسعار التفاعلي" : "INTERACTIVE B2B SPECIFIER";
-  document.getElementById("rfqTitle").innerText = isAr ? "مُنشئ مواصفات عرض السعر المخصص" : "Bespoke RFQ Configurator";
-  document.getElementById("rfqDesc").innerText = isAr ?
+  setText("rfqTag", isAr ? "نظام طلب عروض الأسعار التفاعلي" : "INTERACTIVE B2B SPECIFIER");
+  setText("rfqTitle", isAr ? "مُنشئ مواصفات عرض السعر المخصص" : "Bespoke RFQ Configurator");
+  setText("rfqDesc", isAr ?
     "حدد موديل الرداء الطبي، نوع المادة الواقية، سمك الحماية، تطريز السدو، وشعار المستشفى. الموقع لا يحتوي على أي أسعار؛ مواصفاتك المعتمدة تُرسل فوراً إلى فريق المبيعات الهندسي." :
-    "Select your garment style, core material, lead thickness, bespoke Saudi embroidery, and hospital logo. Zero financial calculations; your custom specification is dispatched directly to our medical sales team.";
+    "Select your garment style, core material, lead thickness, bespoke Saudi embroidery, and hospital logo. Zero financial calculations; your custom specification is dispatched directly to our medical sales team.");
 
-  document.getElementById("step1Title").innerText = isAr ? "1. الموديل والشكل الطبي" : "1. Garment Style & Format";
-  document.getElementById("step2Title").innerText = isAr ? "2. نوع المادة الواقية الخالية من الرصاص" : "2. Protective Core Material";
-  document.getElementById("step3Title").innerText = isAr ? "3. سمك الرصاص المكافئ (Pb-eq)" : "3. Lead Equivalence (Pb-eq)";
-  document.getElementById("step4Title").innerText = isAr ? "4. اللون، القماش ونقشة السدو" : "4. Fabric Color & Pattern";
-  document.getElementById("step5Title").innerText = isAr ? "5. المقاس والجنس" : "5. Sizing & Cut";
-  document.getElementById("step6Title").innerText = isAr ? "6. التخصيص الفاخر (اختياري)" : "6. Bespoke Personalization (Optional)";
+  setText("step1Title", isAr ? "1. الموديل والشكل الطبي" : "1. Garment Style & Format");
+  setText("step2Title", isAr ? "2. نوع المادة الواقية الخالية من الرصاص" : "2. Protective Core Material");
+  setText("step3Title", isAr ? "3. سمك الرصاص المكافئ (Pb-eq)" : "3. Lead Equivalence (Pb-eq)");
+  setText("step4Title", isAr ? "4. اللون، القماش ونقشة السدو" : "4. Fabric Color & Pattern");
+  setText("step5Title", isAr ? "5. المقاس والجنس" : "5. Sizing & Cut");
+  setText("step6Title", isAr ? "6. التخصيص الفاخر (اختياري)" : "6. Bespoke Personalization (Optional)");
 
-  document.getElementById("lblEmbroidery").innerText = isAr ? "🧵 اسم الطبيب أو القسم للتطريز:" : "🧵 Embroidered Physician or Department Name:";
-  document.getElementById("lblLogo").innerText = isAr ? "📎 إرفاق شعار المستشفى / المركز الطبي:" : "📎 Upload Hospital / Healthcare Center Logo:";
-  document.getElementById("lblQuantity").innerText = isAr ? "الكمية المطلوبة (بالقطعة):" : "Quantity (Units):";
-  document.getElementById("btnAddRfqText").innerText = isAr ? "➕ إضافة هذه المواصفات إلى سلة الاستفسار" : "➕ Add Configuration to RFQ Basket";
-  document.getElementById("btnViewRfqNow").innerText = isAr ? "مراجعة وإرسال سلة عرض السعر (RFQ) →" : "Review & Submit RFQ Basket →";
+  setText("lblEmbroidery", isAr ? "🧵 اسم الطبيب أو القسم للتطريز:" : "🧵 Embroidered Physician or Department Name:");
+  setText("lblLogo", isAr ? "📎 إرفاق شعار المستشفى / المركز الطبي:" : "📎 Upload Hospital / Healthcare Center Logo:");
+  setText("lblQuantity", isAr ? "الكمية المطلوبة (بالقطعة):" : "Quantity (Units):");
+  setText("btnAddRfqText", isAr ? "➕ إضافة هذه المواصفات إلى سلة الاستفسار" : "➕ Add Configuration to RFQ Basket");
+  setText("btnViewRfqNow", isAr ? "مراجعة وإرسال سلة عرض السعر (RFQ) →" : "Review & Submit RFQ Basket →");
 
   // Modal
-  document.getElementById("modalRfqTitle").innerText = isAr ? "طلب عرض السعر الرسمي (RFQ)" : "Official Request for Quotation (RFQ)";
-  document.getElementById("modalPolicyTitle").innerText = isAr ? "ℹ️ سياسة التوريد بدون أسعار:" : "ℹ️ Procurement Policy Note:";
-  document.getElementById("modalPolicyDesc").innerText = isAr ? 
+  setText("modalRfqTitle", isAr ? "طلب عرض السعر الرسمي (RFQ)" : "Official Request for Quotation (RFQ)");
+  setText("modalPolicyTitle", isAr ? "ℹ️ سياسة التوريد بدون أسعار:" : "ℹ️ Procurement Policy Note:");
+  setText("modalPolicyDesc", isAr ? 
     " هذا النظام مخصص لإصدار وتوثيق المواصفات الفنية لطلبات عروض الأسعار. سيقوم فريق مبيعات GulfRay بإرسال عرض السعر المالي المعتمد شاملاً خصومات الكميات ومدة التوريد." :
-    " This portal generates certified technical RFQs. Official commercial quotations with institutional volume discounts and delivery timelines will be officially dispatched by GulfRay sales engineers.";
+    " This portal generates certified technical RFQs. Official commercial quotations with institutional volume discounts and delivery timelines will be officially dispatched by GulfRay sales engineers.");
 
-  document.getElementById("btnSubmitRfq").innerText = isAr ? "🚀 إرسال طلب عرض السعر الرسمي" : "🚀 Submit Request for Quotation (RFQ)";
+  setText("btnSubmitRfq", isAr ? "🚀 إرسال طلب عرض السعر الرسمي" : "🚀 Submit Request for Quotation (RFQ)");
 
   // Navigation
-  if (document.getElementById("navLinkFabrics")) document.getElementById("navLinkFabrics").innerText = isAr ? "دليل الأقمشة 2027" : "Fabric Codes";
+  if (document.getElementById("navLinkFabrics")) setText("navLinkFabrics", isAr ? "دليل الأقمشة 2027" : "Fabric Codes");
 
   // 2027 Fabric Reference Section
-  if (document.getElementById("fabricsTag")) document.getElementById("fabricsTag").innerText = isAr ? "دليل الإنتاج المعتمد 2027 · مواصفات الأقمشة والنقشات" : "2027 PRODUCTION REFERENCE · FABRIC SPECIFICATIONS";
-  if (document.getElementById("fabricsTitle")) document.getElementById("fabricsTitle").innerText = isAr ? "الدليل المرجعي لألوان ونقشات وأشرطة أردية GulfRay" : "Outer Fabric, Print & Trim Colour Reference";
-  if (document.getElementById("fabricsDesc")) document.getElementById("fabricsDesc").innerText = isAr ? 
+  if (document.getElementById("fabricsTag")) setText("fabricsTag", isAr ? "دليل الإنتاج المعتمد 2027 · مواصفات الأقمشة والنقشات" : "2027 PRODUCTION REFERENCE · FABRIC SPECIFICATIONS");
+  if (document.getElementById("fabricsTitle")) setText("fabricsTitle", isAr ? "الدليل المرجعي لألوان ونقشات وأشرطة أردية GulfRay" : "Outer Fabric, Print & Trim Colour Reference");
+  if (document.getElementById("fabricsDesc")) setText("fabricsDesc", isAr ? 
     "جميع ألوان الأقمشة الخارجية والنقشات والأشرطة المعتمدة في كتالوج 2027 مع أكواد التصنيع الدقيقة (F-01 إلى F-25، P08 إلى P68، T-01 إلى T-06). يمكن للعملاء والجهات الطالبة تحديد الأكواد المطلوبة بدقة هندسية تامة." :
-    "Every outer-shell colour, print, and trim used across the official 2027 catalogue. Browse verified HEX codes, physical textile swatches, and factory codes (F-01 to F-25, P08 to P68, T-01 to T-06) for bespoke hospital orders.";
+    "Every outer-shell colour, print, and trim used across the official 2027 catalogue. Browse verified HEX codes, physical textile swatches, and factory codes (F-01 to F-25, P08 to P68, T-01 to T-06) for bespoke hospital orders.");
 
-  if (document.getElementById("tabFabAll")) document.getElementById("tabFabAll").innerText = isAr ? "كافة العينات (42)" : "All Swatches (42)";
-  if (document.getElementById("tabFabSolids")) document.getElementById("tabFabSolids").innerText = isAr ? "🎨 ألوان سادة · F-01 إلى F-25 (25)" : "🎨 Solid Colours · F-01 to F-25 (25)";
-  if (document.getElementById("tabFabPrints")) document.getElementById("tabFabPrints").innerText = isAr ? "🖼️ أقمشة مطبوعة · P08 إلى P68 (11)" : "🖼️ Printed Fabrics · P08 to P68 (11)";
-  if (document.getElementById("tabFabTrims")) document.getElementById("tabFabTrims").innerText = isAr ? "🧵 أشرطة وقيطان · T-01 إلى T-06 (6)" : "🧵 Trims & Piping · T-01 to T-06 (6)";
+  if (document.getElementById("tabFabAll")) setText("tabFabAll", isAr ? "كافة العينات (42)" : "All Swatches (42)");
+  if (document.getElementById("tabFabSolids")) setText("tabFabSolids", isAr ? "🎨 ألوان سادة · F-01 إلى F-25 (25)" : "🎨 Solid Colours · F-01 to F-25 (25)");
+  if (document.getElementById("tabFabPrints")) setText("tabFabPrints", isAr ? "🖼️ أقمشة مطبوعة · P08 إلى P68 (11)" : "🖼️ Printed Fabrics · P08 to P68 (11)");
+  if (document.getElementById("tabFabTrims")) setText("tabFabTrims", isAr ? "🧵 أشرطة وقيطان · T-01 إلى T-06 (6)" : "🧵 Trims & Piping · T-01 to T-06 (6)");
 
-  if (document.getElementById("txtModePresets")) document.getElementById("txtModePresets").innerText = isAr ? "🌟 مجموعات الكتالوج الجاهزة" : "🌟 Catalog Pre-Set Editions";
-  if (document.getElementById("txtModeCustom")) document.getElementById("txtModeCustom").innerText = isAr ? "🎯 تخصيص حر بأكواد 2027 (F · P · T)" : "🎯 Custom 2027 Fabric Codes (F · P · T)";
-  if (document.getElementById("lblSolidFabTitle")) document.getElementById("lblSolidFabTitle").innerText = isAr ? "🎨 قماش الرداء الخارجي الأساسي (F-01 إلى F-25):" : "🎨 Primary Outer Fabric (F-01 to F-25):";
-  if (document.getElementById("lblPrintFabTitle")) document.getElementById("lblPrintFabTitle").innerText = isAr ? "🖼️ النقشة المطبوعة الإضافية (اختياري):" : "🖼️ Printed Pattern Accent (Optional):";
-  if (document.getElementById("lblTrimFabTitle")) document.getElementById("lblTrimFabTitle").innerText = isAr ? "🧵 شريط الحواف والقيطان (T-01 إلى T-06):" : "🧵 Edge Trim & Piping (T-01 to T-06):";
+  if (document.getElementById("txtModePresets")) setText("txtModePresets", isAr ? "🌟 مجموعات الكتالوج الجاهزة" : "🌟 Catalog Pre-Set Editions");
+  if (document.getElementById("txtModeCustom")) setText("txtModeCustom", isAr ? "🎯 تخصيص حر بأكواد 2027 (F · P · T)" : "🎯 Custom 2027 Fabric Codes (F · P · T)");
+  if (document.getElementById("lblSolidFabTitle")) setText("lblSolidFabTitle", isAr ? "🎨 قماش الرداء الخارجي الأساسي (F-01 إلى F-25):" : "🎨 Primary Outer Fabric (F-01 to F-25):");
+  if (document.getElementById("lblPrintFabTitle")) setText("lblPrintFabTitle", isAr ? "🖼️ النقشة المطبوعة الإضافية (اختياري):" : "🖼️ Printed Pattern Accent (Optional):");
+  if (document.getElementById("lblTrimFabTitle")) setText("lblTrimFabTitle", isAr ? "🧵 شريط الحواف والقيطان (T-01 إلى T-06):" : "🧵 Edge Trim & Piping (T-01 to T-06):");
 
   // Re-render fabric grids with translated names
   renderFabricsGrid(currentFabricFilter);
@@ -965,30 +999,39 @@ function applyTranslations() {
   }
 
   // Collection Tabs
-  if (document.getElementById("tabAll")) document.getElementById("tabAll").innerText = isAr ? "كافة المجموعات" : "All Collections";
-  if (document.getElementById("tabSaudi")) document.getElementById("tabSaudi").innerText = isAr ? "المجموعات السعودية" : "Saudi Editions";
-  if (document.getElementById("tabSadu")) document.getElementById("tabSadu").innerText = isAr ? "🧵 نقشات السدو التراثية" : "🧵 Sadu & Geometric Patterns";
-  if (document.getElementById("tabClassics")) document.getElementById("tabClassics").innerText = isAr ? "⚓ الألوان الكلاسيكية" : "⚓ Signature & Solid Colors";
+  if (document.getElementById("tabAll")) setText("tabAll", isAr ? "كافة المجموعات" : "All Collections");
+  if (document.getElementById("tabSaudi")) setText("tabSaudi", isAr ? "المجموعات السعودية" : "Saudi Editions");
+  if (document.getElementById("tabSadu")) setText("tabSadu", isAr ? "🧵 نقشات السدو التراثية" : "🧵 Sadu & Geometric Patterns");
+  if (document.getElementById("tabClassics")) setText("tabClassics", isAr ? "⚓ الألوان الكلاسيكية" : "⚓ Signature & Solid Colors");
 
   // Hero Proof Metrics & Showcase
   if (document.getElementById("heroCardBadgeTag")) {
-    document.getElementById("heroCardBadgeTag").innerText = isAr ? "🛡️ معرض المنتجات الحقيقية للمصنع" : "🛡️ OFFICIAL PRODUCT SHOWCASE";
+    setText("heroCardBadgeTag", isAr ? "🛡️ معرض المنتجات الحقيقية للمصنع" : "🛡️ OFFICIAL PRODUCT SHOWCASE");
   }
   if (document.getElementById("heroM1Title")) {
-    document.getElementById("heroM1Title").innerText = isAr ? "أخف وزناً بنسبة 28%" : "28% Lighter Weight";
-    document.getElementById("heroM1Sub").innerText = isAr ? "حشوة UM خالية من الرصاص (2.60 kg/m²)" : "Lead-Free UM Core (2.60 kg/m²)";
+    setText("heroM1Title", isAr ? "أخف وزناً بنسبة 28%" : "28% Lighter Weight");
+    setText("heroM1Sub", isAr ? "حشوة UM خالية من الرصاص (2.60 kg/m²)" : "Lead-Free UM Core (2.60 kg/m²)");
   }
   if (document.getElementById("heroM2Title")) {
-    document.getElementById("heroM2Title").innerText = isAr ? "اختبار الحزمة العريضة" : "Broad-Beam Verified";
-    document.getElementById("heroM2Sub").innerText = isAr ? "المختبر الفيزيائي الوطني البريطاني NPL" : "UK National Physical Laboratory (NPL)";
+    setText("heroM2Title", isAr ? "اختبار الحزمة العريضة" : "Broad-Beam Verified");
+    setText("heroM2Sub", isAr ? "المختبر الفيزيائي الوطني البريطاني NPL" : "UK National Physical Laboratory (NPL)");
   }
   if (document.getElementById("heroM3Title")) {
-    document.getElementById("heroM3Title").innerText = isAr ? "100% غير سام وآمن" : "100% Non-Toxic";
-    document.getElementById("heroM3Sub").innerText = isAr ? "مطابق لمواصفات SGS REACH 234 SVHC" : "SGS REACH 234 SVHC Certified";
+    setText("heroM3Title", isAr ? "100% غير سام وآمن" : "100% Non-Toxic");
+    setText("heroM3Sub", isAr ? "مطابق لمواصفات SGS REACH 234 SVHC" : "SGS REACH 234 SVHC Certified");
   }
+  // 3D Visualizer Translations
+  if (document.getElementById("tab3DMode")) setText("tab3DMode", isAr ? "🔄 استوديو ثلاثي الأبعاد 360°" : "🔄 3D 360° Studio");
+  if (document.getElementById("tabPhotoMode")) setText("tabPhotoMode", isAr ? "📷 صورة الكتالوج" : "📷 Photo");
+  if (document.getElementById("txtDragHint")) setText("txtDragHint", isAr ? "🔄 اسحب للدوران 360° · العجلة للتقريب" : "🔄 Drag 360° · Scroll to Zoom");
+  if (document.getElementById("lblAngleFront")) setText("lblAngleFront", isAr ? "أمامي 0°" : "Front 0°");
+  if (document.getElementById("lblAngleSide")) setText("lblAngleSide", isAr ? "جانبي 90°" : "Side 90°");
+  if (document.getElementById("lblAngleBack")) setText("lblAngleBack", isAr ? "الظهر 180°" : "Back 180°");
+  if (document.getElementById("lbl3DAutoSpin")) setText("lbl3DAutoSpin", isAr ? "🔄 دوران تلقائي" : "🔄 Auto-Spin");
+
   if (document.getElementById("heroM4Title")) {
-    document.getElementById("heroM4Title").innerText = isAr ? "مصنع وطني سعودي" : "Saudi National Manufacturer";
-    document.getElementById("heroM4Sub").innerText = isAr ? "أول مصنع مرخص في المملكة" : "Kingdom of Saudi Arabia Factory";
+    setText("heroM4Title", isAr ? "مصنع وطني سعودي" : "Saudi National Manufacturer");
+    setText("heroM4Sub", isAr ? "أول مصنع مرخص في المملكة" : "Kingdom of Saudi Arabia Factory");
   }
 }
 
