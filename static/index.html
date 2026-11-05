@@ -63,7 +63,7 @@
         <a href="#materials" class="nav-link" id="navLinkMaterials">Core Materials</a>
         <a href="#collections" class="nav-link" id="navLinkCollections">Saudi Collections</a>
         <a href="#fabrics" class="nav-link" id="navLinkFabrics">Fabric Codes</a>
-        <a href="#rfq-builder" class="nav-link" id="navLinkBuilder">RFQ Configurator</a>
+        <a href="#rfq-builder" class="nav-link nav-link-3d" id="navLinkBuilder">🔄 3D Configurator</a>
         <a href="#compliance" class="nav-link" id="navLinkCompliance">Certifications</a>
         <a href="#workflow" class="nav-link" id="navLinkWorkflow">Working with Us</a>
       </nav>
@@ -106,6 +106,9 @@
         <div class="hero-cta-group">
           <a href="#rfq-builder" class="btn-primary" id="btnHeroRfq">
             <span>✨ Configure & Request Quotation (RFQ)</span>
+          </a>
+          <a href="#rfq-builder" class="btn-3d-highlight" id="btnHero3D">
+            <span>🔄 360° 3D Studio Live</span>
           </a>
           <a href="#materials" class="btn-secondary" id="btnHeroMaterials">
             <span>🔬 Explore Core Materials Guide</span>
@@ -586,11 +589,26 @@
 
           <!-- 3D Interactive Viewport -->
           <div class="apron-3d-box" id="apron3DViewportBox">
-            <canvas id="apron3DCanvas" class="apron-3d-canvas"></canvas>
+            <!-- 3D Turntable Stage -->
+            <div class="turntable-stage" id="turntableStage">
+              <div class="mannequin-turntable-plane" id="mannequinPlane">
+                <img id="apronStudioImg" class="turntable-mannequin-img" src="/images/studio360/fullwrap_green_front_framed.jpg" alt="GulfRay Studio Mannequin">
+                <!-- Pocket Custom Embroidery Badge -->
+                <div class="pocket-embroidery-overlay" id="pocketOverlay">
+                  <span class="emb-gold-title" id="embNameOverlay">GULFRAY® SURGICAL</span>
+                  <span class="emb-gold-spec" id="embSpecOverlay">0.50 mm Pb · Ultra-Light</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pedestal Floor Shadow -->
+            <div class="pedestal-floor-shadow"></div>
+
+            <canvas id="apron3DCanvas" class="apron-3d-canvas" style="display:none;"></canvas>
             
             <!-- Drag Hint Overlay -->
             <div class="apron-3d-hint">
-              <span id="txtDragHint">🔄 Drag 360° · Scroll to Zoom</span>
+              <span id="txtDragHint">🔄 Drag 360° to Rotate</span>
             </div>
 
             <!-- 3D Controls Bar -->
@@ -893,10 +911,10 @@
     </div>
   </div>
 
-  <!-- Three.js Engine & 3D Apron Turntable -->
+  <!-- Ultra-HD 360° Studio Turntable Engine -->
   <script src="/js/three.min.js"></script>
-  <script src="/js/apron_3d_viewer.js?v=1.0"></script>
+  <script src="/js/apron_3d_viewer.js?v=2.0"></script>
   <!-- Main Application JavaScript -->
-  <script src="/js/app.js?v=3.1"></script>
+  <script src="/js/app.js?v=3.2"></script>
 </body>
 </html>

@@ -906,7 +906,7 @@ function applyTranslations() {
   // Nav
   setText("navLinkMaterials", isAr ? "دليل المواد الواقية" : "Core Materials");
   setText("navLinkCollections", isAr ? "المجموعات والسدو" : "Saudi Collections");
-  setText("navLinkBuilder", isAr ? "مُنشئ عرض السعر" : "RFQ Configurator");
+  setText("navLinkBuilder", isAr ? "🔄 استوديو 3D والطلب" : "🔄 3D Configurator");
   setText("navLinkCompliance", isAr ? "الاعتمادات والجودة" : "Certifications");
   setText("navLinkWorkflow", isAr ? "آلية العمل" : "Working with Us");
 
@@ -924,6 +924,7 @@ function applyTranslations() {
     "Saudi Arabia's premier medical manufacturer of lightweight, certified radiation protection aprons. Engineered with broad-beam verified lead-free cores, bespoke Saudi Sadu heritage embroidery, and custom hospital sizing.");
 
   setHtml("btnHeroRfq", isAr ? "<span>✨ تخصيص وطلب عرض السعر (RFQ)</span>" : "<span>✨ Configure & Request Quotation (RFQ)</span>");
+  setHtml("btnHero3D", isAr ? "<span>🔄 استوديو المعاينة 360° ثلاثي الأبعاد</span>" : "<span>🔄 360° 3D Studio Live</span>");
   setHtml("btnHeroMaterials", isAr ? "<span>🔬 استعراض دليل المواد الواقية</span>" : "<span>🔬 Explore Core Materials Guide</span>");
 
   // Materials Guide
@@ -1023,7 +1024,7 @@ function applyTranslations() {
   // 3D Visualizer Translations
   if (document.getElementById("tab3DMode")) setText("tab3DMode", isAr ? "🔄 استوديو ثلاثي الأبعاد 360°" : "🔄 3D 360° Studio");
   if (document.getElementById("tabPhotoMode")) setText("tabPhotoMode", isAr ? "📷 صورة الكتالوج" : "📷 Photo");
-  if (document.getElementById("txtDragHint")) setText("txtDragHint", isAr ? "🔄 اسحب للدوران 360° · العجلة للتقريب" : "🔄 Drag 360° · Scroll to Zoom");
+  if (document.getElementById("txtDragHint")) setText("txtDragHint", isAr ? "🔄 اسحب للتدوير 360 درجة" : "🔄 Drag 360° to Rotate");
   if (document.getElementById("lblAngleFront")) setText("lblAngleFront", isAr ? "أمامي 0°" : "Front 0°");
   if (document.getElementById("lblAngleSide")) setText("lblAngleSide", isAr ? "جانبي 90°" : "Side 90°");
   if (document.getElementById("lblAngleBack")) setText("lblAngleBack", isAr ? "الظهر 180°" : "Back 180°");
