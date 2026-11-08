@@ -794,7 +794,6 @@ function applyTranslations() {
   // Nav
   setText("navLinkMaterials", isAr ? "دليل المواد الواقية" : "Core Materials");
   setText("navLinkFactory", isAr ? "المصنع السعودي" : "Saudi Factory");
-  setText("btnHeaderContact", isAr ? "🏭 المصنع السعودي" : "🏭 Saudi Factory");
   setText("navLinkCollections", isAr ? "المجموعات والسدو" : "Saudi Collections");
   setText("navLinkFabrics", isAr ? "أكواد الأقمشة 2027" : "Fabric Codes");
   setText("navLinkBuilder", isAr ? "🔄 استوديو المنتجات 360°" : "🔄 3D Product Studio");
@@ -926,6 +925,7 @@ function applyTranslations() {
   if (document.getElementById("tabPhotoMode")) setText("tabPhotoMode", isAr ? "📷 صورة الكتالوج" : "📷 Photo");
   if (document.getElementById("txtDragHint")) setText("txtDragHint", isAr ? "🔄 اسحب للتدوير 360 درجة" : "🔄 Drag 360° to Rotate");
   if (document.getElementById("lblAngleFront")) setText("lblAngleFront", isAr ? "أمامي 0°" : "Front 0°");
+  if (document.getElementById("lblAngleQuarter")) setText("lblAngleQuarter", isAr ? "زاوية 45°" : "Angle 45°");
   if (document.getElementById("lblAngleSide")) setText("lblAngleSide", isAr ? "جانبي 90°" : "Side 90°");
   if (document.getElementById("lblAngleBack")) setText("lblAngleBack", isAr ? "الظهر 180°" : "Back 180°");
   if (document.getElementById("lbl3DAutoSpin")) setText("lbl3DAutoSpin", isAr ? "🔄 دوران تلقائي" : "🔄 Auto-Spin");

@@ -1,6 +1,7 @@
 // ==========================================================================
 // GulfRay® Medical - Ultra-HD Photorealistic 360° Studio Turntable Engine
 // Authentic 2027 Catalogue Studio Photography with Real-time 3D Foreshortening
+// Automotive-Grade Real-Time Material & Pattern Synthesizer
 // ==========================================================================
 
 const apron3D = {
@@ -13,6 +14,9 @@ const apron3D = {
   embNameOverlay: null,
   embSpecOverlay: null,
   anglePill: null,
+  hudFabricDot: null,
+  hudFabricText: null,
+  hudCoreText: null,
   
   // Real Studio Asset Pairs
   activeFrontSrc: '/images/studio360/fullwrap_green_front_framed.jpg',
@@ -26,6 +30,7 @@ const apron3D = {
   isDragging: false,
   startX: 0,
   autoSpin: true,
+  zoomLevel: 1.0,
   viewMode: '3d', // '3d' or 'photo'
   animId: null,
   
@@ -35,15 +40,12 @@ const apron3D = {
 };
 
 // ==========================================================================
-// Initialization
+// 1. Initialization & DOM Setup
 // ==========================================================================
 function initApron3DViewer(canvasId, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
   apron3D.container = container;
-
-  // Build turntable DOM inside container if not already present
-  ensureTurntableDOM(container);
 
   // Cache elements
   apron3D.stage = document.getElementById('turntableStage');
@@ -53,8 +55,11 @@ function initApron3DViewer(canvasId, containerId) {
   apron3D.embNameOverlay = document.getElementById('embNameOverlay');
   apron3D.embSpecOverlay = document.getElementById('embSpecOverlay');
   apron3D.anglePill = document.getElementById('apron3DAnglePill');
+  apron3D.hudFabricDot = document.getElementById('hudFabricDot');
+  apron3D.hudFabricText = document.getElementById('hudFabricText');
+  apron3D.hudCoreText = document.getElementById('hudCoreText');
 
-  // Attach Mouse & Touch Drag Listeners
+  // Attach Mouse, Touch, & Wheel Zoom Listeners
   setupTurntableInteraction(container);
 
   apron3D.initialized = true;
@@ -68,51 +73,14 @@ function initApron3DViewer(canvasId, containerId) {
   updateTurntableRender();
 }
 
-function ensureTurntableDOM(container) {
-  // If stage already exists, nothing to do
-  if (document.getElementById('turntableStage')) return;
-
-  // Hide old canvas if present
-  const oldCanvas = document.getElementById('apron3DCanvas');
-  if (oldCanvas) {
-    oldCanvas.style.display = 'none';
-  }
-
-  // Inject 3D Turntable Stage
-  const stage = document.createElement('div');
-  stage.id = 'turntableStage';
-  stage.className = 'turntable-stage';
-  stage.innerHTML = `
-    <div class="mannequin-turntable-plane" id="mannequinPlane">
-      <img id="apronStudioImg" class="turntable-mannequin-img" src="/images/studio360/fullwrap_green_front_framed.jpg" alt="GulfRay Real Studio Apron">
-      <div class="pocket-embroidery-overlay" id="pocketOverlay">
-        <span class="emb-gold-title" id="embNameOverlay">GULFRAY® SURGICAL</span>
-        <span class="emb-gold-spec" id="embSpecOverlay">0.50 mm Pb · Ultra-Light</span>
-      </div>
-    </div>
-  `;
-
-  // Inject Floor Shadow
-  const shadow = document.createElement('div');
-  shadow.className = 'pedestal-floor-shadow';
-
-  // Insert before controls
-  const controls = container.querySelector('.apron-3d-controls');
-  if (controls) {
-    container.insertBefore(shadow, controls);
-    container.insertBefore(stage, shadow);
-  } else {
-    container.appendChild(stage);
-    container.appendChild(shadow);
-  }
-}
-
 // ==========================================================================
-// Interaction: Drag, Touch, Inertia & Angle Snapping
+// 2. Interaction: Drag, Touch, Wheel Zoom & Angle Controls
 // ==========================================================================
 function setupTurntableInteraction(container) {
   // Mouse Drag
   container.addEventListener('mousedown', (e) => {
+    // Ignore clicks on control buttons
+    if (e.target.closest('.apron-3d-controls') || e.target.closest('.apron-hud-overlay')) return;
     apron3D.isDragging = true;
     apron3D.autoSpin = false;
     updateSpinButtonState();
@@ -131,8 +99,9 @@ function setupTurntableInteraction(container) {
     apron3D.isDragging = false;
   });
 
-  // Touch Drag
+  // Touch Drag (Mobile / Tablets)
   container.addEventListener('touchstart', (e) => {
+    if (e.target.closest('.apron-3d-controls') || e.target.closest('.apron-hud-overlay')) return;
     if (e.touches.length === 1) {
       apron3D.isDragging = true;
       apron3D.autoSpin = false;
@@ -152,18 +121,26 @@ function setupTurntableInteraction(container) {
   window.addEventListener('touchend', () => {
     apron3D.isDragging = false;
   });
+
+  // Mouse Wheel Smooth Zoom (Automotive Configurator Feature)
+  container.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const delta = e.deltaY < 0 ? 0.08 : -0.08;
+    zoomApron(delta);
+  }, { passive: false });
 }
 
-// Animation loop
+// ==========================================================================
+// 3. Render Loop & 3D Perspective Transformations
+// ==========================================================================
 function turntableLoop() {
-  if (apron3D.autoSpin) {
-    apron3D.currentAngle += 0.80;
+  if (apron3D.autoSpin && !apron3D.isDragging) {
+    apron3D.currentAngle += 0.38; // Smooth cinematic studio spin
     updateTurntableRender();
   }
   apron3D.animId = requestAnimationFrame(turntableLoop);
 }
 
-// 3D Perspective & Asset Update
 function updateTurntableRender() {
   if (!apron3D.stage || !apron3D.img) return;
 
@@ -173,9 +150,9 @@ function updateTurntableRender() {
   // Realistic 3D perspective foreshortening with anatomical mannequin depth
   const cosVal = Math.cos(rad);
   const absCos = Math.abs(cosVal);
-  const scaleX = 0.36 + 0.64 * absCos; // Natural human profile depth at 90°
-  const skewY = Math.sin(rad) * -3.5;
-  const rotY = Math.sin(rad) * 18;
+  const scaleX = 0.38 + 0.62 * absCos; // Natural human profile depth at 90°
+  const skewY = Math.sin(rad) * -3.2;
+  const rotY = Math.sin(rad) * 16;
 
   // Front vs Back swap at 90° and 270°
   const isBack = (normAngle > 90 && normAngle < 270);
@@ -185,7 +162,7 @@ function updateTurntableRender() {
     apron3D.img.src = targetSrc;
   }
 
-  // Pocket Embroidery foreshortening & back visibility
+  // Pocket Embroidery badge visibility & foreshortening
   if (apron3D.pocketOverlay) {
     apron3D.pocketOverlay.style.display = isBack ? 'none' : 'flex';
     if (!isBack) {
@@ -193,52 +170,71 @@ function updateTurntableRender() {
     }
   }
 
-  // Apply 3D perspective transform
-  apron3D.stage.style.transform = `scaleX(${scaleX}) rotateY(${rotY}deg) skewY(${skewY}deg)`;
+  // Apply 3D perspective + Zoom transform to turntable stage
+  const zoom = apron3D.zoomLevel || 1.0;
+  apron3D.stage.style.transform = `scale(${zoom}) scaleX(${scaleX}) rotateY(${rotY}deg) skewY(${skewY}deg)`;
 
-  // Update Angle Pill
+  // Update Floor Shadow perspective
+  const shadow = document.querySelector('.pedestal-floor-shadow');
+  if (shadow) {
+    const shadowScale = (0.75 + 0.25 * absCos) * zoom;
+    shadow.style.transform = `translateX(-50%) scale(${shadowScale})`;
+    shadow.style.opacity = `${0.35 + 0.15 * absCos}`;
+  }
+
+  // Update Angle HUD
   updateAnglePill(normAngle);
 }
 
 function updateAnglePill(normAngle) {
-  const angleEl = apron3D.anglePill || document.getElementById('apron3DAnglePill');
-  if (!angleEl) return;
-
   const isAr = (typeof currentLang !== "undefined" && currentLang === "ar") ||
                (document.documentElement.getAttribute("dir") === "rtl");
 
   let desc = isAr ? "الواجهة الأمامية" : "Front View";
-  if (normAngle >= 45 && normAngle < 135) {
-    desc = isAr ? "الجانب الأيمن" : "Right Profile";
-  } else if (normAngle >= 135 && normAngle < 225) {
-    desc = isAr ? "حماية الظهر (360°)" : "Back Shielding (360°)";
-  } else if (normAngle >= 225 && normAngle < 315) {
-    desc = isAr ? "الجانب الأيسر" : "Left Profile";
+  if (normAngle >= 30 && normAngle < 65) {
+    desc = isAr ? "زاوية 45° مجسمة" : "45° 3D Profile";
+  } else if (normAngle >= 65 && normAngle < 125) {
+    desc = isAr ? "الجانب الأيمن (90°)" : "Right Profile (90°)";
+  } else if (normAngle >= 125 && normAngle < 235) {
+    desc = isAr ? "حماية الظهر (180°)" : "Back Shielding (180°)";
+  } else if (normAngle >= 235 && normAngle < 295) {
+    desc = isAr ? "الجانب الأيسر (270°)" : "Left Profile (270°)";
+  } else if (normAngle >= 295 && normAngle < 330) {
+    desc = isAr ? "زاوية خلفية مجسمة" : "Three-Quarter View";
   }
 
-  angleEl.innerText = `${Math.round(normAngle)}° · ${desc}`;
+  const degText = `${Math.round(normAngle)}° · ${desc}`;
+
+  // Update Pill at top of switch bar
+  const angleEl = apron3D.anglePill || document.getElementById('apron3DAnglePill');
+  if (angleEl) angleEl.innerText = degText;
+
+  // Update HUD text inside viewport
+  const hudAngle = document.getElementById('hudAngleText');
+  if (hudAngle) hudAngle.innerText = degText;
 
   // Update Snap Buttons active class
-  const rounded = Math.round(normAngle);
-  updateActiveSnapButton(rounded);
+  updateActiveSnapButton(Math.round(normAngle));
 }
 
 function updateActiveSnapButton(deg) {
-  ['btnAngleFront', 'btnAngleSide', 'btnAngleBack'].forEach(id => {
+  ['btnAngleFront', 'btnAngleQuarter', 'btnAngleSide', 'btnAngleBack'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('active');
   });
 
-  if ((deg <= 10 || deg >= 350) && document.getElementById('btnAngleFront')) {
+  if ((deg <= 15 || deg >= 345) && document.getElementById('btnAngleFront')) {
     document.getElementById('btnAngleFront').classList.add('active');
-  } else if ((deg >= 80 && deg <= 100) && document.getElementById('btnAngleSide')) {
+  } else if ((deg >= 35 && deg <= 60) && document.getElementById('btnAngleQuarter')) {
+    document.getElementById('btnAngleQuarter').classList.add('active');
+  } else if ((deg >= 75 && deg <= 105) && document.getElementById('btnAngleSide')) {
     document.getElementById('btnAngleSide').classList.add('active');
-  } else if ((deg >= 170 && deg <= 190) && document.getElementById('btnAngleBack')) {
+  } else if ((deg >= 165 && deg <= 195) && document.getElementById('btnAngleBack')) {
     document.getElementById('btnAngleBack').classList.add('active');
   }
 }
 
-// Snap Controls
+// Snap Angle Controls
 function setApronAngle(deg) {
   apron3D.autoSpin = false;
   updateSpinButtonState();
@@ -258,6 +254,27 @@ function updateSpinButtonState() {
     btn.classList.add("active");
   } else {
     btn.classList.remove("active");
+  }
+}
+
+// Zoom Controls (Car Configurator Feature)
+function zoomApron(delta) {
+  apron3D.zoomLevel = Math.min(2.1, Math.max(0.75, (apron3D.zoomLevel || 1.0) + delta));
+  updateTurntableRender();
+  updateZoomLabel();
+}
+
+function resetApronZoom() {
+  apron3D.zoomLevel = 1.0;
+  apron3D.currentAngle = 0;
+  updateTurntableRender();
+  updateZoomLabel();
+}
+
+function updateZoomLabel() {
+  const lbl = document.getElementById('hudZoomLevel');
+  if (lbl) {
+    lbl.innerText = `${Math.round(apron3D.zoomLevel * 100)}%`;
   }
 }
 
@@ -282,97 +299,206 @@ function togglePreviewMode(mode) {
 }
 
 // ==========================================================================
-// Dynamic Model Update on Configuration Change
+// 4. Dynamic Model & Material Synthesizer
 // ==========================================================================
 function updateApron3DModel(config) {
   if (!config) return;
   apron3D.currentConfig = config;
 
-  // 1. Determine Garment Style & Real Studio Assets
+  // 1. Garment Style & Real Base Studio Photography
   const cat = (config.category || "").toLowerCase();
   const col = (config.collection || "").toLowerCase();
   const colName = (config.color || "").toLowerCase();
   const isLavender = col.includes("lavender") || colName.includes("lavender") || (config.color_hex && config.color_hex.toLowerCase() === "#684f8c");
-  const hasPattern = config.fabric_mode === "custom_codes" && config.pattern_code && config.pattern_code !== "None";
+  const hasPattern = (config.pattern_code && config.pattern_code !== "None" && config.pattern_code !== "");
 
   let frontAsset = '/images/studio360/fullwrap_green_front_framed.jpg';
   let backAsset = '/images/studio360/fullwrap_green_back_clean.jpg';
 
   if (cat.includes("frontal")) {
-    // Frontal Surgery Apron
     frontAsset = '/images/studio360/frontal_green_front_framed.jpg';
     backAsset = '/images/studio360/frontal_green_back_framed.jpg';
   } else if (cat.includes("vest") || cat.includes("skirt")) {
-    // Vest & Skirt Style
-    if (hasPattern) {
-      frontAsset = '/images/studio360/vestskirt_pattern_front_framed.jpg';
-      backAsset = '/images/studio360/vestskirt_pattern_back_framed.jpg';
-    } else if (isLavender) {
-      frontAsset = '/images/studio360/vestskirt_lavender_front_framed.jpg';
-      backAsset = '/images/studio360/vestskirt_green_back_framed.jpg';
-    } else {
-      frontAsset = '/images/studio360/vestskirt_green_front_framed.jpg';
-      backAsset = '/images/studio360/vestskirt_green_back_framed.jpg';
-    }
+    frontAsset = '/images/studio360/vestskirt_green_front_framed.jpg';
+    backAsset = '/images/studio360/vestskirt_green_back_framed.jpg';
   } else {
-    // Full Overlap Wraparound (One-Piece)
-    if (isLavender) {
-      frontAsset = '/images/studio360/fullwrap_lavender_front_framed.jpg';
-      backAsset = '/images/studio360/fullwrap_green_back_clean.jpg';
-    } else {
-      frontAsset = '/images/studio360/fullwrap_green_front_framed.jpg';
-      backAsset = '/images/studio360/fullwrap_green_back_clean.jpg';
-    }
+    frontAsset = '/images/studio360/fullwrap_green_front_framed.jpg';
+    backAsset = '/images/studio360/fullwrap_green_back_clean.jpg';
   }
 
   apron3D.activeFrontSrc = frontAsset;
   apron3D.activeBackSrc = backAsset;
 
-  // 2. Dynamic Color Tinting (for F-01 to F-25 and custom solid swatches)
-  const isCustomSolid = (config.fabric_mode === "custom_codes" && (!config.pattern_code || config.pattern_code === "None")) ||
-                        (!isLavender && config.color_hex && config.color_hex.toLowerCase() !== "#006c35" && config.color_hex.toLowerCase() !== "#234a3c");
-
+  // 2. Pattern Accent vs Solid Color Synthesizer
   const targetHex = (config.fabric_mode === "custom_codes" && config.fabric_hex) ? config.fabric_hex : config.color_hex;
 
-  if (isCustomSolid && targetHex && !hasPattern) {
+  if (hasPattern) {
+    // Look up pattern image URL (e.g. P68 -> /images/fabrics/P68_teal_abstract.jpg)
+    const patternUrl = getPatternImageUrl(config.pattern_code);
+    if (patternUrl) {
+      applyPatternToAssets(frontAsset, backAsset, patternUrl);
+    } else {
+      apron3D.activeFrontDisplay = frontAsset;
+      apron3D.activeBackDisplay = backAsset;
+      updateTurntableRender();
+    }
+  } else if (isLavender) {
+    // Authentic Lavender Studio Photography
+    if (cat.includes("vest") || cat.includes("skirt")) {
+      apron3D.activeFrontDisplay = '/images/studio360/vestskirt_lavender_front_framed.jpg';
+      apron3D.activeBackDisplay = backAsset;
+    } else {
+      apron3D.activeFrontDisplay = '/images/studio360/fullwrap_lavender_front_framed.jpg';
+      apron3D.activeBackDisplay = backAsset;
+    }
+    updateTurntableRender();
+  } else if (targetHex && targetHex.toLowerCase() !== "#006c35" && targetHex.toLowerCase() !== "#234a3c") {
+    // Authentic Solid Color Dynamic Tinting (F-01 to F-25)
     applyDynamicFabricTint(frontAsset, backAsset, targetHex);
   } else {
+    // Default Official Saudi Green Studio
     apron3D.activeFrontDisplay = frontAsset;
     apron3D.activeBackDisplay = backAsset;
     updateTurntableRender();
   }
 
-  // 3. Update Live Pocket Embroidery Overlay
-  updatePocketEmbroideryOverlay(config, targetHex);
+  // 3. Update HUD & Floating Pocket Certification Tag
+  updateStudioHUD(config, targetHex, hasPattern);
 }
 
-function updatePocketEmbroideryOverlay(config, targetHex) {
-  const embInput = document.getElementById("inputEmbroidery");
-  let text = embInput ? embInput.value.trim() : (config.embroidery || "");
-  if (!text) {
-    text = "GULFRAY® SURGICAL";
+// Pattern Lookup Helper
+function getPatternImageUrl(patternCode) {
+  if (!patternCode || patternCode === "None") return null;
+  
+  // Specific pattern dictionary
+  const patternMap = {
+    'P08': '/images/fabrics/P08_sunflower.jpg',
+    'P17': '/images/fabrics/P17_eucalyptus.jpg',
+    'P18': '/images/fabrics/P18_spring_flora.jpg',
+    'P19': '/images/fabrics/P19_abstract_botanical.jpg',
+    'P20': '/images/fabrics/P20_watercolour_wave.jpg',
+    'P21': '/images/fabrics/P21_lavender_sketch.jpg',
+    'P22': '/images/fabrics/P22_micro_floral.jpg',
+    'P23': '/images/fabrics/P23_geometric_lattice.jpg',
+    'P40': '/images/fabrics/P40_blue_camo.jpg',
+    'P41': '/images/fabrics/P41_grey_digital_camo.jpg',
+    'P68': '/images/fabrics/P68_teal_abstract.jpg'
+  };
+
+  if (patternMap[patternCode]) return patternMap[patternCode];
+
+  // Fallback to FABRIC_REFERENCE if available
+  if (typeof FABRIC_REFERENCE !== "undefined" && FABRIC_REFERENCE.printed_fabrics) {
+    const found = FABRIC_REFERENCE.printed_fabrics.find(p => p.code === patternCode);
+    if (found && found.image) return found.image;
   }
 
-  if (apron3D.embNameOverlay) {
-    apron3D.embNameOverlay.innerText = text;
-  }
-  if (apron3D.embSpecOverlay) {
-    const thick = config.thickness || "0.50 mm Pb";
-    apron3D.embSpecOverlay.innerText = `${thick} · GulfRay`;
-  }
-
-  // Adjust pocket badge background to harmonize with garment
-  if (apron3D.pocketOverlay) {
-    if (targetHex && targetHex !== '#006C35') {
-      apron3D.pocketOverlay.style.background = targetHex;
-    } else {
-      apron3D.pocketOverlay.style.background = 'rgba(0, 77, 37, 0.92)';
-    }
-  }
+  return `/images/fabrics/${patternCode}_teal_abstract.jpg`;
 }
 
 // ==========================================================================
-// Ultra-Fast HTML5 Canvas Fabric Tinting Engine
+// 5. Pattern Compositor Engine (HTML5 Canvas)
+// Wraps pattern seamlessly around 3D folds, shadows & contours
+// ==========================================================================
+function applyPatternToAssets(frontSrc, backSrc, patternUrl) {
+  compositePatternOnSingleAsset(frontSrc, patternUrl, (frontDataUrl) => {
+    apron3D.activeFrontDisplay = frontDataUrl;
+    updateTurntableRender();
+  });
+
+  compositePatternOnSingleAsset(backSrc, patternUrl, (backDataUrl) => {
+    apron3D.activeBackDisplay = backDataUrl;
+    updateTurntableRender();
+  });
+}
+
+function compositePatternOnSingleAsset(srcUrl, patternUrl, callback) {
+  const cacheKey = `${srcUrl}__pattern__${patternUrl}`;
+  if (apron3D.tintCache.has(cacheKey)) {
+    callback(apron3D.tintCache.get(cacheKey));
+    return;
+  }
+
+  const baseImg = new Image();
+  baseImg.crossOrigin = "anonymous";
+  baseImg.onload = () => {
+    const patImg = new Image();
+    patImg.crossOrigin = "anonymous";
+    patImg.onload = () => {
+      try {
+        const c = document.createElement('canvas');
+        c.width = baseImg.naturalWidth || 640;
+        c.height = baseImg.naturalHeight || 800;
+        const ctx = c.getContext('2d');
+        ctx.drawImage(baseImg, 0, 0);
+
+        const imgData = ctx.getImageData(0, 0, c.width, c.height);
+        const data = imgData.data;
+
+        // Create offscreen canvas for repeating pattern tile
+        const patCanvas = document.createElement('canvas');
+        patCanvas.width = c.width;
+        patCanvas.height = c.height;
+        const patCtx = patCanvas.getContext('2d');
+
+        // Scale pattern tile to realistic garment scale (140px width per motif)
+        const patW = patImg.naturalWidth || 200;
+        const patH = patImg.naturalHeight || 200;
+        const scale = 140 / patW;
+        const scaledW = Math.max(90, Math.round(patW * scale));
+        const scaledH = Math.max(90, Math.round(patH * scale));
+
+        for (let x = 0; x < c.width; x += scaledW) {
+          for (let y = 0; y < c.height; y += scaledH) {
+            patCtx.drawImage(patImg, x, y, scaledW, scaledH);
+          }
+        }
+
+        const patData = patCtx.getImageData(0, 0, c.width, c.height).data;
+
+        // Composite pattern onto fabric mask
+        const len = data.length;
+        for (let i = 0; i < len; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+
+          // Background is warm white/cream: r > 215 && g > 210 && b > 205
+          const isBg = (r > 215 && g > 210 && b > 205);
+          const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+          const isGreenFabric = (g > 25 && g > r * 1.02 && g > b * 1.02 && lum < 200);
+
+          if (isGreenFabric && !isBg) {
+            const pr = patData[i];
+            const pg = patData[i + 1];
+            const pb = patData[i + 2];
+
+            // Luminance factor wraps pattern naturally across folds & shadows
+            const lumFactor = Math.min(2.1, Math.max(0.18, lum / 55.0));
+            data[i]     = Math.min(255, Math.max(0, Math.round(pr * lumFactor * 0.95)));
+            data[i + 1] = Math.min(255, Math.max(0, Math.round(pg * lumFactor * 0.95)));
+            data[i + 2] = Math.min(255, Math.max(0, Math.round(pb * lumFactor * 0.95)));
+          }
+        }
+
+        ctx.putImageData(imgData, 0, 0);
+        const resultUrl = c.toDataURL('image/jpeg', 0.92);
+        apron3D.tintCache.set(cacheKey, resultUrl);
+        callback(resultUrl);
+      } catch (err) {
+        console.warn("Pattern composite error:", err);
+        callback(srcUrl);
+      }
+    };
+    patImg.onerror = () => callback(srcUrl);
+    patImg.src = patternUrl;
+  };
+  baseImg.onerror = () => callback(srcUrl);
+  baseImg.src = srcUrl;
+}
+
+// ==========================================================================
+// 6. Solid Color Tinting Engine (HTML5 Canvas)
 // Preserves 100% of authentic folds, shadows, stitching, and pedestal
 // ==========================================================================
 function applyDynamicFabricTint(frontSrc, backSrc, hexColor) {
@@ -388,7 +514,7 @@ function applyDynamicFabricTint(frontSrc, backSrc, hexColor) {
 }
 
 function tintSingleAsset(srcUrl, hexColor, callback) {
-  const cacheKey = `${srcUrl}__${hexColor}`;
+  const cacheKey = `${srcUrl}__color__${hexColor}`;
   if (apron3D.tintCache.has(cacheKey)) {
     callback(apron3D.tintCache.get(cacheKey));
     return;
@@ -412,18 +538,29 @@ function tintSingleAsset(srcUrl, hexColor, callback) {
       const normR = rgb.r / maxTarget;
       const normG = rgb.g / maxTarget;
       const normB = rgb.b / maxTarget;
+      const isDark = (rgb.r * 0.299 + rgb.g * 0.587 + rgb.b * 0.114) < 65;
 
-      for (let i = 0; i < data.length; i += 4) {
+      const len = data.length;
+      for (let i = 0; i < len; i += 4) {
         const r = data[i];
         const g = data[i + 1];
         const b = data[i + 2];
+        const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+        const isBg = (r > 215 && g > 210 && b > 205);
 
-        // Green fabric mask (Saudi Green)
-        if (g > 35 && g > r * 1.05 && g > b * 1.05 && r < 185 && b < 185) {
-          const lum = (r * 0.299 + g * 0.587 + b * 0.114) / 100.0;
-          data[i]     = Math.min(255, Math.max(0, normR * lum * 120.0));
-          data[i + 1] = Math.min(255, Math.max(0, normG * lum * 120.0));
-          data[i + 2] = Math.min(255, Math.max(0, normB * lum * 120.0));
+        // Green fabric mask
+        if (g > 25 && g > r * 1.02 && g > b * 1.02 && lum < 200 && !isBg) {
+          const lumFactor = lum / 65.0;
+          if (isDark) {
+            // For dark colors (Black, Charcoal, Navy), retain specular highlights
+            data[i]     = Math.min(255, Math.max(0, Math.round(rgb.r * 0.35 + lumFactor * 22.0)));
+            data[i + 1] = Math.min(255, Math.max(0, Math.round(rgb.g * 0.35 + lumFactor * 22.0)));
+            data[i + 2] = Math.min(255, Math.max(0, Math.round(rgb.b * 0.35 + lumFactor * 22.0)));
+          } else {
+            data[i]     = Math.min(255, Math.max(0, Math.round(normR * lumFactor * rgb.r * 0.95)));
+            data[i + 1] = Math.min(255, Math.max(0, Math.round(normG * lumFactor * rgb.g * 0.95)));
+            data[i + 2] = Math.min(255, Math.max(0, Math.round(normB * lumFactor * rgb.b * 0.95)));
+          }
         }
       }
 
@@ -449,4 +586,63 @@ function parseHexColor(hex) {
     g: (num >> 8) & 255,
     b: num & 255
   };
+}
+
+// ==========================================================================
+// 7. Interactive Live HUD & Pocket Certification Tag
+// ==========================================================================
+function updateStudioHUD(config, targetHex, hasPattern) {
+  const isAr = (typeof currentLang !== "undefined" && currentLang === "ar") ||
+               (document.documentElement.getAttribute("dir") === "rtl");
+
+  // 1. Update Chest Pocket Tag
+  if (apron3D.embNameOverlay) {
+    const catObj = (typeof CATALOG_DATA !== "undefined" && CATALOG_DATA.categories) ? 
+      CATALOG_DATA.categories.find(c => c.id === config.category) : null;
+    apron3D.embNameOverlay.innerText = catObj ? (isAr ? catObj.name_ar.split('(')[0] : catObj.name_en.split('(')[0]) : "GULFRAY® SURGICAL";
+  }
+  if (apron3D.embSpecOverlay) {
+    const thick = config.thickness || "0.50 mm Pb";
+    const core = (config.core_material || "UM").split('(')[0].trim();
+    apron3D.embSpecOverlay.innerText = `${thick} · ${core}`;
+  }
+  if (apron3D.pocketOverlay) {
+    if (targetHex && targetHex !== '#006C35') {
+      apron3D.pocketOverlay.style.background = targetHex;
+    } else {
+      apron3D.pocketOverlay.style.background = 'rgba(0, 77, 37, 0.92)';
+    }
+  }
+
+  // 2. Update In-Viewport HUD Overlay
+  const hudFabricDot = document.getElementById('hudFabricDot');
+  const hudFabricText = document.getElementById('hudFabricText');
+  const hudCoreText = document.getElementById('hudCoreText');
+
+  if (hudFabricText) {
+    if (hasPattern) {
+      hudFabricText.innerText = `${config.pattern_code} · ${config.pattern_name || 'Teal Abstract'}`;
+    } else if (config.fabric_code) {
+      hudFabricText.innerText = `${config.fabric_code} · ${config.fabric_name || config.color}`;
+    } else {
+      hudFabricText.innerText = config.color || "Saudi Green";
+    }
+  }
+
+  if (hudFabricDot) {
+    if (hasPattern) {
+      const pUrl = getPatternImageUrl(config.pattern_code);
+      hudFabricDot.style.backgroundImage = `url(${pUrl})`;
+      hudFabricDot.style.backgroundSize = "cover";
+    } else {
+      hudFabricDot.style.backgroundImage = "none";
+      hudFabricDot.style.backgroundColor = targetHex || "#006C35";
+    }
+  }
+
+  if (hudCoreText) {
+    const core = config.core_material || "UM (Ultra-Lightest)";
+    const thick = config.thickness || "0.50 mm Pb";
+    hudCoreText.innerText = `${core.split('(')[0]} · ${thick}`;
+  }
 }

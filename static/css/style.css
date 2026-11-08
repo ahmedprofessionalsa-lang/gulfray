@@ -1478,15 +1478,109 @@ html[dir="rtl"] .option-card-radio {
   left: 6px;
   right: 6px;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
   gap: 4px;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(8px);
-  padding: 4px 6px;
+  padding: 4px 8px;
   border-radius: var(--radius-full);
   border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.10);
   z-index: 10;
+}
+
+.angle-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.zoom-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 4px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(203, 213, 225, 0.8);
+}
+
+[dir="rtl"] .zoom-buttons-group {
+  margin-left: 0;
+  margin-right: 4px;
+  padding-left: 0;
+  padding-right: 6px;
+  border-left: none;
+  border-right: 1px solid rgba(203, 213, 225, 0.8);
+}
+
+.zoom-btn {
+  background: rgba(241, 245, 249, 0.9);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--slate-700);
+  padding: 3px 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.zoom-btn:hover {
+  background: var(--saudi-green);
+  color: #ffffff;
+  border-color: var(--saudi-green);
+}
+
+/* Interactive Studio HUD (Head-Up Display) */
+.apron-hud-overlay {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.hud-pill {
+  background: rgba(15, 23, 42, 0.76);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+}
+
+.hud-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  display: inline-block;
+  box-shadow: 0 0 6px #10b981;
+}
+
+.hud-fabric-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  display: inline-block;
+  background-size: cover;
+  background-position: center;
 }
 
 .angle-btn {

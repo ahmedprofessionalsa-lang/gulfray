@@ -75,11 +75,6 @@
         <button class="btn-lang-toggle" id="btnLangToggle" onclick="toggleLanguage()" title="Switch Language">
           <span>🌐 العربية</span>
         </button>
-
-        <!-- Direct Factory Link Button -->
-        <a href="#factory" class="btn-factory-nav" id="btnHeaderContact" title="Factory Location & Contacts">
-          <span>🏭 Saudi Factory</span>
-        </a>
       </div>
 
     </div>
@@ -616,8 +611,25 @@
             <span class="apron-angle-pill" id="apron3DAnglePill">0° · Front View</span>
           </div>
 
-          <!-- 3D Interactive Viewport -->
+          <!-- 3D Interactive Viewport (Automotive-Grade Studio Configurator) -->
           <div class="apron-3d-box" id="apron3DViewportBox">
+            
+            <!-- Interactive Studio HUD Overlay -->
+            <div class="apron-hud-overlay" id="apronHUD">
+              <div class="hud-pill hud-angle-pill">
+                <span class="hud-dot"></span>
+                <span id="hudAngleText">0° · Front View</span>
+              </div>
+              <div class="hud-pill hud-fabric-pill">
+                <span class="hud-fabric-dot" id="hudFabricDot" style="background: #006C35;"></span>
+                <span id="hudFabricText">Saudi Green · F-04</span>
+              </div>
+              <div class="hud-pill hud-core-pill">
+                <span>🛡️</span>
+                <span id="hudCoreText">UM Lead-Free · 0.50 mm Pb</span>
+              </div>
+            </div>
+
             <!-- 3D Turntable Stage -->
             <div class="turntable-stage" id="turntableStage">
               <div class="mannequin-turntable-plane" id="mannequinPlane">
@@ -637,23 +649,41 @@
             
             <!-- Drag Hint Overlay -->
             <div class="apron-3d-hint">
-              <span id="txtDragHint">🔄 Drag 360° to Rotate</span>
+              <span id="txtDragHint">🔄 Drag 360° to Rotate · Scroll to Zoom</span>
             </div>
 
-            <!-- 3D Controls Bar -->
+            <!-- 3D Configurator Controls Bar -->
             <div class="apron-3d-controls">
-              <button type="button" class="angle-btn active" id="btnAngleFront" onclick="setApronAngle(0)" title="Front View">
-                <span id="lblAngleFront">Front 0°</span>
-              </button>
-              <button type="button" class="angle-btn" id="btnAngleSide" onclick="setApronAngle(90)" title="Profile View">
-                <span id="lblAngleSide">Side 90°</span>
-              </button>
-              <button type="button" class="angle-btn" id="btnAngleBack" onclick="setApronAngle(180)" title="Back Shielding">
-                <span id="lblAngleBack">Back 180°</span>
-              </button>
-              <button type="button" class="angle-btn active" id="btn3DAutoSpin" onclick="toggleApronAutoSpin()" title="Auto-Rotate">
-                <span id="lbl3DAutoSpin">🔄 Auto-Spin</span>
-              </button>
+              <div class="angle-buttons-group">
+                <button type="button" class="angle-btn active" id="btnAngleFront" onclick="setApronAngle(0)" title="Front View">
+                  <span id="lblAngleFront">Front 0°</span>
+                </button>
+                <button type="button" class="angle-btn" id="btnAngleQuarter" onclick="setApronAngle(45)" title="45° Angle">
+                  <span id="lblAngleQuarter">Angle 45°</span>
+                </button>
+                <button type="button" class="angle-btn" id="btnAngleSide" onclick="setApronAngle(90)" title="Profile View">
+                  <span id="lblAngleSide">Side 90°</span>
+                </button>
+                <button type="button" class="angle-btn" id="btnAngleBack" onclick="setApronAngle(180)" title="Back Shielding">
+                  <span id="lblAngleBack">Back 180°</span>
+                </button>
+                <button type="button" class="angle-btn active" id="btn3DAutoSpin" onclick="toggleApronAutoSpin()" title="Auto-Rotate 360°">
+                  <span id="lbl3DAutoSpin">🔄 Auto-Spin</span>
+                </button>
+              </div>
+
+              <!-- Zoom Controls -->
+              <div class="zoom-buttons-group">
+                <button type="button" class="zoom-btn" onclick="zoomApron(0.15)" title="Zoom In (+)">
+                  <span>➕</span>
+                </button>
+                <button type="button" class="zoom-btn" onclick="zoomApron(-0.15)" title="Zoom Out (-)">
+                  <span>➖</span>
+                </button>
+                <button type="button" class="zoom-btn" onclick="resetApronZoom()" title="Reset Zoom">
+                  <span>↺</span>
+                </button>
+              </div>
             </div>
           </div>
 
