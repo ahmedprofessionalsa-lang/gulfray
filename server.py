@@ -25,6 +25,7 @@ async def add_cache_control_headers(request: Request, call_next):
     response = await call_next(request)
     path = request.url.path
     # Cache static assets (CSS, JS, Images, Fonts) for 7 days
+    response.headers["Access-Control-Allow-Origin"] = "*"
     if any(path.startswith(prefix) for prefix in ("/css/", "/js/", "/images/", "/fonts/")):
         response.headers["Cache-Control"] = "public, max-age=604800, immutable"
     elif path.startswith("/api/"):

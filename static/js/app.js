@@ -526,6 +526,8 @@ function selectLead(thick) {
 }
 
 function selectColor(colId, nameEn, hex, tagEn) {
+  currentConfig.fabric_mode = "presets";
+  currentConfig.pattern_code = "None"; // Clear pattern on preset selection
   currentConfig.color = nameEn;
   currentConfig.color_hex = hex;
   currentConfig.collection = tagEn;
@@ -1148,14 +1150,18 @@ function selectCustomSolid(code) {
   const solidObj = FABRIC_REFERENCE.solid_colors.find(c => c.code === code);
   if (!solidObj) return;
 
+  currentConfig.fabric_mode = "custom_codes";
   currentConfig.fabric_code = solidObj.code;
   currentConfig.fabric_name = currentLang === "ar" ? solidObj.name_ar : solidObj.name_en;
   currentConfig.fabric_hex = solidObj.hex;
   currentConfig.color = `${solidObj.code} (${solidObj.name_en})`;
   currentConfig.color_hex = solidObj.hex;
-  currentConfig.collection = `Custom Spec: ${solidObj.code} · ${currentConfig.pattern_code}`;
+  currentConfig.pattern_code = "None"; // Clear pattern so solid color renders on 3D!
+  currentConfig.pattern_name = currentLang === "ar" ? "سادة" : "Solid";
+  currentConfig.collection = `Custom Spec: ${solidObj.code} (Solid)`;
 
   renderCustomSolidChips();
+  renderCustomPrintChips(); // Refresh print chips to show None selected
   updateLiveSummary();
 }
 
@@ -1201,6 +1207,7 @@ function renderCustomPrintChips() {
 }
 
 function selectCustomPrint(code) {
+  currentConfig.fabric_mode = "custom_codes";
   currentConfig.pattern_code = code;
   if (code === "None") {
     currentConfig.pattern_name = currentLang === "ar" ? "سادة" : "Solid";

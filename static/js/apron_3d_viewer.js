@@ -1,7 +1,7 @@
 // ==========================================================================
 // GulfRay® Medical - Ultra-HD Photorealistic 360° Studio Turntable Engine
 // Authentic 2027 Catalogue Studio Photography with Real-time 3D Foreshortening
-// Automotive-Grade Real-Time Material & Pattern Synthesizer
+// Automotive-Grade Real-Time Material, Cut & Pattern Synthesizer
 // ==========================================================================
 
 const apron3D = {
@@ -79,7 +79,6 @@ function initApron3DViewer(canvasId, containerId) {
 function setupTurntableInteraction(container) {
   // Mouse Drag
   container.addEventListener('mousedown', (e) => {
-    // Ignore clicks on control buttons
     if (e.target.closest('.apron-3d-controls') || e.target.closest('.apron-hud-overlay')) return;
     apron3D.isDragging = true;
     apron3D.autoSpin = false;
@@ -205,15 +204,12 @@ function updateAnglePill(normAngle) {
 
   const degText = `${Math.round(normAngle)}° · ${desc}`;
 
-  // Update Pill at top of switch bar
   const angleEl = apron3D.anglePill || document.getElementById('apron3DAnglePill');
   if (angleEl) angleEl.innerText = degText;
 
-  // Update HUD text inside viewport
   const hudAngle = document.getElementById('hudAngleText');
   if (hudAngle) hudAngle.innerText = degText;
 
-  // Update Snap Buttons active class
   updateActiveSnapButton(Math.round(normAngle));
 }
 
@@ -305,23 +301,34 @@ function updateApron3DModel(config) {
   if (!config) return;
   apron3D.currentConfig = config;
 
-  // 1. Garment Style & Real Base Studio Photography
+  // 1. Precise Category Matching for ALL 9 Styles
   const cat = (config.category || "").toLowerCase();
   const col = (config.collection || "").toLowerCase();
   const colName = (config.color || "").toLowerCase();
   const isLavender = col.includes("lavender") || colName.includes("lavender") || (config.color_hex && config.color_hex.toLowerCase() === "#684f8c");
-  const hasPattern = (config.pattern_code && config.pattern_code !== "None" && config.pattern_code !== "");
+  const hasPattern = (config.pattern_code && config.pattern_code !== "None" && config.pattern_code !== "" && config.pattern_code !== "null");
 
   let frontAsset = '/images/studio360/fullwrap_green_front_framed.jpg';
   let backAsset = '/images/studio360/fullwrap_green_back_clean.jpg';
 
-  if (cat.includes("frontal")) {
+  if (cat.includes("dental") || cat.includes("panoramic")) {
+    // Panoramic & Dental Shielding Apron with Thyroid Shield
+    frontAsset = '/images/studio360/dental_green_front_framed.jpg';
+    backAsset = '/images/studio360/dental_green_back_framed.jpg';
+  } else if (cat.includes("accessories") || cat.includes("thyroid")) {
+    // Shielding Accessories (Thyroid, Sleeves, Belts)
+    frontAsset = '/images/studio360/accessories_green_front_framed.jpg';
+    backAsset = '/images/studio360/accessories_green_back_framed.jpg';
+  } else if (cat.includes("frontal")) {
+    // Frontal Surgery Drop-Off & Classic Frontal
     frontAsset = '/images/studio360/frontal_green_front_framed.jpg';
     backAsset = '/images/studio360/frontal_green_back_framed.jpg';
-  } else if (cat.includes("vest") || cat.includes("skirt")) {
+  } else if (cat.includes("overlap") || cat.includes("reverse") || cat.includes("zipper") || cat.includes("vest") || cat.includes("skirt")) {
+    // Vest & Skirt Styles (Full Overlap, Reverse, Zipper)
     frontAsset = '/images/studio360/vestskirt_green_front_framed.jpg';
     backAsset = '/images/studio360/vestskirt_green_back_framed.jpg';
   } else {
+    // Full Wraparound One-Piece Styles
     frontAsset = '/images/studio360/fullwrap_green_front_framed.jpg';
     backAsset = '/images/studio360/fullwrap_green_back_clean.jpg';
   }
@@ -330,10 +337,10 @@ function updateApron3DModel(config) {
   apron3D.activeBackSrc = backAsset;
 
   // 2. Pattern Accent vs Solid Color Synthesizer
-  const targetHex = (config.fabric_mode === "custom_codes" && config.fabric_hex) ? config.fabric_hex : config.color_hex;
+  const targetHex = (config.fabric_hex || config.color_hex || '').trim();
 
   if (hasPattern) {
-    // Look up pattern image URL (e.g. P68 -> /images/fabrics/P68_teal_abstract.jpg)
+    // Composite Selected Pattern onto Garment
     const patternUrl = getPatternImageUrl(config.pattern_code);
     if (patternUrl) {
       applyPatternToAssets(frontAsset, backAsset, patternUrl);
@@ -343,8 +350,8 @@ function updateApron3DModel(config) {
       updateTurntableRender();
     }
   } else if (isLavender) {
-    // Authentic Lavender Studio Photography
-    if (cat.includes("vest") || cat.includes("skirt")) {
+    // Authentic Royal Lavender Studio Shots
+    if (cat.includes("overlap") || cat.includes("reverse") || cat.includes("zipper") || cat.includes("vest") || cat.includes("skirt")) {
       apron3D.activeFrontDisplay = '/images/studio360/vestskirt_lavender_front_framed.jpg';
       apron3D.activeBackDisplay = backAsset;
     } else {
@@ -352,8 +359,8 @@ function updateApron3DModel(config) {
       apron3D.activeBackDisplay = backAsset;
     }
     updateTurntableRender();
-  } else if (targetHex && targetHex.toLowerCase() !== "#006c35" && targetHex.toLowerCase() !== "#234a3c") {
-    // Authentic Solid Color Dynamic Tinting (F-01 to F-25)
+  } else if (targetHex && targetHex.toLowerCase() !== "#006c35") {
+    // Dynamic Solid Color Tinting (F-01 to F-25)
     applyDynamicFabricTint(frontAsset, backAsset, targetHex);
   } else {
     // Default Official Saudi Green Studio
@@ -370,7 +377,6 @@ function updateApron3DModel(config) {
 function getPatternImageUrl(patternCode) {
   if (!patternCode || patternCode === "None") return null;
   
-  // Specific pattern dictionary
   const patternMap = {
     'P08': '/images/fabrics/P08_sunflower.jpg',
     'P17': '/images/fabrics/P17_eucalyptus.jpg',
@@ -387,7 +393,6 @@ function getPatternImageUrl(patternCode) {
 
   if (patternMap[patternCode]) return patternMap[patternCode];
 
-  // Fallback to FABRIC_REFERENCE if available
   if (typeof FABRIC_REFERENCE !== "undefined" && FABRIC_REFERENCE.printed_fabrics) {
     const found = FABRIC_REFERENCE.printed_fabrics.find(p => p.code === patternCode);
     if (found && found.image) return found.image;
@@ -420,10 +425,8 @@ function compositePatternOnSingleAsset(srcUrl, patternUrl, callback) {
   }
 
   const baseImg = new Image();
-  baseImg.crossOrigin = "anonymous";
   baseImg.onload = () => {
     const patImg = new Image();
-    patImg.crossOrigin = "anonymous";
     patImg.onload = () => {
       try {
         const c = document.createElement('canvas');
@@ -441,7 +444,6 @@ function compositePatternOnSingleAsset(srcUrl, patternUrl, callback) {
         patCanvas.height = c.height;
         const patCtx = patCanvas.getContext('2d');
 
-        // Scale pattern tile to realistic garment scale (140px width per motif)
         const patW = patImg.naturalWidth || 200;
         const patH = patImg.naturalHeight || 200;
         const scale = 140 / patW;
@@ -456,14 +458,12 @@ function compositePatternOnSingleAsset(srcUrl, patternUrl, callback) {
 
         const patData = patCtx.getImageData(0, 0, c.width, c.height).data;
 
-        // Composite pattern onto fabric mask
         const len = data.length;
         for (let i = 0; i < len; i += 4) {
           const r = data[i];
           const g = data[i + 1];
           const b = data[i + 2];
 
-          // Background is warm white/cream: r > 215 && g > 210 && b > 205
           const isBg = (r > 215 && g > 210 && b > 205);
           const lum = 0.299 * r + 0.587 * g + 0.114 * b;
           const isGreenFabric = (g > 25 && g > r * 1.02 && g > b * 1.02 && lum < 200);
@@ -473,7 +473,6 @@ function compositePatternOnSingleAsset(srcUrl, patternUrl, callback) {
             const pg = patData[i + 1];
             const pb = patData[i + 2];
 
-            // Luminance factor wraps pattern naturally across folds & shadows
             const lumFactor = Math.min(2.1, Math.max(0.18, lum / 55.0));
             data[i]     = Math.min(255, Math.max(0, Math.round(pr * lumFactor * 0.95)));
             data[i + 1] = Math.min(255, Math.max(0, Math.round(pg * lumFactor * 0.95)));
@@ -521,7 +520,6 @@ function tintSingleAsset(srcUrl, hexColor, callback) {
   }
 
   const img = new Image();
-  img.crossOrigin = "anonymous";
   img.onload = () => {
     try {
       const c = document.createElement('canvas');
@@ -595,11 +593,20 @@ function updateStudioHUD(config, targetHex, hasPattern) {
   const isAr = (typeof currentLang !== "undefined" && currentLang === "ar") ||
                (document.documentElement.getAttribute("dir") === "rtl");
 
-  // 1. Update Chest Pocket Tag
+  // 1. Update Chest Pocket Tag & Style Label
   if (apron3D.embNameOverlay) {
-    const catObj = (typeof CATALOG_DATA !== "undefined" && CATALOG_DATA.categories) ? 
-      CATALOG_DATA.categories.find(c => c.id === config.category) : null;
-    apron3D.embNameOverlay.innerText = catObj ? (isAr ? catObj.name_ar.split('(')[0] : catObj.name_en.split('(')[0]) : "GULFRAY® SURGICAL";
+    const cat = (config.category || "").toLowerCase();
+    if (cat.includes("dental") || cat.includes("panoramic")) {
+      apron3D.embNameOverlay.innerText = "GULFRAY® DENTAL SHIELD";
+    } else if (cat.includes("accessories") || cat.includes("thyroid")) {
+      apron3D.embNameOverlay.innerText = "GULFRAY® THYROID SHIELD";
+    } else if (cat.includes("overlap") || cat.includes("reverse") || cat.includes("zipper") || cat.includes("vest") || cat.includes("skirt")) {
+      apron3D.embNameOverlay.innerText = "GULFRAY® VEST & SKIRT";
+    } else if (cat.includes("frontal")) {
+      apron3D.embNameOverlay.innerText = "GULFRAY® FRONTAL VEST";
+    } else {
+      apron3D.embNameOverlay.innerText = "GULFRAY® FULL WRAP";
+    }
   }
   if (apron3D.embSpecOverlay) {
     const thick = config.thickness || "0.50 mm Pb";
