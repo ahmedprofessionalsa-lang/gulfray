@@ -2222,3 +2222,292 @@ html[dir="rtl"] .basket-items-table th {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   Factory Showcase & 3D Product Studio Actions (Pure Local / Presentation Mode)
+   ========================================================================== */
+.btn-factory-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--saudi-green);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(197, 168, 105, 0.4);
+}
+
+.btn-factory-nav:hover {
+  background: #004D25;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 108, 53, 0.25);
+  transform: translateY(-1px);
+}
+
+.factory-section {
+  padding: 85px 0;
+  background: #ffffff;
+  border-top: 1px solid var(--slate-200);
+  border-bottom: 1px solid var(--slate-200);
+}
+
+.factory-highlight-banner {
+  background: linear-gradient(135deg, #004D25 0%, #006C35 60%, #15803d 100%);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--saudi-gold);
+  padding: 35px 40px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 15px 35px rgba(0, 77, 37, 0.18);
+  flex-wrap: wrap;
+}
+
+.factory-banner-content {
+  flex: 1;
+  min-width: 300px;
+}
+
+.factory-badge-pill {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  color: var(--saudi-gold);
+  border: 1px solid rgba(197, 168, 105, 0.6);
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.factory-highlight-banner h4 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.factory-highlight-banner p {
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 780px;
+}
+
+.factory-banner-meta {
+  display: flex;
+  gap: 20px;
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: #f1f5f9;
+  flex-wrap: wrap;
+}
+
+.btn-gold-factory {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #C5A869 0%, #d8bf84 100%);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 0.92rem;
+  padding: 13px 22px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-gold-factory:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(197, 168, 105, 0.4);
+  color: #0f172a;
+}
+
+.factory-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.factory-pillar-card {
+  background: #f8fafc;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  padding: 26px 22px;
+  transition: all 0.25s ease;
+}
+
+.factory-pillar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  border-color: var(--saudi-green);
+}
+
+.pillar-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(0, 108, 53, 0.1);
+  color: var(--saudi-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
+
+.factory-pillar-card h4 {
+  font-size: 1.05rem;
+  color: var(--slate-900);
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+
+.factory-pillar-card p {
+  font-size: 0.85rem;
+  color: var(--slate-600);
+  line-height: 1.6;
+}
+
+/* Summary Certificate Badge */
+.summary-spec-certificate-badge {
+  background: #FAF8F5;
+  border: 1px solid var(--gold-accent);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+/* Spec Action Buttons */
+.spec-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.btn-spec-action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.btn-print-spec {
+  background: var(--saudi-green);
+  color: #ffffff;
+}
+
+.btn-print-spec:hover {
+  background: #004D25;
+  box-shadow: 0 4px 12px rgba(0, 108, 53, 0.3);
+}
+
+.btn-copy-spec {
+  background: #ffffff;
+  border-color: var(--slate-300);
+  color: var(--slate-800);
+}
+
+.btn-copy-spec:hover {
+  background: var(--slate-50);
+  border-color: var(--saudi-gold);
+  color: var(--saudi-green);
+}
+
+.btn-whatsapp-spec {
+  background: #25D366;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.btn-whatsapp-spec:hover {
+  background: #1eb956;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+/* Toast Notification */
+.toast-notification {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 12px 22px;
+  border-radius: 8px;
+  border-left: 4px solid #10b981;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  font-size: 0.9rem;
+  font-weight: 700;
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toast-notification.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+[dir="rtl"] .toast-notification {
+  right: auto;
+  left: 25px;
+  border-left: none;
+  border-right: 4px solid #10b981;
+}
+
+/* Print Stylesheet for Technical Spec Sheet */
+@media print {
+  header, footer, .hero-section, .materials-guide-section, .collections-section, .fabric-reference-section, .compliance-section, .builder-steps-pane, .apron-view-switch-bar, .apron-3d-controls, .apron-3d-hint, .spec-action-buttons {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+  }
+  .builder-summary-sticky {
+    position: static !important;
+    box-shadow: none !important;
+    border: 2px solid #006C35 !important;
+    padding: 25px !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+  }
+  .builder-summary-sticky::before {
+    content: "GulfRay® Medical - Clinical Specification Sheet (Made in KSA)";
+    display: block;
+    font-size: 16pt;
+    font-weight: bold;
+    color: #006C35;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #C5A869;
+    padding-bottom: 8px;
+  }
+}

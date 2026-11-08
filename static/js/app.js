@@ -338,8 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
     applyTranslations();
   }
 
-  loadSavedBasket();
-  renderCollectionsGrid("all");
+    renderCollectionsGrid("all");
   renderStyleOptions();
   renderCoreOptions();
   renderLeadOptions();
@@ -360,16 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Live real-time embroidery text sync to 3D chest pocket
-  const embInput = document.getElementById("inputEmbroidery");
-  if (embInput) {
-    embInput.addEventListener("input", (e) => {
-      currentConfig.embroidery = e.target.value;
-      if (typeof updateApron3DModel === "function") {
-        updateApron3DModel(currentConfig);
-      }
-    });
-  }
+
 
   // Smooth scroll to URL hash on load
   if (window.location.hash) {
@@ -623,7 +613,9 @@ function updateLiveSummary() {
     document.getElementById("sumValColor").innerText = currentConfig.color.split('(')[0];
   }
   document.getElementById("sumValFit").innerText = `${currentConfig.gender} · ${currentConfig.size}`;
-  document.getElementById("sumValQty").innerText = `${currentConfig.qty} ${currentLang === 'ar' ? 'قطعة' : 'Unit(s)'}`;
+  const qtyEl = document.getElementById("sumValQty");
+  if (qtyEl) qtyEl.innerText = `${currentConfig.qty} ${currentLang === 'ar' ? 'قطعة' : 'Unit(s)'}`;
+
 
   // Live 3D Model Update
   if (typeof updateApron3DModel === "function") {
@@ -681,194 +673,90 @@ function selectColorAndConfigure(colId, nameEn, hex, tagEn) {
 }
 
 // ==========================================================================
-// RFQ Basket Management
+// Clinical Specification Sheet Actions (Local Presentation Mode)
 // ==========================================================================
-function loadSavedBasket() {
-  try {
-    const saved = localStorage.getItem("gulfray_rfq_basket");
-    if (saved) {
-      rfqBasket = JSON.parse(saved);
-      updateBasketCount();
-    }
-  } catch (e) {
-    rfqBasket = [];
-  }
+function printSpecSheet() {
+  window.print();
 }
 
-function saveBasket() {
-  try {
-    localStorage.setItem("gulfray_rfq_basket", JSON.stringify(rfqBasket));
-  } catch (e) {}
-  updateBasketCount();
-}
-
-function updateBasketCount() {
-  const total = rfqBasket.reduce((sum, it) => sum + (it.qty || 1), 0);
-  document.getElementById("headerCartCount").innerText = total;
-}
-
-function addItemToRfq() {
+function copyModelSpecs() {
+  const isAr = currentLang === "ar";
   const catObj = CATALOG_DATA.categories.find(c => c.id === currentConfig.category) || CATALOG_DATA.categories[0];
-  const embroideryVal = document.getElementById("inputEmbroidery").value.trim();
+  const modelName = isAr ? catObj.name_ar : catObj.name_en;
+  const specsText = isAr 
+    ? `🛡️ بطاقة مواصفات ملابس الوقاية من الأشعة - GulfRay®
+--------------------------------------------------
+الموديل: ${modelName} (${catObj.code})
+مادة الوقاية: ${currentConfig.core_material} Core (خالٍ من الرصاص 100%)
+سمك الرصاص المكافئ: ${currentConfig.thickness}
+اللون / النقشة: ${currentConfig.color}
+المقاس والقصة: ${currentConfig.size} (${currentConfig.gender})
+المعايير والاعتمادات: IEC 61331-1:2014 · ASTM F2547 · NPL UK
+المصنع: مصنع شركة سقالة حلول الوقاية - الرياض، المملكة العربية السعودية
+للتواصل المباشر: +966 56 241 4524 | operations@gulfray.com.sa`
+    : `🛡️ GulfRay® Radiation Protection Specification Sheet
+--------------------------------------------------
+Model: ${modelName} (${catObj.code})
+Protective Core: ${currentConfig.core_material} Core (100% Lead-Free)
+Lead Equivalence: ${currentConfig.thickness}
+Color / Pattern: ${currentConfig.color}
+Size & Fit: ${currentConfig.size} (${currentConfig.gender})
+Accreditation: IEC 61331-1:2014 · ASTM F2547 · NPL UK Verified
+Manufacturer: GulfRay® Radiation Protection Facility - Riyadh, Saudi Arabia
+Direct Contact: +966 56 241 4524 | operations@gulfray.com.sa`;
 
-  const isCustomFabric = currentConfig.fabric_mode === "custom_codes";
-  const item = {
-    category: currentConfig.category,
-    name_en: catObj.name_en,
-    name_ar: catObj.name_ar,
-    code: catObj.code,
-    core_material: `${currentConfig.core_material} Core`,
-    collection: isCustomFabric ? `2027 Spec: ${currentConfig.fabric_code} · ${currentConfig.pattern_code} · ${currentConfig.trim_code}` : currentConfig.collection,
-    color: isCustomFabric ? `${currentConfig.fabric_code} (${currentConfig.fabric_name})` : currentConfig.color,
-    thickness: currentConfig.thickness,
-    size: currentConfig.size,
-    gender: currentConfig.gender,
-    qty: currentConfig.qty,
-    embroidery: embroideryVal,
-    custom_logo: uploadedLogoFilename ? "Attached" : "",
-    fabric_code: isCustomFabric ? currentConfig.fabric_code : "",
-    pattern_code: isCustomFabric ? currentConfig.pattern_code : "",
-    trim_code: isCustomFabric ? currentConfig.trim_code : "",
-    fabric_details: isCustomFabric ? `${currentConfig.fabric_code} (${currentConfig.fabric_name}) · Pattern: ${currentConfig.pattern_code} · Trim: ${currentConfig.trim_code}` : ""
-  };
+  navigator.clipboard.writeText(specsText).then(() => {
+    showToast(isAr ? "✓ تم نسخ بطاقة المواصفات بنجاح!" : "✓ Specification sheet copied to clipboard!");
+  }).catch(() => {
+    showToast(isAr ? "تم إعداد المواصفات" : "Specs ready");
+  });
+}
 
-  rfqBasket.push(item);
-  saveBasket();
+function inquireWhatsApp() {
+  const isAr = currentLang === "ar";
+  const catObj = CATALOG_DATA.categories.find(c => c.id === currentConfig.category) || CATALOG_DATA.categories[0];
+  const modelName = isAr ? catObj.name_ar : catObj.name_en;
+  const msg = isAr
+    ? `السلام عليكم ورحمة الله،
+أود الاستفسار من مصنع GulfRay عن الموديل التالي:
+- الموديل: ${modelName} (${catObj.code})
+- مادة الوقاية: ${currentConfig.core_material} Core
+- سمك الرصاص: ${currentConfig.thickness}
+- اللون: ${currentConfig.color}
+- المقاس: ${currentConfig.size} (${currentConfig.gender})`
+    : `Hello GulfRay Medical Factory,
+I would like to inquire about the following garment specification:
+- Model: ${modelName} (${catObj.code})
+- Core: ${currentConfig.core_material} Core
+- Lead Equiv: ${currentConfig.thickness}
+- Color/Pattern: ${currentConfig.color}
+- Size: ${currentConfig.size} (${currentConfig.gender})`;
 
-  // Visual Feedback animation
-  const btn = document.querySelector(".btn-add-rfq");
-  btn.style.background = "linear-gradient(135deg, #10B981 0%, #059669 100%)";
-  const origText = document.getElementById("btnAddRfqText").innerText;
-  document.getElementById("btnAddRfqText").innerText = currentLang === "ar" ? "✓ تم الإضافة إلى سلة الاستفسار!" : "✓ Added to RFQ Basket!";
+  const encoded = encodeURIComponent(msg);
+  window.open(`https://wa.me/966562414524?text=${encoded}`, '_blank');
+}
 
+function showToast(message) {
+  let toast = document.getElementById("toastNotification");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "toastNotification";
+    toast.className = "toast-notification";
+    document.body.appendChild(toast);
+  }
+  toast.innerText = message;
+  toast.classList.add("show");
   setTimeout(() => {
-    btn.style.background = "";
-    document.getElementById("btnAddRfqText").innerText = origText;
-  }, 1800);
-}
-
-function openRfqModal() {
-  renderBasketTable();
-  document.getElementById("rfqSuccessBox").style.display = "none";
-  document.getElementById("rfqCustomerForm").style.display = "grid";
-  document.getElementById("rfqModalOverlay").classList.add("open");
-}
-
-function closeRfqModal() {
-  document.getElementById("rfqModalOverlay").classList.remove("open");
-}
-
-function renderBasketTable() {
-  const tbody = document.getElementById("basketTableBody");
-  if (!tbody) return;
-
-  if (rfqBasket.length === 0) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="5" style="text-align: center; padding: 30px; color: var(--slate-400);">
-          ${currentLang === 'ar' ? 'سلة الاستفسار فارغة حالياً. أضف مواصفات من أداة التخصيص بالأسفل.' : 'Your RFQ basket is currently empty. Configure garments below.'}
-        </td>
-      </tr>
-    `;
-    return;
-  }
-
-  tbody.innerHTML = rfqBasket.map((it, idx) => {
-    const name = currentLang === "ar" ? it.name_ar : it.name_en;
-    const customTxt = it.embroidery ? `🧵 ${it.embroidery}` : (currentLang === 'ar' ? 'قياسي' : 'Standard');
-    return `
-      <tr>
-        <td style="text-align: center; color: var(--slate-500); font-weight: bold;">${idx + 1}</td>
-        <td>
-          <b style="color: var(--slate-900); font-size: 0.95rem;">${name}</b>
-          <div style="font-size: 0.78rem; color: var(--slate-600); margin-top: 3px;">
-            <b>${it.core_material}</b> · ${it.thickness} · ${it.color.split('(')[0]} · Size: ${it.size} (${it.gender})
-          </div>
-        </td>
-        <td style="font-size: 0.8rem; color: var(--saudi-green); font-weight: 600;">${customTxt}</td>
-        <td style="text-align: center; font-weight: 800; font-size: 1rem; color: var(--slate-900);">${it.qty}</td>
-        <td style="text-align: center;">
-          <button type="button" class="basket-item-del-btn" onclick="removeBasketItem(${idx})">
-            ${currentLang === 'ar' ? 'حذف' : 'Remove'}
-          </button>
-        </td>
-      </tr>
-    `;
-  }).join("");
-}
-
-function removeBasketItem(idx) {
-  rfqBasket.splice(idx, 1);
-  saveBasket();
-  renderBasketTable();
-}
-
-// ==========================================================================
-// Handle RFQ Form Submission
-// ==========================================================================
-async function handleRfqSubmit(e) {
-  e.preventDefault();
-
-  if (rfqBasket.length === 0) {
-    alert(currentLang === "ar" ? "يرجى إضافة صنف واحد على الأقل إلى السلة." : "Please add at least one garment specification to the RFQ basket.");
-    return;
-  }
-
-  const submitBtn = document.getElementById("btnSubmitRfq");
-  submitBtn.disabled = true;
-  submitBtn.innerText = currentLang === "ar" ? "جاري إرسال الطلب..." : "Submitting RFQ...";
-
-  const customerData = {
-    organization: document.getElementById("custOrg").value.trim(),
-    name: document.getElementById("custName").value.trim(),
-    city: document.getElementById("custCity").value.trim(),
-    phone: document.getElementById("custPhone").value.trim(),
-    email: document.getElementById("custEmail").value.trim(),
-    notes: document.getElementById("custNotes").value.trim()
-  };
-
-  const payload = {
-    customer: customerData,
-    items: rfqBasket,
-    logo_filename: uploadedLogoFilename,
-    honeypot: document.getElementById("rfqHoneypot").value
-  };
-
-  try {
-    const res = await fetch("/api/rfq", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await res.json();
-    if (data.success) {
-      document.getElementById("succRefNo").innerText = data.rfq_id;
-      document.getElementById("rfqCustomerForm").style.display = "none";
-      document.getElementById("rfqSuccessBox").style.display = "block";
-
-      // Clear basket after successful dispatch
-      rfqBasket = [];
-      saveBasket();
-      renderBasketTable();
-    } else {
-      alert(data.detail || (currentLang === 'ar' ? "فشل إرسال الطلب" : "Submission failed"));
-    }
-  } catch (err) {
-    alert(currentLang === "ar" ? "حدث خطأ أثناء الاتصال بالسيرفر. يرجى المحاولة مرة أخرى." : "Error communicating with server. Please try again.");
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerText = currentLang === "ar" ? "🚀 إرسال طلب عرض السعر الرسمي" : "🚀 Submit Request for Quotation (RFQ)";
-  }
+    toast.classList.remove("show");
+  }, 2800);
 }
 
 function resetConfigurator() {
   document.getElementById("inputEmbroidery").value = "";
-  document.getElementById("fileLogoUpload").value = "";
-  document.getElementById("logoUploadIndicator").innerText = currentLang === "ar" ? "لم يتم إرفاق ملف" : "No file chosen";
+  if (document.getElementById("fileLogoUpload")) document.getElementById("fileLogoUpload").value = "";
+  if (document.getElementById("logoUploadIndicator")) document.getElementById("logoUploadIndicator").innerText = currentLang === "ar" ? "لم يتم إرفاق ملف" : "No file chosen";
   uploadedLogoFilename = null;
   currentConfig.qty = 1;
-  document.getElementById("qtyDisplay").innerText = 1;
   updateLiveSummary();
 }
 
@@ -905,10 +793,44 @@ function applyTranslations() {
 
   // Nav
   setText("navLinkMaterials", isAr ? "دليل المواد الواقية" : "Core Materials");
+  setText("navLinkFactory", isAr ? "المصنع السعودي" : "Saudi Factory");
+  setText("btnHeaderContact", isAr ? "🏭 المصنع السعودي" : "🏭 Saudi Factory");
   setText("navLinkCollections", isAr ? "المجموعات والسدو" : "Saudi Collections");
-  setText("navLinkBuilder", isAr ? "🔄 استوديو 3D والطلب" : "🔄 3D Configurator");
+  setText("navLinkFabrics", isAr ? "أكواد الأقمشة 2027" : "Fabric Codes");
+  setText("navLinkBuilder", isAr ? "🔄 استوديو المنتجات 360°" : "🔄 3D Product Studio");
   setText("navLinkCompliance", isAr ? "الاعتمادات والجودة" : "Certifications");
   setText("navLinkWorkflow", isAr ? "آلية العمل" : "Working with Us");
+
+  // Factory Section
+  setText("factoryTag", isAr ? "صناعة وطنية سعودية · أول مصنع مرخص" : "NATIONAL MANUFACTURING FACILITY · أول مصنع وطني مرخص");
+  setText("factoryTitle", isAr ? "مصنع جلف راي للوقاية من الأشعة الطبية" : "The GulfRay® Radiation Protection Facility");
+  setText("factoryDesc", isAr ? 
+    "أول مصنع وطني مرخص في المملكة العربية السعودية متخصص في تصنيع وتطوير ملابس وحلول الوقاية من الأشعة لكبرى المستشفيات والمراكز الجراحية." : 
+    "Headquartered in the Kingdom of Saudi Arabia, GulfRay® operates the first national licensed manufacturing plant dedicated to certified clinical radiation shielding garments.");
+  setText("factoryBannerTitle", isAr ? "تصنيع متطور في بيئة معقمة مع فحص إشعاعي شامل 100%" : "State-of-the-Art Clean Manufacturing & Radiographic QC Testing");
+  setText("factoryBannerDesc", isAr ? 
+    "يجمع مصنعنا بالرياض بين القص الليزري الآلي فائق الدقة، ومعالجة مصفوفة الحماية الثلاثية الخالية من الرصاص، والفحص الإشعاعي الفردي لكل رداء قبل التوريد." : 
+    "Our Riyadh facility combines automated laser precision cutting, tri-element lead-free core vulcanization, and 100% radiographic attenuation verification for every garment delivered.");
+  setText("pillar1Title", isAr ? "قص ليزري آلي فائق الدقة" : "Automated Laser Cutting");
+  setText("pillar1Desc", isAr ? "أنظمة قص بالليزر محوسبة تضمن قياسات سريرية دقيقة بالمليمتر، مع أطراف محكمة تمنع التنسيل وتمنح راحة حركية أثناء العمليات الطويلة." : "Computerized CNC laser cutting lines ensure millimeter-accurate clinical garment fits, chemically sealed hems that prevent edge fraying.");
+  setText("pillar2Title", isAr ? "مصفوفة حماية خالية من الرصاص" : "Tri-Element Lead-Free Cores");
+  setText("pillar2Desc", isAr ? "دمج سبائك الأنتيمون والبزموت والتنغستن مع بوليمرات مرنة لتوفير وزن أخف بنسبة 28% مع أمان تام وخلو 100% من الرصاص السام." : "Custom polymer vulcanization fusing Antimony, Bismuth, and Tungsten micro-particulates. Delivers 28% lighter weight than traditional lead vinyl.");
+  setText("pillar3Title", isAr ? "فحص إشعاعي شامل 100%" : "100% Radiographic Verification");
+  setText("pillar3Desc", isAr ? "كل مريول يصنع في المصنع يخضع لاختبار توهين الأشعة بالحزمة العريضة وفق المعايير البريطانية والأوروبية IEC 61331-1 قبل التغليف والتوريد." : "Every manufactured garment undergoes comprehensive broad-beam X-ray attenuation verification calibrated to UK NPL and IEC 61331-1 standards.");
+  setText("pillar4Title", isAr ? "مختبر التطريز وشعارات المستشفيات" : "Digital Embroidery & Crest Lab");
+  setText("pillar4Desc", isAr ? "تطريز إلكتروني عالي الدقة لأسماء الأطباء، وشعارات المستشفيات، وبطاقة سمك الرصاص المعتمدة بخيوط ذهبية وفضية مقاومة للغسيل والتعقيم." : "High-precision multi-head computerized embroidery for physician names, hospital department crests, and permanent Pb-equivalence identification badges.");
+
+  // Product Studio Section & Spec Sheet Actions
+  setText("rfqTag", isAr ? "استوديو المنتجات والمواصفات السريرية ثلاثي الأبعاد" : "INTERACTIVE 3D PRODUCT STUDIO · استوديو المنتجات ثلاثي الأبعاد");
+  setText("rfqTitle", isAr ? "مستكشف المنتجات والمواصفات ثلاثي الأبعاد 360°" : "3D Clinical Product & Specification Explorer");
+  setText("rfqDesc", isAr ? 
+    "استكشف موديلات جلف راي الطبية، واختر نوع مادة الحماية، وسمك الرصاص، وجرب ألوان ونقشات كتالوج 2027 مع معاينة دوران حية 360° وبطاقة مواصفات سريرية جاهزة للطباعة والمشاركة." : 
+    "Inspect GulfRay's certified radiation protection garments, lightweight lead-free cores, and the official 2027 fabric and motif palette in real-time 360° rotation with full specification sheets.");
+  setText("specBadgeTitle", isAr ? "بطاقة مواصفات سريرية معتمدة من GulfRay®" : "Official GulfRay® Clinical Specification");
+  setText("specBadgeDesc", isAr ? "صُنع في الرياض، المملكة العربية السعودية وفق معايير IEC 61331-1:2014 و ASTM F2547." : "Engineered to IEC 61331-1:2014 & ASTM F2547 standards in Riyadh, Saudi Arabia.");
+  setText("lblPrintSpec", isAr ? "طباعة بطاقة المواصفات الفنية" : "Print Technical Spec Sheet");
+  setText("lblCopySpec", isAr ? "نسخ تفاصيل المواصفات" : "Copy Specifications");
+  setText("lblWhatsAppSpec", isAr ? "واتساب المصنع المباشر" : "Direct Factory WhatsApp");
 
   // Hero
   setHtml("heroBadge", isAr ? 
@@ -923,8 +845,8 @@ function applyTranslations() {
     "أول مصنع سعودي متخصص في إنتاج ملابس وإكسسوارات الوقاية من الإشعاع الطبي. مصمم بمواد واقية خالية من الرصاص ومختبرة بالحزمة العريضة، مع لمسات تطريز السدو التراثي وخيارات المقاسات الخاصة للمستشفيات." :
     "Saudi Arabia's premier medical manufacturer of lightweight, certified radiation protection aprons. Engineered with broad-beam verified lead-free cores, bespoke Saudi Sadu heritage embroidery, and custom hospital sizing.");
 
-  setHtml("btnHeroRfq", isAr ? "<span>✨ تخصيص وطلب عرض السعر (RFQ)</span>" : "<span>✨ Configure & Request Quotation (RFQ)</span>");
-  setHtml("btnHero3D", isAr ? "<span>🔄 استوديو المعاينة 360° ثلاثي الأبعاد</span>" : "<span>🔄 360° 3D Studio Live</span>");
+  setHtml("btnHero3DPrimary", isAr ? "<span>🔄 استوديو المنتجات ثلاثي الأبعاد 360°</span>" : "<span>🔄 360° Product Studio · استوديو المنتجات</span>");
+  setHtml("btnHeroFactory", isAr ? "<span>🏭 جولة في المصنع السعودي</span>" : "<span>🏭 Saudi Factory Tour · جولة المصنع</span>");
   setHtml("btnHeroMaterials", isAr ? "<span>🔬 استعراض دليل المواد الواقية</span>" : "<span>🔬 Explore Core Materials Guide</span>");
 
   // Materials Guide
@@ -941,34 +863,12 @@ function applyTranslations() {
   setText("mlBadge", isAr ? "ML · الخيار الاقتصادي الأعلى قيمة" : "ML · Most Economical");
   setText("mlSub", isAr ? "أعلى كفاءة لميزانيات المستشفيات الكبيرة" : "Accessible price for larger departments");
 
-  // RFQ Builder Section
-  setText("rfqTag", isAr ? "نظام طلب عروض الأسعار التفاعلي" : "INTERACTIVE B2B SPECIFIER");
-  setText("rfqTitle", isAr ? "مُنشئ مواصفات عرض السعر المخصص" : "Bespoke RFQ Configurator");
-  setText("rfqDesc", isAr ?
-    "حدد موديل الرداء الطبي، نوع المادة الواقية، سمك الحماية، تطريز السدو، وشعار المستشفى. الموقع لا يحتوي على أي أسعار؛ مواصفاتك المعتمدة تُرسل فوراً إلى فريق المبيعات الهندسي." :
-    "Select your garment style, core material, lead thickness, bespoke Saudi embroidery, and hospital logo. Zero financial calculations; your custom specification is dispatched directly to our medical sales team.");
-
-  setText("step1Title", isAr ? "1. الموديل والشكل الطبي" : "1. Garment Style & Format");
+  // Product Studio Steps
+  setText("step1Title", isAr ? "1. الموديل والشكل السريري" : "1. Garment Style & Clinical Format");
   setText("step2Title", isAr ? "2. نوع المادة الواقية الخالية من الرصاص" : "2. Protective Core Material");
   setText("step3Title", isAr ? "3. سمك الرصاص المكافئ (Pb-eq)" : "3. Lead Equivalence (Pb-eq)");
-  setText("step4Title", isAr ? "4. اللون، القماش ونقشة السدو" : "4. Fabric Color & Pattern");
+  setText("step4Title", isAr ? "4. اللون، القماش ونقشة الكتالوج" : "4. Fabric Color & Pattern");
   setText("step5Title", isAr ? "5. المقاس والجنس" : "5. Sizing & Cut");
-  setText("step6Title", isAr ? "6. التخصيص الفاخر (اختياري)" : "6. Bespoke Personalization (Optional)");
-
-  setText("lblEmbroidery", isAr ? "🧵 اسم الطبيب أو القسم للتطريز:" : "🧵 Embroidered Physician or Department Name:");
-  setText("lblLogo", isAr ? "📎 إرفاق شعار المستشفى / المركز الطبي:" : "📎 Upload Hospital / Healthcare Center Logo:");
-  setText("lblQuantity", isAr ? "الكمية المطلوبة (بالقطعة):" : "Quantity (Units):");
-  setText("btnAddRfqText", isAr ? "➕ إضافة هذه المواصفات إلى سلة الاستفسار" : "➕ Add Configuration to RFQ Basket");
-  setText("btnViewRfqNow", isAr ? "مراجعة وإرسال سلة عرض السعر (RFQ) →" : "Review & Submit RFQ Basket →");
-
-  // Modal
-  setText("modalRfqTitle", isAr ? "طلب عرض السعر الرسمي (RFQ)" : "Official Request for Quotation (RFQ)");
-  setText("modalPolicyTitle", isAr ? "ℹ️ سياسة التوريد بدون أسعار:" : "ℹ️ Procurement Policy Note:");
-  setText("modalPolicyDesc", isAr ? 
-    " هذا النظام مخصص لإصدار وتوثيق المواصفات الفنية لطلبات عروض الأسعار. سيقوم فريق مبيعات GulfRay بإرسال عرض السعر المالي المعتمد شاملاً خصومات الكميات ومدة التوريد." :
-    " This portal generates certified technical RFQs. Official commercial quotations with institutional volume discounts and delivery timelines will be officially dispatched by GulfRay sales engineers.");
-
-  setText("btnSubmitRfq", isAr ? "🚀 إرسال طلب عرض السعر الرسمي" : "🚀 Submit Request for Quotation (RFQ)");
 
   // Navigation
   if (document.getElementById("navLinkFabrics")) setText("navLinkFabrics", isAr ? "دليل الأقمشة 2027" : "Fabric Codes");
